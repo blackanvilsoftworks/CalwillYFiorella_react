@@ -13,7 +13,7 @@ const Menu = () => {
                 </button>
                 <div id="navbarNav" className="collapse navbar-collapse text-center ps-auto">
                     <ul className="navbar-nav ms-auto">
-                        <NavLink to='/'>Inicio</NavLink>
+                        <NavLink to='/' className="nav-item nav-link">Inicio</NavLink>
                         <NavLink to='/about'>Sobre Nosotros</NavLink>
                         {/* <li className="nav-item"><a className="nav-link" href="#hero_container">Inicio</a></li>
                         <li className="nav-item"><a className="nav-link" href="#about_us_container">Sobre Nosotros</a></li> */}
