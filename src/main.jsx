@@ -7,9 +7,9 @@ import {
 } from 'react-router-dom';
 
 // import './index.css';
-import Layout   from './components/Layout.jsx';
+import Layout   from './components/layout/Layout.jsx';
 
-import Home     from './paages/Home.jsx';
+import Home     from './pages/Home.jsx';
 import Page_404 from './pages/Page_404.jsx';
 
 // import { ContextProvider } from './contexts/Context.jsx';
@@ -22,9 +22,9 @@ createRoot(document.getElementById('root')).render(
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="/productos" element={<AboutUs />} />
-            <Route path="/pagos-envios" element={<AboutUs />} />
-            <Route path="/contacto" element={<AboutUs />} />
+            <Route path="/productos" element={<Home />} />
+            <Route path="/pagos_envios" element={<Home />} />
+            <Route path="/contacto" element={<Home />} />
             <Route path='*' element={<Page_404 />} />
           </Route>
         </Routes>
