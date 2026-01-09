@@ -22,7 +22,9 @@ createRoot(document.getElementById('root')).render(
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="/products" element={<AboutUs />} />
+            <Route path="/productos" element={<AboutUs />} />
+            <Route path="/pagos-envios" element={<AboutUs />} />
+            <Route path="/contacto" element={<AboutUs />} />
             <Route path='*' element={<Page_404 />} />
           </Route>
         </Routes>

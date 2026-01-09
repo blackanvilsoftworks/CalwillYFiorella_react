@@ -14,7 +14,9 @@ const Menu = () => {
                 <div id="navbarNav" className="collapse navbar-collapse text-center ps-auto">
                     <ul className="navbar-nav ms-auto">
                         <NavLink to='/' className="nav-item nav-link">Inicio</NavLink>
-                        <NavLink to='/about'>Sobre Nosotros</NavLink>
+                        <NavLink to='/productos'>Productos</NavLink>
+                        <NavLink to='/pagos-envios'>Pagos y Envíos</NavLink>
+                        <NavLink to='/contacto'>Contacto</NavLink>
                         {/* <li className="nav-item"><a className="nav-link" href="#hero_container">Inicio</a></li>
                         <li className="nav-item"><a className="nav-link" href="#about_us_container">Sobre Nosotros</a></li> */}
                         <li className="nav-item"><a className="nav-link" href="#features_container">Características</a></li>
