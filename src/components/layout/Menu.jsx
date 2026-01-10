@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom';
 
+import './Menu.css';
+
 const Menu = () => {
     return (<>
         <nav id="navbar_container" className="navbar navbar-expand-md navbar-light m-0 p-0 fixed-top shadow">

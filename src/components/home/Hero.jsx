@@ -1,3 +1,5 @@
+import './Hero.css';
+
 const Hero = () => {
     return (
         <div id="hero_container" className="hero mt-5 px-3">

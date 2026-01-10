@@ -1,0 +1,7 @@
+/* @import url('./Card.css');
+@import url('./Carousel.css'); */
+
+#products_container {
+    /* background-color: var(--secondary-background-color); */
+    background-color: rgb(248, 246, 233);
+}

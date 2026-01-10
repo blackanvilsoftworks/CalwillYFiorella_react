@@ -1,0 +1,23 @@
+:root {
+    --feature-icon-color: #4e89ae;
+    --primary-background-color  : #ffffff;
+}
+
+.feature-box {
+    text-align      : center;
+    padding         : 30px 20px;
+    border-radius   : 10px;
+    background      : var(--primary-background-color);
+    box-shadow      : 0 5px 15px rgba(0,0,0,0.08);
+    transition      : transform 0.3s;
+}
+  
+.feature-box:hover {
+    transform: translateY(-10px);
+}
+  
+.feature-icon {
+    font-size       : 2.5rem;
+    color           : var(--feature-icon-color);
+    margin-bottom   : 20px;
+}

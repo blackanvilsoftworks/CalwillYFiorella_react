@@ -1,3 +1,5 @@
+import './Features.css';
+
 const Features = () => {
     return (
         <div id="features_container" className="container mt-2 mt-sm-4 py-5">

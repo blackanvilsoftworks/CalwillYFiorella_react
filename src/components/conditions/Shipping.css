@@ -1,0 +1,7 @@
+:root {
+    --secondary-background-color: rgb(248, 246, 233);
+}
+
+.shipping_rules_container{
+    background-color: var(--secondary-background-color);
+}

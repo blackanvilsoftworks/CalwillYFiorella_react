@@ -1,3 +1,5 @@
+import './ContactForm.css';
+
 const Contact = () => {
     return (
         <div id="contact_form_container" className="container mt-4 pt-5 rounded-3">

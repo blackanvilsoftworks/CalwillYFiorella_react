@@ -1,0 +1,21 @@
+.product-card {
+    transition      : transform 0.3s, box-shadow 0.3s;
+    border          : none;
+    border-radius   : 10px;
+    overflow        : hidden;
+    box-shadow      : 0 5px 15px rgba(0,0,0,0.08);
+    margin-bottom   : 30px;
+}
+  
+.product-card:hover {
+    transform   : translateY(-10px);
+    box-shadow  : 0 15px 30px rgba(0,0,0,0.15);
+}
+  
+.product-card img {
+    width       : 100%;     /* Ocupa el 100% del ancho disponible */
+    height      : auto;     /* Mantiene la proporción de la imagen */
+    max-height  : 300px;    /* Ajusta la altura máxima al contenido */
+    height      : 300px;  
+    overflow    : hidden;
+}

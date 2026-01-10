@@ -1,3 +1,7 @@
+import './Products.css';
+import './Carousel.css';
+import './Card.css';
+
 const Products = () => {
     return (
         <div id="products_container" className="container py-3 py-sm-4 py-md-5 rounded-3">
