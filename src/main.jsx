@@ -10,6 +10,7 @@ import {
 import Layout   from './components/layout/Layout.jsx';
 
 import Home     from './pages/Home.jsx';
+import ProductsContainer     from './pages/ProductsContainer.jsx';
 import Page_404 from './pages/Page_404.jsx';
 
 // import { ContextProvider } from './contexts/Context.jsx';
@@ -22,7 +23,7 @@ createRoot(document.getElementById('root')).render(
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="/productos" element={<Home />} />
+            <Route path="/productos" element={<ProductsContainer />} />
             <Route path="/pagos_envios" element={<Home />} />
             <Route path="/contacto" element={<Home />} />
             <Route path='*' element={<Page_404 />} />
