@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "env:example": "cp .env.example .env.local",
+    "vercel:link": "vercel link",
+    "vercel:env": "vercel env pull .env.local"
   },
   "dependencies": {
     "react": "^19.2.0",
