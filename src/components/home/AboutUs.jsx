@@ -10,7 +10,7 @@ const AboutUs = () => {
                             <span className="title">Sobre Nosotros <i className="bi bi-balloon-heart"></i></span>
                         </h2>
                         <div className="col-12 col-md-5 col-lg-5 align-content-center">
-                            <img className="img-fluid" src="./src/assets/images/logo.jpg" alt="calwill &amp; fiorella Logo" />
+                            <img className="img-fluid" src="/assets/images/logo.jpg" alt="calwill &amp; fiorella Logo" />
                         </div>
                         <div className="col-12 col-md-7 col-lg-7 px-5 align-self-center">
                             <p>En Calwill &amp; Fiorella nos especializamos en la fabricación de calzado infantil de la más alta calidad, con diseños únicos y materiales sostenibles.</p>
