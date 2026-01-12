@@ -1,0 +1,25 @@
+// FONTS
+$global-font: 'Borel';
+
+// COLORS
+$white-color                : #fff;
+$black-color                : #000;
+$cream-white-color          : rgb(248, 246, 233);
+$red-color                  : rgb(188, 4, 5); /* titles and navbar */
+$bright-terracotta-color    : #ed9b40;
+
+// BACKGRAUND COLORS
+$primary-background-color   : $white-color;
+$secondary-background-color : $cream-white-color;
+
+// TITLE/SUBTITLES COLORS
+$titles-subtitles-color: $red-color;
+
+// OTHER COLORS
+$secondary-color            : $red-color;
+$accent-color               : $bright-terracotta-color;
+$icons-color                : $black-color;
+
+// BUTTONS
+$btn-primary-color  : $bright-terracotta-color;
+$btn-secondary-color: $bright-terracotta-color;
