@@ -19,10 +19,10 @@ const Menu = () => {
                 </button>
                 <div id="navbarNav" className="collapse navbar-collapse text-center ps-auto">
                     <ul className="navbar-nav ms-auto">
-                        <NavLink to='/'>Inicio</NavLink>
-                        <NavLink to='/productos'>Productos</NavLink>
-                        <NavLink to='/pagos_envios'>Pagos y Envíos</NavLink>
-                        <NavLink to='/contacto'>Contacto</NavLink>
+                        <NavLink className="nav-item" to='/'>Inicio</NavLink>
+                        <NavLink className="nav-item" to='/productos'>Productos</NavLink>
+                        <NavLink className="nav-item" to='/pagos_envios'>Pagos y Envíos</NavLink>
+                        <NavLink className="nav-item" to='/contacto'>Contacto</NavLink>
                     </ul>
                 </div>
             </div>
