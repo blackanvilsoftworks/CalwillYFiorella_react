@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './Hero.css';
+import './Hero.scss';
 
 const Hero = () => {
     return (
@@ -7,7 +7,7 @@ const Hero = () => {
             <h1 className="display-4 fw-bold mb-4">Calzados para Toda la Familia</h1>
             <p className="lead mb-4 fw-semibold">Somos distribuidores de una gran variedad de modelos de calzado infantil y calzado para adultos.</p>
             {/* <a className="btn btn-primary btn-lg" href="#products-container">Ver Productos</a> */}
-            <Link to='/productos'>Ver Productos</Link>
+            <Link className="btn btn-primary btn-lg" to='/productos'>Ver Productos</Link>
         </div>
     );
 };

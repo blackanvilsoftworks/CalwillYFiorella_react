@@ -10,7 +10,7 @@ const Menu = () => {
         <nav id="navbar_container" className="navbar navbar-expand-md navbar-light m-0 p-0 fixed-top shadow">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">
-                    <img className="d-inline-block align-text-top me-2" src="./../../public/navbar-logo.png" alt="calwill &amp; fiorella Logo" height="40" />
+                    <img className="d-inline-block align-text-top me-2" src="./../../../public/navbar-logo.png" alt="calwill &amp; fiorella Logo" height="40" />
                     <span className="ms-2 navbar-title">CALWILL &amp; FIORELLA</span>
                 </Link>
                 {/* <a className="navbar-brand" href="#hero_container"></a> */}
