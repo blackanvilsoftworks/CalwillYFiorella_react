@@ -1,0 +1,27 @@
+@use './global/variables' as *;
+
+/* BUTTONS */
+.btn-primary {
+  background-color: $btn-secondary-color;
+  border-color    : $btn-primary-color;
+  color           : $btn-primary-color;
+  padding         : 10px 25px;
+  border-radius   : 30px;
+  font-weight     : 600;
+  transition      : transform 0.3s;
+
+  &:hover, 
+  &.active {
+    background-color: $btn-primary-color      !important;
+    border-color    : $btn-primary-color      !important;
+    color           : $btn-secondary-color    !important;
+    transform       : translateY(-5px);
+  }
+}
+
+// button.nav-link.btn-primary.active {
+//   background-color: $btn-primary-color      !important;
+//   border-color    : $btn-primary-color      !important;
+//   color           : $btn-secondary-color    !important;
+//   transform       : translateY(-5px);
+// }

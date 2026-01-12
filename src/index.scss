@@ -1,79 +1,9 @@
-@use 'variables' as *;
-// :root {
-//   --global-font               : 'Borel';
-//   --primary-background-color  : #ffffff;
-//   --secondary-background-color: rgb(248, 246, 233);
-//   --secondary-color           : rgb(188, 4, 5); /* titles and navbar */
-//   --accent-color              : #ed9b40;
-//   --icons-color               : #000;
+@use './styles/global/variables' as *;
 
-//   /* BUTTONS */
-//   --btn-primary-color     : #ed9b40;
-//   --btn-secondary-color   : rgb(248, 246, 233);
-// }
+@use './styles/button';
+@use './styles/title';
+@use './styles/subtitle';
 
 body {
-  font-family: var($global-font);
+  font-family: $global-font;
 }
-
-/* BUTTONS */
-.btn-primary {
-  background-color: var($btn-secondary-color);
-  border-color    : var($btn-primary-color);
-  color           : var($btn-primary-color);
-  padding         : 10px 25px;
-  border-radius   : 30px;
-  font-weight     : 600;
-  transition      : transform 0.3s;
-}
-
-.btn-primary:hover, .btn-primary.active {
-  background-color: var($btn-primary-color);
-  border-color    : var($btn-primary-color);
-  color           : var($btn-secondary-color);
-  transform       : translateY(-5px);
-}
-
-button.nav-link.btn-primary.active {
-  background-color: var($btn-primary-color)      !important;
-  border-color    : var($btn-primary-color)      !important;
-  color           : var($btn-secondary-color)    !important;
-  transform       : translateY(-5px);
-}
-
-/* TITLE */
-.title{
-  font-family : var($global-font);
-  font-size   : 2.5rem;
-  font-weight : 500;
-  color       : var($titles-subtitles-color);
-  position    : relative;
-}
-
-.title i {
-  color: var($icons-color);
-}
-
-.title:after {
-  content     : '';
-  display     : block;
-  width       : 60px;
-  height      : 3px;
-  background  : var($accent-color);
-  margin      : 15px auto 0;
-}
-
-/* SUBTITLE */
-.subtitle{
-  font-family: var($global-font);
-}
-
-.subtitle:after {
-  content     : '';
-  display     : block;
-  width       : 20px;
-  height      : 2px;
-  background  : var($accent-color);
-  margin      : 15px auto 0;
-}
-

@@ -1,0 +1,15 @@
+@use './global/variables' as *;
+
+/* SUBTITLE */
+.subtitle{
+  font-family: $global-font;
+
+  &:after {
+    content     : '';
+    display     : block;
+    width       : 20px;
+    height      : 2px;
+    background  : $accent-color;
+    margin      : 15px auto 0;
+  }
+}
