@@ -6,7 +6,7 @@ import {
   Route 
 } from 'react-router-dom';
 
-// import './index.css';
+import './index.scss';
 import Layout   from './components/layout/Layout.jsx';
 
 import Home     from './pages/Home.jsx';

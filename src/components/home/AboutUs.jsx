@@ -1,8 +1,8 @@
-import './AboutUs.css';
+import './AboutUs.scss';
 
 const AboutUs = () => {
     return (
-        <div id="about_us_container" className="container mt-3 mt-sm-5 pt-5 pb-3 text-center rounded-3">
+        <div id="about_us_container" className="container mt-3 mt-sm-5 pt-5 pb-3 text-center rounded-3 about_us_container">
             <div className="row justify-content-center">
                 <div className="col-10">
                     <div className="row">
