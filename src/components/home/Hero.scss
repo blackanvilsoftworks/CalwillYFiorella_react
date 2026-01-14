@@ -1,6 +1,4 @@
-:root {
-  --primary-background-color  : #ffffff;
-}
+@use '../../styles/global/variables' as *;
 
 .hero {
   background: linear-gradient(
@@ -9,7 +7,7 @@
   ), url('./../../assets/images/heroSection/hero.jpg');
   background-size     : cover;
   background-position : center;
-  color               : var(--primary-background-color);
+  color               : $primary-background-color;
   padding             : 100px 0;
   text-align          : center;
 }
