@@ -1,6 +1,6 @@
-import './Footer.css';
+import './Footer.scss';
 
-const Footer = () => {
+const Footer = () => { 
     return (
         <footer id="footer_container" className="text-center pt-4 mt-3">
             <div className="container pt-0">

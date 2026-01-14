@@ -1,0 +1,7 @@
+@use '../../styles/global/variables' as *;
+
+footer {
+    background-color: $footer-bg-color;
+    color           : $footer-txt-color;
+    padding         : 60px 0 30px;
+}

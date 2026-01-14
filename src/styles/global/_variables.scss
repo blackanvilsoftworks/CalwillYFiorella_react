@@ -8,6 +8,7 @@ $cream-white-color          : rgb(248, 246, 233);
 $red-color                  : rgb(188, 4, 5); /* titles and navbar */
 $bright-terracotta-color    : #ed9b40;
 $steel-blue-color           : #4e89ae;
+$charcoal-gray-color        : #313638;
 
 // BACKGRAUND COLORS
 $primary-background-color   : $white-color;
@@ -22,6 +23,10 @@ $btn-secondary-color: $cream-white-color;
 
 // FEATURES
 $feature-icon-color: $steel-blue-color;
+
+// FOOTER
+$footer-bg-color    : $charcoal-gray-color;
+$footer-txt-color   : $white-color;
 
 // OTHER COLORS
 $secondary-color: $red-color;
