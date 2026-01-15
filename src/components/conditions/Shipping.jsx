@@ -1,8 +1,8 @@
-import './Shipping.css';
+import './Shipping.scss';
 
 const Shipping = () => {
     return (
-        <div id="shipping_container" className="cointainer pt-5 text-center">
+        <div id="shipping_container" className="container pt-5 text-center">
             <div className="row justify-content-center">
                 <div className="col-12 col-md-10">
                     <div className="row mx-3 mx-sm-5 px-3">

@@ -1,4 +1,4 @@
-// import './PayMethods.css';
+// import './PayMethods.scss';
 
 const Payments = () => {
     return (
