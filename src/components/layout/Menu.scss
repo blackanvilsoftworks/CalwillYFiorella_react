@@ -1,0 +1,26 @@
+@use '../../styles/global/variables' as *;
+
+.navbar {
+  background-color: $navbar-bg-color;
+  
+  .navbar-title {
+    font-size : 1.5rem;
+    color     : $secondary-color;
+  }
+  
+  .nav-link {
+    color: $icons-color;
+    
+    &:hover {
+      color: $accent-color;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-title {
+    font-size   : 1rem !important; /* Tamaño reducido para móviles */
+    margin-right: auto;
+    margin-left : auto;
+  }
+}
