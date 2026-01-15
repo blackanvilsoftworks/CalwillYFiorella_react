@@ -1,10 +1,10 @@
-import './Products.css';
-import './Carousel.css';
-import './Card.css';
+import './Carousel.scss';
+import './Card.scss';
+import './Products.scss';
 
 const Products = () => {
     return (
-        <div id="products_container" className="container py-3 py-sm-4 py-md-5 rounded-3">
+        <div className="products-container container py-3 py-sm-4 py-md-5 rounded-3">
             <div className="row justify-content-center">
                 <div className="col-10 col-lg-12 px-lg-5">
                     <div className="row">
