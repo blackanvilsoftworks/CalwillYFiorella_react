@@ -11,13 +11,13 @@ const Products = () => {
                         <h2 className="text-center"><span className="title">Nuestros Productos <i className="bi bi-cart"></i></span></h2>
                         <ul id="productsTab" className="nav nav-pills justify-content-center mb-4" role="tablist">
                             <li className="nav-item" role="presentation">
-                                <button id="children-tab" className="nav-link btn-primary active" data-bs-toggle="pill" data-bs-target="#children" aria-selected="true" type="button" role="tab">Calzado Infantil</button>
+                                <button id="children-tab" className="nav-link main-btn-style active" data-bs-toggle="pill" data-bs-target="#children" aria-selected="true" type="button" role="tab">Calzado Infantil</button>
                             </li>
                             <li className="nav-item" role="presentation">
-                                <button id="women-tab" className="nav-link btn-primary" data-bs-toggle="pill" data-bs-target="#women" aria-selected="false" type="button" tabIndex="-1" role="tab">Calzado para Mujeres</button>
+                                <button id="women-tab" className="nav-link main-btn-style" data-bs-toggle="pill" data-bs-target="#women" aria-selected="false" type="button" tabIndex="-1" role="tab">Calzado para Mujeres</button>
                             </li>
                             <li className="nav-item" role="presentation">
-                                <button id="men-tab" className="nav-link btn-primary" data-bs-toggle="pill" data-bs-target="#men" aria-selected="false" type="button" tabIndex="-1" role="tab">Calzado para Hombres</button>
+                                <button id="men-tab" className="nav-link main-btn-style" data-bs-toggle="pill" data-bs-target="#men" aria-selected="false" type="button" tabIndex="-1" role="tab">Calzado para Hombres</button>
                             </li>
                         </ul>
                         <div id="productsTabContent" className="tab-content">

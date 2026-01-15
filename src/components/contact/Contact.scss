@@ -1,0 +1,13 @@
+@use '../../styles/global/variables' as *;
+
+.contact-form-container {
+    background-color: $secondary-background-color;
+    padding         : 25px;
+    width           : 100%;
+    
+    #contact_form {
+        display     : flex;
+        flex-wrap   : wrap; /* Permite que los elementos se ajusten en varias líneas */
+    }
+}
+  

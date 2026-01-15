@@ -1,8 +1,8 @@
-import './ContactForm.css';
+import './Contact.scss';
 
 const Contact = () => {
     return (
-        <div id="contact_form_container" className="container mt-4 pt-5 rounded-3">
+        <div className="contact-form-container container mt-4 pt-5 rounded-3">
             <h2 className="text-center mb-4">
                 <span className="title">Contáctanos <i className="bi bi-mailbox-flag"></i></span>
             </h2>
@@ -10,7 +10,7 @@ const Contact = () => {
                 <form id="contact_form" action="https://formsubmit.co/calwillyfiorella@gmail.com" method="POST">
                     <input type="hidden" name="_subject" value="Nuevo mensaje desde la web" />
                     <input type="hidden" name="_template" value="table" />
-                    <input type="hidden" name="_next" value="https://blackanvilsoftworks.github.io/CalwillYFiorella/#contact-form-container" />
+                    <input type="hidden" name="_next" value="https://calwillyfiorella.vercel.app/contacto" />
                     <input type="hidden" name="_captcha" value="false" />
                     <div className="col-12 col-md-6 mb-3 px-1">
                         <label htmlFor="name" className="form-label">Nombre</label>
@@ -24,7 +24,7 @@ const Contact = () => {
                         <label htmlFor="message" className="form-label">Mensaje</label>
                         <textarea className="form-control" name="Mensaje" id="message" rows="3" placeholder="Recibirá una respuesta vía WhatsApp lo más pronto posible." required=""></textarea>
                     </div>
-                    <button className="btn btn-primary" type="submit">Enviar</button>
+                    <button className="btn main-btn-style" type="submit">Enviar</button>
                 </form>
             </div>
             <div className="row mt-3">

@@ -1,7 +1,7 @@
 @use './global/variables' as *;
 
 /* BUTTONS */
-.btn-primary {
+.main-btn-style {
   background-color: $btn-secondary-color;
   border-color    : $btn-primary-color;
   color           : $btn-primary-color;
@@ -18,10 +18,3 @@
     transform       : translateY(-5px);
   }
 }
-
-// button.nav-link.btn-primary.active {
-//   background-color: $btn-primary-color      !important;
-//   border-color    : $btn-primary-color      !important;
-//   color           : $btn-secondary-color    !important;
-//   transform       : translateY(-5px);
-// }
