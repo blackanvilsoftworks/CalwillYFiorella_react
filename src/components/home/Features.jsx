@@ -4,9 +4,9 @@ import FeatureBox from './FeatureBox';
 import { createTitle } from '../../utils/createTitle';
 
 const Features = () => {
-    const { arrContainers, arrFeatures } = useContext(DataContext);
+    const { objContainers, arrFeatures } = useContext(DataContext);
 
-    const data = arrContainers.features;
+    const data = objContainers.features;
 
     return (
         <div id={data.id} className={data.className}>
