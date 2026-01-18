@@ -15,12 +15,12 @@ import Page_404 from './pages/Page_404.jsx';
 import ContactContainer from './pages/ContactContainer.jsx';
 import Payment_Shipping from './pages/Payment_Shipping.jsx';
 
-// import { ContextProvider } from './contexts/Context.jsx';
+import { DataContextProvider } from './contexts/Data.jsx';
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* <ContextProvider> */}
+    <DataContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -32,5 +32,5 @@ createRoot(document.getElementById('root')).render(
           </Route>
         </Routes>
       </BrowserRouter>
-    {/* </ContextProvider> */}
+    </DataContextProvider>
   </StrictMode>);
