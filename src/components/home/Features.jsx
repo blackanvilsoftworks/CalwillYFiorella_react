@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 // import './Features.scss';
 import FeatureBox from './FeatureBox';
-import { createTitle } from '../../utils/createTitle';
+import { createTitle } from '../../utils/createTitle.jsx';
+import { DataContext } from '../../contexts/Data.jsx';
 
 const Features = () => {
     const { objContainers, arrFeatures } = useContext(DataContext);
@@ -20,6 +21,7 @@ const Features = () => {
                             arrFeatures.map(({ icon, title, description }) => {
                                 return (
                                     <FeatureBox 
+                                        key         = { title }
                                         icon        = { icon }
                                         title       = { title }
                                         description = { description }
