@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 import './AboutUs.scss';
+import { createTitle } from '../../utils/createTitle.jsx';
+import { DataContext } from '../../contexts/Data.jsx';
 
 const AboutUs = () => {
     const { objContainers, imagesPath } = useContext(DataContext);
@@ -7,7 +9,7 @@ const AboutUs = () => {
     const data = objContainers.about;
     
     return (
-        <div id={data.id} className={data.classNames}>
+        <div id={data.id} className={data.className}>
             <div className="row justify-content-center">
                 <div className="col-10">
                     <div className="row">

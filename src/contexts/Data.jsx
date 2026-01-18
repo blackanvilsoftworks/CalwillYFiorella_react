@@ -33,7 +33,7 @@ const DataContextProvider = ({ children }) => {
         },
         about: {
             id          : 'about_us_container',
-            className   : 'container mt-3 mt-sm-5 pt-5 pb-3 text-center rounded-3',
+            className   : 'about_us_container container mt-3 mt-sm-5 pt-5 pb-3 text-center rounded-3',
             navbar      : 'Sobre Nosotros',
             title       : 'Sobre Nosotros',
             icon        : 'bi bi-balloon-heart',
