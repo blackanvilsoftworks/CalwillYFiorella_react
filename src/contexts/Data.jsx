@@ -7,7 +7,8 @@ const DataContextProvider = ({ children }) => {
     const globalInfo = {
         name        : 'calwill & fiorella',
         phoneNumber : '+54 9 11-5959-0586',
-        email       : 'calwillyfiorella@gmail.com'
+        email       : 'calwillyfiorella@gmail.com',
+        web         : 'https://calwillyfiorella.com'
     };
     
     const imagesPath = '/assets/images/';
@@ -47,14 +48,14 @@ const DataContextProvider = ({ children }) => {
         },
         products: {
             id          : 'products_container',
-            className   : 'container py-3 py-sm-4 py-md-5 rounded-3',
+            className   : 'products_container container py-3 py-sm-4 py-md-5 rounded-3',
             navbar      : 'Productos',
             title       : 'Nuestros Productos',
             icon        : 'bi bi-cart',
         },
         shipping: {
             id          : 'shipping_container',
-            className   : 'cointainer pt-5 text-center',
+            className   : 'container pt-5 text-center',
             navbar      : 'Envíos',
             title       : 'Opciones de Envío',
             icon        : 'bi bi-rocket-takeoff',
@@ -68,7 +69,7 @@ const DataContextProvider = ({ children }) => {
         },
         contact: {
             id          : 'contact_form_container',
-            className   : 'container mt-4 pt-5 rounded-3',
+            className   : 'contact_form_container container mt-4 pt-5 rounded-3',
             navbar      : 'Contacto',
             title       : 'Contáctanos',
             icon        : 'bi bi-mailbox-flag',

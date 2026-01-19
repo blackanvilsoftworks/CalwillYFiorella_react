@@ -1,17 +1,26 @@
+import { useContext } from 'react';
+import { DataContext } from '../../contexts/Data.jsx';
+import { createTitle } from '../../utils/createTitle.jsx';
+
 import './Contact.scss';
 
 const Contact = () => {
+
+    const { globalInfo, objContainers, arrInfoCardContent } = useContext(DataContext);
+            
+    const data = objContainers.contact;
+    
     return (
-        <div className="contact-form-container container mt-4 pt-5 rounded-3">
+        <div id={data.id} className={data.className}>
             <h2 className="text-center mb-4">
-                <span className="title">Contáctanos <i className="bi bi-mailbox-flag"></i></span>
+                { createTitle(data.title, data.icon) }
             </h2>
             <div id="form-row" className="row">
-                <form id="contact_form" action="https://formsubmit.co/calwillyfiorella@gmail.com" method="POST">
-                    <input type="hidden" name="_subject" value="Nuevo mensaje desde la web" />
-                    <input type="hidden" name="_template" value="table" />
-                    <input type="hidden" name="_next" value="https://calwillyfiorella.vercel.app/contacto" />
-                    <input type="hidden" name="_captcha" value="false" />
+                <form id="contact_form" action={`https://formsubmit.co/${globalInfo.email}`} method="POST">
+                    <input type="hidden" name="_subject"    value="Nuevo mensaje desde la web" />
+                    <input type="hidden" name="_template"   value="table" />
+                    <input type="hidden" name="_next"       value={`${globalInfo.web}/contacto`} />
+                    <input type="hidden" name="_captcha"    value="false" />
                     <div className="col-12 col-md-6 mb-3 px-1">
                         <label htmlFor="name" className="form-label">Nombre</label>
                         <input type="text" name="Nombre" className="form-control" id="name" placeholder="Solo letras" required="" />
@@ -33,16 +42,14 @@ const Contact = () => {
                         <div className="card-body">
                             <h5 className="card-title">Información de Contacto</h5>
                             <div className="container">
-                                <div className="row mb-2">
-                                    <div className="col-1"><i className="bi bi-envelope-fill"></i></div>
-                                    <div className="col-11">Email: calwillyfiorella@gmail.com</div></div>
-                                    <div className="row mb-2"><div className="col-1"><i className="bi bi-telephone-fill"></i></div>
-                                    <div className="col-11">Teléfono: +54 9 11-5959-0586</div>
-                                </div>
-                                <div className="row mb-2">
-                                    <div className="col-1"><i className="bi bi-clock-fill"></i></div>
-                                    <div className="col-11">Horario: Lunes a Sábado de 09:00 a 18:00</div>
-                                </div>
+                                {
+                                    arrInfoCardContent.map( ({type, value, icon}, index) => (
+                                        <div key={type} className="row mb-2">
+                                            <div className="col-1"><i className={icon}></i></div>
+                                            <div className="col-11">{type}: {value}</div>
+                                        </div> 
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>
