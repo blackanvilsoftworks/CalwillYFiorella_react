@@ -214,21 +214,21 @@ const DataContextProvider = ({ children }) => {
         }
     ];
     
-    const arrShippingOptions = [
-        {
+    const objDeliveryOptions = {
+        collect_in_store: {
             subtitle    : 'Retiros en Estación Llavallol',
             description : [
                 'En caso que deseen retirarlo, se realiza la entrega de manera gratuita en el hall de la estación de tren de Llavallol, coordinando día y horario por WhatsApp.'
             ]
         },
-        {
+        delivery_gba: {
             subtitle    : 'Envíos en GBA',
             description : [
                 'Envío mediante repartidor con un costo adicional. El costo depende de la zona.',
                 'En caso de seleccionar envío, se deberá abonar el mismo en su totalidad por transeferencia a Mercado Pago el mismo día a modo de anticipo, previo a la salida del repartidor.'
             ]
         },
-        {
+        delivery_country: {
             subtitle    : 'Envíos al Resto del País',
             description : [
                 'Envío mediante Correo Argentino.',
@@ -237,15 +237,15 @@ const DataContextProvider = ({ children }) => {
                 'Envío mediante otras empresas de logística.'
             ]
         },
-        {
-            subtitle    : 'Reglas de Envío',
+        shipping_policies:{
+            subtitle    : 'Políticas de Envío',
             description : [
                 'Se coordinará día y horario vía WhatsApp, una vez esté el repartidor en el lugar y hora acordado, se tendrá una tolerancia de 15 minutos.',
                 'En caso de sobrepasar el tiemo de tolerancia, el pago no es reembolsable, y el repartidor coninuará con el resto de entregas, debiendose pactar una nueva fecha y horario.',
                 'Dependiendo de la demanda, podría coordinarse para ese mismo día. En cualquier caso, se deberá abonar una nueva cuota de envío.'
             ]
         }
-    ];
+    };
     
     const arrPayMethods = [
         'Transferencia bancaria a cuenta de Mercado Pago',
@@ -263,7 +263,7 @@ const DataContextProvider = ({ children }) => {
         arrFeatures, 
         arrInfoCardContent, 
         arrSocialMedia, 
-        arrShippingOptions, 
+        objDeliveryOptions,
         arrPayMethods 
     };
 
