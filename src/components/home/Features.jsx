@@ -18,7 +18,7 @@ const Features = () => {
                             { createTitle(data.title, data.icon) }
                         </h2>
                         {
-                            arrFeatures.map(({ icon, title, description }) => {
+                            arrFeatures.map( ({ icon, title, description }) => {
                                 return (
                                     <FeatureBox 
                                         key         = { title }

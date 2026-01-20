@@ -7,7 +7,8 @@ const DataContextProvider = ({ children }) => {
     const globalInfo = {
         name        : 'calwill & fiorella',
         phoneNumber : '+54 9 11-5959-0586',
-        email       : 'calwillyfiorella@gmail.com'
+        email       : 'calwillyfiorella@gmail.com',
+        web         : 'https://calwillyfiorella.com'
     };
     
     const imagesPath = '/assets/images/';
@@ -47,14 +48,14 @@ const DataContextProvider = ({ children }) => {
         },
         products: {
             id          : 'products_container',
-            className   : 'container py-3 py-sm-4 py-md-5 rounded-3',
+            className   : 'products_container container py-3 py-sm-4 py-md-5 rounded-3',
             navbar      : 'Productos',
             title       : 'Nuestros Productos',
             icon        : 'bi bi-cart',
         },
         shipping: {
             id          : 'shipping_container',
-            className   : 'cointainer pt-5 text-center',
+            className   : 'container pt-5 text-center',
             navbar      : 'Envíos',
             title       : 'Opciones de Envío',
             icon        : 'bi bi-rocket-takeoff',
@@ -68,7 +69,7 @@ const DataContextProvider = ({ children }) => {
         },
         contact: {
             id          : 'contact_form_container',
-            className   : 'container mt-4 pt-5 rounded-3',
+            className   : 'contact_form_container container mt-4 pt-5 rounded-3',
             navbar      : 'Contacto',
             title       : 'Contáctanos',
             icon        : 'bi bi-mailbox-flag',
@@ -214,21 +215,21 @@ const DataContextProvider = ({ children }) => {
         }
     ];
     
-    const arrShippingOptions = [
-        {
+    const objDeliveryOptions = {
+        collect_in_store: {
             subtitle    : 'Retiros en Estación Llavallol',
             description : [
                 'En caso que deseen retirarlo, se realiza la entrega de manera gratuita en el hall de la estación de tren de Llavallol, coordinando día y horario por WhatsApp.'
             ]
         },
-        {
+        delivery_gba: {
             subtitle    : 'Envíos en GBA',
             description : [
                 'Envío mediante repartidor con un costo adicional. El costo depende de la zona.',
                 'En caso de seleccionar envío, se deberá abonar el mismo en su totalidad por transeferencia a Mercado Pago el mismo día a modo de anticipo, previo a la salida del repartidor.'
             ]
         },
-        {
+        delivery_country: {
             subtitle    : 'Envíos al Resto del País',
             description : [
                 'Envío mediante Correo Argentino.',
@@ -237,15 +238,15 @@ const DataContextProvider = ({ children }) => {
                 'Envío mediante otras empresas de logística.'
             ]
         },
-        {
-            subtitle    : 'Reglas de Envío',
+        shipping_policies:{
+            subtitle    : 'Políticas de Envío',
             description : [
                 'Se coordinará día y horario vía WhatsApp, una vez esté el repartidor en el lugar y hora acordado, se tendrá una tolerancia de 15 minutos.',
                 'En caso de sobrepasar el tiemo de tolerancia, el pago no es reembolsable, y el repartidor coninuará con el resto de entregas, debiendose pactar una nueva fecha y horario.',
                 'Dependiendo de la demanda, podría coordinarse para ese mismo día. En cualquier caso, se deberá abonar una nueva cuota de envío.'
             ]
         }
-    ];
+    };
     
     const arrPayMethods = [
         'Transferencia bancaria a cuenta de Mercado Pago',
@@ -263,7 +264,7 @@ const DataContextProvider = ({ children }) => {
         arrFeatures, 
         arrInfoCardContent, 
         arrSocialMedia, 
-        arrShippingOptions, 
+        objDeliveryOptions,
         arrPayMethods 
     };
 
