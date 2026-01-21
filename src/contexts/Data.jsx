@@ -27,7 +27,7 @@ const DataContextProvider = ({ children }) => {
         },
         hero: {
             id          : 'hero_container',
-            className   : 'hero mt-5 px-3',
+            className   : 'hero px-3',
             navbar      : 'Inicio',
             title       : '',
             icon        : '',
@@ -62,14 +62,14 @@ const DataContextProvider = ({ children }) => {
         },
         payment: {
             id          : 'pay_methods_container',
-            className   : 'container text-center mt-0 pt-5',
+            className   : 'pay_methods_container container text-center',
             navbar      : 'Pagos',
             title       : 'Métodos de Pago',
             icon        : 'bi bi-cash-coin',
         },
         contact: {
             id          : 'contact_form_container',
-            className   : 'contact_form_container container mt-4 pt-5 rounded-3',
+            className   : 'contact_form_container container pt-5 rounded-3',
             navbar      : 'Contacto',
             title       : 'Contáctanos',
             icon        : 'bi bi-mailbox-flag',
