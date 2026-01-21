@@ -91,22 +91,22 @@ const DataContextProvider = ({ children }) => {
                 {
                     title           : 'Zapatos para Niño',
                     description     : 'Zapatos cómodos y resistentes para los más pequeños, disponibles en varios colores.',
-                    carouselImages  : [1, 2, 3]
+                    images          : [1, 2, 3]
                 },
                 {
                     title           : 'Zapatos para Niña',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
-                    carouselImages  : [1, 2, 3]
+                    images          : [1, 2, 3]
                 },
                 {
                     title           : 'Zapatos para Bebé',
                     description     : 'Suaves y flexibles zapatos para bebés, diseñados para no molestar sus pies en desarrollo.',
-                    carouselImages  : [1, 2, 3]
+                    images          : [1, 2, 3]
                 },
                 {
                     title           : 'Zapatos para Niño',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
-                    carouselImages  : [1, 2, 3]
+                    images          : [1, 2, 3]
                 }
             ]
         },
@@ -117,22 +117,22 @@ const DataContextProvider = ({ children }) => {
                 {
                     title           : 'Zapatos para Mujer',
                     description     : 'Zapatos cómodos y resistentes para los más pequeños, disponibles en varios colores.',
-                    carouselImages  : [1, 2, 3]
+                    images          : [1, 2, 3]
                 },
                 {
                     title           : 'Zapatos para Mujer',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
-                    carouselImages  : [1, 2, 3]
+                    images          : [1, 2, 3]
                 },
                 {
                     title           : 'Zapatos para Mujer',
                     description     : 'Suaves y flexibles zapatos para bebés, diseñados para no molestar sus pies en desarrollo.',
-                    carouselImages  : [1, 2, 3]
+                    images          : [1, 2, 3]
                 },
                 {
                     title           : 'Zapatos para Mujer',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
-                    carouselImages  : [1, 2, 3]
+                    images          : [1, 2, 3]
                 }
             ]
         },
@@ -143,22 +143,22 @@ const DataContextProvider = ({ children }) => {
                 {
                     title           : 'Zapatos para Hombres',
                     description     : 'Zapatos cómodos y resistentes para los más pequeños, disponibles en varios colores.',
-                    carouselImages  : [1, 2, 3]
+                    images          : [1, 2, 3]
                 },
                 {
                     title           : 'Zapatos para Hombres',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
-                    carouselImages  : [1, 2, 3]
+                    images          : [1, 2, 3]
                 },
                 {
                     title           : 'Zapatos para Hombres',
                     description     : 'Suaves y flexibles zapatos para bebés, diseñados para no molestar sus pies en desarrollo.',
-                    carouselImages  : [1, 2, 3]
+                    images          : [1, 2, 3]
                 },
                 {
                     title           : 'Zapatos para Hombres',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
-                    carouselImages  : [1, 2, 3]
+                    images          : [1, 2, 3]
                 }
             ]
         }
