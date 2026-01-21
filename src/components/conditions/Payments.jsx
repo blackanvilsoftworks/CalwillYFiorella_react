@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import { DataContext } from '../../contexts/Data.jsx';
 import { createTitle } from '../../utils/createTitle.jsx';
-// import './PayMethods.scss';
+
+import './Payments.scss';
 
 const Payments = () => {
 
