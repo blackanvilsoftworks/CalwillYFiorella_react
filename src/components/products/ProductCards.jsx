@@ -2,7 +2,7 @@ import ProductCarousel from "./ProductCarousel";
 import './ProductCards.scss';
 
 const ProductCards = ({ id, cards }) => {
-    return cards.map(({ title, description, images }, i) => {
+    return cards.map(({ product, description, price, images }, i) => {
         return (
             <div key={`${id}-${i}`} className="col-12 col-md-6 col-lg-4">
                 <div className="card product-card">                    
@@ -12,9 +12,10 @@ const ProductCards = ({ id, cards }) => {
                         i={i} 
                     />
                     <div className="card-body">
-                        <div className="card-title">{title}</div>
+                        <div className="card-title">{product}</div>
+                        <p className="card-text text-body-secondary">Precio: ${price.toLocaleString('es-ES')}.-</p>
                         <p className="card-text">{description}</p>
-                    </div>                    
+                    </div>
                 </div>
             </div>
         );

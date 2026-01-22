@@ -20,6 +20,7 @@ const Products = () => {
                         <h2 className="text-center">
                             { createTitle(data.title, data.icon) }
                         </h2>
+                        <div className='text-end'>*Consultar por precio mayorista.</div>
                         <ul id="productsTab" className="nav nav-pills justify-content-center mb-4" role="tablist">
                             <ProductsTabItem items={arrProducts} />
                         </ul>
@@ -36,7 +37,7 @@ const Products = () => {
                                     );
                                 })
                             }
-                        </div>
+                        </div>                        
                     </div>
                 </div>
             </div>
