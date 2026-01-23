@@ -13,10 +13,6 @@ const DataContextProvider = ({ children }) => {
     
     const imagesPath = '/assets/images/';
     
-    const nameRegex          = /^[A-Za-z\s]+$/;
-    const phoneNumberRegex   = /^[0-9]{10}$/;
-    const messageRegex       = /^[A-Za-z0-9\-\s]/g; // todo Que esto valide que no se metan símbolos extraños. Que se puedan poner , y .
-    
     const objContainers = {
         menu: {
             id          : 'navbar_container',
@@ -268,9 +264,6 @@ const DataContextProvider = ({ children }) => {
     const value = { 
         globalInfo, 
         imagesPath, 
-        nameRegex, 
-        phoneNumberRegex, 
-        messageRegex, 
         objContainers, 
         arrProducts, 
         arrFeatures, 
