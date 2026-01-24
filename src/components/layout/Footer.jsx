@@ -5,7 +5,7 @@ import './Footer.scss';
 
 const Footer = () => {
 
-    const msgBtnFailed = 'Se detectó un prbolema con este botón y actualmente no está funcionando. Le pedimos disculpas por las molestias ocasionadas.';
+    const msgBtnFailed = 'Se detectó un problema con este botón y actualmente no está funcionando. Estamos trabajando para resolverlo. Le pedimos disculpas por las molestias ocasionadas.';
 
     const { globalInfo, arrSocialMedia } = useContext(DataContext);
 
