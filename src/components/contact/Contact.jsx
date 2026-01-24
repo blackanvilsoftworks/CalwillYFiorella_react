@@ -4,6 +4,8 @@ import { createTitle } from '../../utils/createTitle.jsx';
 
 import './Contact.scss';
 
+// TODO: Hacer que salten popups en vez de alerts
+
 const Contact = () => {
 
     const { globalInfo, objContainers, arrInfoCardContent } = useContext(DataContext);
@@ -109,7 +111,10 @@ const Contact = () => {
                     <div className="form-floating col-12 mb-3">
                         <textarea className="form-control" id="message" name="Mensaje" style={{height: 100}} ref={inputMessage} onChange={setMessageState} maxLength={500} required></textarea>
                         <label htmlFor="message">Mensaje</label>
-                        <p><small>*Recibirá una respuesta vía WhatsApp lo más pronto posible. ({count ?? 0}/{max_length} caracteres.)</small></p>
+                        <div className="d-flex justify-content-between">
+                            <p><small>*Recibirá una respuesta vía WhatsApp lo más pronto posible.</small></p>
+                            <p><small>({count ?? 0}/{max_length} caracteres.)</small></p>
+                        </div>
                     </div>
                     <button className="btn main-btn-style" type="submit">Enviar</button>
                 </form>
