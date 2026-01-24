@@ -15,10 +15,12 @@ const Contact = () => {
     const inputMessage      = useRef(null);
     const contactForm       = useRef(null);
 
+    const max_length = 500;
+    const [count, setCount] = useState(0);
 
     const [message, setMessage] = useState({
         name            : '',
-        phone_number    : '',
+        phone_number    : '54901122223333',
         message         : ''
     });
 
@@ -28,18 +30,13 @@ const Contact = () => {
             ...prevState,
             [id]: value.toUpperCase()
         }));
-    };
-
-    useEffect(() => {
-        if (inputName.current)          inputName.current.value         = message.name;
-        if (inputPhoneNumber.current)   inputPhoneNumber.current.value  = message.phone_number;
-        if (inputMessage.current)       inputMessage.current.value      = message.message;
-    }, [message]);
+    };    
 
     const nameValidation = () => {
         const cleanedName = inputName.current.value.trim();
         if (!/^[A-Za-z\s]+$/.test(cleanedName)) {
             alert('El nombre solo puede contener letras y espacios.');
+            inputName.current.focus();
             return false;
         }
         return cleanedName.toUpperCase();
@@ -47,8 +44,9 @@ const Contact = () => {
 
     const phoneNumberValidation = () => {
         const cleanedPhoneNumber = inputPhoneNumber.current.value.trim().replace(/\D/g, '');
-        if (!/^[0-9]{14}$/.test(cleanedPhoneNumber)) {
-            alert('El número de teléfono no puede contener espacios ni guines, y debe tener 14 caracteres.');
+        if (!/^[0-9]{10,14}$/.test(cleanedPhoneNumber)) {
+            alert('El número de teléfono no puede contener espacios ni símbolos, y debe tener entre 10 y 14 caracteres.');
+            inputPhoneNumber.current.focus();
             return false;
         }    
         return cleanedPhoneNumber; 
@@ -56,8 +54,9 @@ const Contact = () => {
 
     const messageValidation = () => {
         const cleanedMessage = inputMessage.current.value.trim();
-        if (!/^[A-Za-z0-9\-\s]/g.test(cleanedMessage)) {
+        if (!/^[A-Za-z0-9\-\s.,]{1,500}$/.test(cleanedMessage)) {
             alert('El mensaje no puede contener caracteres especiales.');
+            inputMessage.current.focus();
             return false;
         }
         return cleanedMessage; 
@@ -76,6 +75,16 @@ const Contact = () => {
         contactForm.current.reset();
     };
     
+    useEffect(() => {
+        if (inputName.current)          inputName.current.value         = message.name;
+        if (inputPhoneNumber.current)   inputPhoneNumber.current.value  = message.phone_number;
+        if (inputMessage.current)       inputMessage.current.value      = message.message;
+    }, [message]);
+
+    useEffect(() => {
+        setCount(message.message.length);
+    }, [message.message]);
+
     return (
         <div id={data.id} className={data.className}>
             <h2 className="text-center mb-4">
@@ -88,19 +97,19 @@ const Contact = () => {
                     <input type="hidden" name="_next"       value={`${globalInfo.web}/contacto`} />
                     <input type="hidden" name="_captcha"    value="false" />
                     <div className="form-floating col-12 col-md-6 mb-3 px-1">
-                        <input type="text" className="form-control" id="name" name="Nombre" ref={inputName} onChange={setMessageState} required/>
+                        <input type="text" className="form-control" id="name" name="Nombre" ref={inputName} onChange={setMessageState} maxLength={30} required/>
                         <label htmlFor="name">Nombre</label>
                         <p><small>*Solo letras</small></p>
                     </div>
                     <div className="form-floating col-12 col-md-6 mb-3 px-1">
-                        <input type="phone-number" className="form-control" id="phone_number" name="Teléfono" ref={inputPhoneNumber} onChange={setMessageState} required/>
+                        <input type="phone-number" className="form-control" id="phone_number" name="Teléfono" ref={inputPhoneNumber} onChange={setMessageState} maxLength={14} required/>
                         <label htmlFor="phone_number">Número de Teléfono</label>
                         <p><small>*Sin espacios ni guiones 1122223333</small></p>
                     </div>
                     <div className="form-floating col-12 mb-3">
-                        <textarea className="form-control" id="message" name="Mensaje" style={{height: 100}} ref={inputMessage} onChange={setMessageState} required></textarea>
+                        <textarea className="form-control" id="message" name="Mensaje" style={{height: 100}} ref={inputMessage} onChange={setMessageState} maxLength={500} required></textarea>
                         <label htmlFor="message">Mensaje</label>
-                        <p><small>*Recibirá una respuesta vía WhatsApp lo más pronto posible.</small></p>
+                        <p><small>*Recibirá una respuesta vía WhatsApp lo más pronto posible. ({count ?? 0}/{max_length} caracteres.)</small></p>
                     </div>
                     <button className="btn main-btn-style" type="submit">Enviar</button>
                 </form>
