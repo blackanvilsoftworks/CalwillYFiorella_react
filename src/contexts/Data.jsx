@@ -5,7 +5,7 @@ const DataContext = createContext();
 const DataContextProvider = ({ children }) => {
 
     const globalInfo = {
-        name        : 'calwill & fiorella',
+        name        : 'Calwill & Fiorella',
         phoneNumber : '+54 9 11-5959-0586',
         email       : 'calwillyfiorella@gmail.com',
         web         : 'https://calwillyfiorella.com'
@@ -219,7 +219,7 @@ const DataContextProvider = ({ children }) => {
             name    : 'whatsapp',
             icon    : 'bi bi-whatsapp',
             color   : 'success',
-            url     : `https://wa.me/${globalInfo.phoneNumber.replace(/\D/g, '')}` // Quita todo lo que no sea número y que busque el array por tipo y no porindex
+            url     : `https://wa.me/${globalInfo.phoneNumber.replace(/\D/g, '')}` // Quita todo lo que no sea número y que busque el array por tipo y no por index
         }
     ];
     
