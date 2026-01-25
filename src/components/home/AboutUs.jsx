@@ -4,7 +4,7 @@ import { createTitle } from '../../utils/createTitle.jsx';
 import { DataContext } from '../../contexts/Data.jsx';
 
 const AboutUs = () => {
-    const { imagesPath } = useContext(DataContext);
+    const { imagesPath, globalInfo } = useContext(DataContext);
     
     return (
         <div id="about_us_container" className="about_us_container container mt-3 mt-sm-5 pt-5 pb-3 text-center rounded-3">
