@@ -8,9 +8,7 @@ import './Contact.scss';
 
 const Contact = () => {
 
-    const { globalInfo, objContainers, arrInfoCardContent } = useContext(DataContext);
-
-    const data = objContainers.contact;
+    const { globalInfo, arrInfoCardContent } = useContext(DataContext);
 
     const inputName         = useRef(null);
     const inputPhoneNumber  = useRef(null);
@@ -88,9 +86,9 @@ const Contact = () => {
     }, [message.message]);
 
     return (
-        <div id={data.id} className={data.className}>
+        <div id="contact_form_container" className="contact_form_container container pt-5 rounded-3">
             <h2 className="text-center mb-4">
-                { createTitle(data.title, data.icon) }
+                { createTitle('Contáctanos', 'bi bi-mailbox-flag') }
             </h2>
             <div id="form-row" className="row">
                 <form id="contact_form" action={`https://formsubmit.co/${globalInfo.email}`} method="POST" ref={contactForm} onSubmit={formHandler}>
@@ -101,18 +99,18 @@ const Contact = () => {
                     <div className="form-floating col-12 col-md-6 mb-3 px-1">
                         <input type="text" className="form-control" id="name" name="Nombre" ref={inputName} onChange={setMessageState} maxLength={30} required/>
                         <label htmlFor="name">Nombre</label>
-                        <p><small>*Solo letras</small></p>
+                        <p><small className='text-secondary'>*Solo letras</small></p>
                     </div>
                     <div className="form-floating col-12 col-md-6 mb-3 px-1">
                         <input type="phone-number" className="form-control" id="phone_number" name="Teléfono" ref={inputPhoneNumber} onChange={setMessageState} maxLength={14} required/>
                         <label htmlFor="phone_number">Número de Teléfono</label>
-                        <p><small>*Sin espacios ni guiones 1122223333</small></p>
+                        <p><small className='text-secondary'>*Sin espacios ni guiones 1122223333</small></p>
                     </div>
                     <div className="form-floating col-12 mb-3">
                         <textarea className="form-control" id="message" name="Mensaje" style={{height: 100}} ref={inputMessage} onChange={setMessageState} maxLength={500} required></textarea>
                         <label htmlFor="message">Mensaje</label>
                         <div className="d-flex justify-content-between">
-                            <p><small>*Recibirá una respuesta vía WhatsApp lo más pronto posible.</small></p>
+                            <p><small className='text-secondary'>*Recibirá una respuesta vía WhatsApp lo más pronto posible.</small></p>
                             <p><small>({count ?? 0}/{max_length} caracteres.)</small></p>
                         </div>
                     </div>

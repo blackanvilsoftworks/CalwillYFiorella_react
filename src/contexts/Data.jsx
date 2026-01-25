@@ -12,73 +12,7 @@ const DataContextProvider = ({ children }) => {
     };
     
     const imagesPath = '/assets/images/';
-    
-    const objContainers = {
-        menu: {
-            id          : 'navbar_container',
-            className   : 'navbar navbar-expand-md navbar-light m-0 p-0 fixed-top shadow',
-            navbar      : '',
-            title       : '',
-            icon        : '',
-        },
-        hero: {
-            id          : 'hero_container',
-            className   : 'hero px-3',
-            navbar      : 'Inicio',
-            title       : '',
-            icon        : '',
-        },
-        about: {
-            id          : 'about_us_container',
-            className   : 'about_us_container container mt-3 mt-sm-5 pt-5 pb-3 text-center rounded-3',
-            navbar      : 'Sobre Nosotros',
-            title       : 'Sobre Nosotros',
-            icon        : 'bi bi-balloon-heart',
-        },
-        features: {
-            id          : 'features_container',
-            className   : 'container mt-2 mt-sm-4 py-5',
-            navbar      : 'Características',
-            title       : '¿Por Qué Elegirnos?',
-            icon        : 'bi bi-person-raised-hand',
-        },
-        products: {
-            id          : 'products_container',
-            className   : 'products_container container py-3 py-sm-4 py-md-5 rounded-3',
-            navbar      : 'Productos',
-            title       : 'Nuestros Productos',
-            icon        : 'bi bi-cart',
-        },
-        shipping: {
-            id          : 'shipping_container',
-            className   : 'container pt-5 text-center',
-            navbar      : 'Envíos',
-            title       : 'Opciones de Envío',
-            icon        : 'bi bi-rocket-takeoff',
-        },
-        payment: {
-            id          : 'pay_methods_container',
-            className   : 'pay_methods_container container text-center',
-            navbar      : 'Pagos',
-            title       : 'Métodos de Pago',
-            icon        : 'bi bi-cash-coin',
-        },
-        contact: {
-            id          : 'contact_form_container',
-            className   : 'contact_form_container container pt-5 rounded-3',
-            navbar      : 'Contacto',
-            title       : 'Contáctanos',
-            icon        : 'bi bi-mailbox-flag',
-        },
-        footer: {
-            id          : 'footer_container',
-            className   : 'text-center pt-4 mt-3',
-            navbar      : '',
-            title       : '',
-            icon        : '',
-        }
-    };
-    
+
     const arrProducts = [
         {
             id      : 'children',
@@ -264,7 +198,6 @@ const DataContextProvider = ({ children }) => {
     const value = { 
         globalInfo, 
         imagesPath, 
-        objContainers, 
         arrProducts, 
         arrFeatures, 
         arrInfoCardContent, 

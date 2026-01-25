@@ -8,19 +8,17 @@ import './Products.scss';
 
 const Products = () => {
 
-    const { objContainers, arrProducts } = useContext(DataContext);
+    const { arrProducts } = useContext(DataContext);
             
-    const data = objContainers.products;
-
     return (
-        <div id={data.id} className={data.className}>
+        <div id="products_container" className="products_container container py-3 py-sm-4 py-md-5 rounded-3">
             <div className="row justify-content-center">
                 <div className="col-10 col-lg-12 px-lg-5">
                     <div className="row">
                         <h2 className="text-center">
-                            { createTitle(data.title, data.icon) }
+                            { createTitle('Nuestros Productos', 'bi bi-cart') }
                         </h2>
-                        <div className='text-end'>*Consultar por precio mayorista.</div>
+                        <div className='text-end text-secondary'>*Consultar por precio mayorista.</div>
                         <ul id="productsTab" className="nav nav-pills justify-content-center mb-4" role="tablist">
                             { arrProducts ? <ProductsTabItem items={arrProducts} /> : null }
                         </ul>
