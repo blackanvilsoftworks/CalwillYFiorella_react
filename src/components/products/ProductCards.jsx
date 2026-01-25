@@ -16,7 +16,7 @@ const ProductCards = ({ id, cards }) => {
                         <p className="card-text text-body-secondary">Precio: ${price.toLocaleString('es-ES')}.-</p>
                         <p className="card-text">{description}</p>
                     </div>
-                </div>
+                </div>                
             </div>
         );
     });
