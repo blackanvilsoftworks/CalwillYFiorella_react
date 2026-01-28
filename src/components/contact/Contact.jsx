@@ -69,7 +69,7 @@ const Contact = () => {
 
         if (!nameValidation(inputName) || !cleanedPhoneNumber || !messageValidation(inputMessage)) return;
     
-        inputPhoneNumber.current.value = `https://wa.me/549${cleanedPhoneNumber}`;
+        inputPhoneNumber.current.value = `https://wa.me/${cleanedPhoneNumber}`;
         
         contactForm.current.submit();
         contactForm.current.reset();
