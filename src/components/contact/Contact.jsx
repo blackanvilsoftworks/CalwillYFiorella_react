@@ -107,7 +107,7 @@ const Contact = () => {
                         <p><small className='text-secondary'>*Sin espacios ni guiones 1122223333</small></p>
                     </div>
                     <div className="form-floating col-12 mb-3">
-                        <textarea className="form-control" id="message" name="Mensaje" style={{height: 100}} ref={inputMessage} onChange={setMessageState} maxLength={500} required></textarea>
+                        <textarea className="form-control" id="message" name="Mensaje" style={{height: 100}} ref={inputMessage} onChange={setMessageState} maxLength={500} required />
                         <label htmlFor="message">Mensaje</label>
                         <div className="d-flex justify-content-between">
                             <p><small className='text-secondary'>*Recibirá una respuesta vía WhatsApp lo más pronto posible.</small></p>
