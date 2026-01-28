@@ -4,117 +4,195 @@ import { createTitle } from '../../utils/createTitle.jsx';
 
 import './Contact.scss';
 
-// TODO: Hacer que salten popups en vez de alerts
-
 const Contact = () => {
-
     const { globalInfo, arrInfoCardContent } = useContext(DataContext);
-
-    const inputName         = useRef(null);
-    const inputPhoneNumber  = useRef(null);
-    const inputMessage      = useRef(null);
-    const contactForm       = useRef(null);
-
     const max_length = 500;
+
+    const initialState = {
+        name        : '',
+        phone_number: '1122223333',
+        message     : ''
+    }
+
+    const contactForm = useRef(null);
     const [count, setCount] = useState(0);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
+    const [formContent, setFormContent] = useState(initialState);
 
-    const [message, setMessage] = useState({
-        name            : '',
-        phone_number    : '54901122223333',
-        message         : ''
-    });
-
-    const setMessageState = (e) => {
-        const {id, value} = e.target;
-        setMessage((prevState) => ({                          
+    const setFormContentState = (e) => {
+        const { id, value } = e.target;
+        setFormContent((prevState) => ({
             ...prevState,
             [id]: value.toUpperCase()
         }));
-    };    
+    };
 
-    const nameValidation = () => {
-        const cleanedName = inputName.current.value.trim();
-        if (!/^[A-Za-z\s]+$/.test(cleanedName)) {
+    // Validaciones
+    const nameValidation = (name) => {
+        const cleanedName = name.trim();
+        if (!/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/.test(cleanedName)) {
             alert('El nombre solo puede contener letras y espacios.');
-            inputName.current.focus();
             return false;
         }
         return cleanedName.toUpperCase();
     };
 
-    const phoneNumberValidation = () => {
-        const cleanedPhoneNumber = inputPhoneNumber.current.value.trim().replace(/\D/g, '');
-        if (!/^[0-9]{10,14}$/.test(cleanedPhoneNumber)) {
-            alert('El número de teléfono no puede contener espacios ni símbolos, y debe tener entre 10 y 14 caracteres.');
-            inputPhoneNumber.current.focus();
-            return false;
-        }    
-        return cleanedPhoneNumber; 
-    };
-
-    const messageValidation = () => {
-        const cleanedMessage = inputMessage.current.value.trim();
-        if (!/^[A-Za-z0-9\-\s.,]{1,500}$/.test(cleanedMessage)) {
-            alert('El mensaje no puede contener caracteres especiales.');
-            inputMessage.current.focus();
+    const phoneNumberValidation = (phone) => {
+        const cleanedPhoneNumber = phone.trim().replace(/\D/g, '');
+        if (!/^[0-9]{10}$/.test(cleanedPhoneNumber)) {
+            alert('El número de teléfono debe tener exactamente 10 dígitos.');
             return false;
         }
-        return cleanedMessage; 
+        return cleanedPhoneNumber;
     };
 
-    const formHandler = (e) => {    
+    const messageValidation = (message) => {
+        const cleanedMessage = message.trim();
+        if (!/^[A-Za-z0-9ÁáÉéÍíÓóÚúÑñÜü\s.,!?\-]{1,500}$/.test(cleanedMessage)) {
+            alert('El mensaje contiene caracteres no permitidos.');
+            return false;
+        }
+        return cleanedMessage;
+    };
+
+    const formHandler = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitStatus(null);
         
-        const cleanedPhoneNumber = phoneNumberValidation(inputPhoneNumber);
-
-        if (!nameValidation(inputName) || !cleanedPhoneNumber || !messageValidation(inputMessage)) return;
-    
-        inputPhoneNumber.current.value = `https://wa.me/${cleanedPhoneNumber}`;
+        // Validaciones...
+        const validName     = nameValidation(formContent.name);
+        const validPhone    = phoneNumberValidation(formContent.phone_number);
+        const validMessage  = messageValidation(formContent.message);
         
-        contactForm.current.submit();
-        contactForm.current.reset();
+        if (!validName || !validPhone || !validMessage) {
+            setIsSubmitting(false);
+            return;
+        }
+        
+        try {
+            const response = await fetch(`https://formsubmit.co/ajax/${globalInfo.email}`, {
+                method  : 'POST',
+                headers : {
+                    'Content-Type'  : 'application/json',
+                    'Accept'        : 'application/json'
+                },
+                body    : JSON.stringify({
+                    _subject: 'Nuevo mensaje desde la web',
+                    _captcha: 'false',
+                    Nombre  : validName,
+                    Numero  : validPhone,
+                    WhatsApp: `https://wa.me/549${validPhone}`,
+                    Mensaje : validMessage
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                setSubmitStatus('success');
+                setFormContent(initialState);
+                // Auto-ocultar mensaje después de 5 segundos
+                setTimeout(() => setSubmitStatus(null), 5000);
+            } else {
+                setSubmitStatus('error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setSubmitStatus('error');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
-    
-    useEffect(() => {
-        if (inputName.current)          inputName.current.value         = message.name;
-        if (inputPhoneNumber.current)   inputPhoneNumber.current.value  = message.phone_number;
-        if (inputMessage.current)       inputMessage.current.value      = message.message;
-    }, [message]);
 
     useEffect(() => {
-        setCount(message.message.length);
-    }, [message.message]);
+        setCount(formContent.message.length);
+    }, [formContent.message]);
 
     return (
         <div id="contact_form_container" className="contact_form_container container pt-5 rounded-3">
             <h2 className="text-center mb-4">
-                { createTitle('Contáctanos', 'bi bi-mailbox-flag') }
+                {createTitle('Contáctanos', 'bi bi-mailbox-flag')}
             </h2>
+            
+            {/* Mensajes de estado */}
+            {submitStatus === 'success' && (
+                <div className="alert alert-success alert-dismissible fade show" role="alert">
+                    ¡Mensaje enviado con éxito! Te contactaremos pronto.
+                    <button type="button" className="btn-close" onClick={() => setSubmitStatus(null)}></button>
+                </div>
+            )}
+            
+            {submitStatus === 'error' && (
+                <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                    Error al enviar el mensaje. Por favor, intenta nuevamente.
+                    <button type="button" className="btn-close" onClick={() => setSubmitStatus(null)}></button>
+                </div>
+            )}
+
             <div id="form-row" className="row">
-                <form id="contact_form" action={`https://formsubmit.co/${globalInfo.email}`} method="POST" ref={contactForm} onSubmit={formHandler}>
-                    <input type="hidden" name="_subject"    value="Nuevo mensaje desde la web" />
-                    <input type="hidden" name="_template"   value="table" />
-                    <input type="hidden" name="_next"       value={`${globalInfo.web}/contacto`} />
-                    <input type="hidden" name="_captcha"    value="false" />
+                <form id="contact_form" ref={contactForm} onSubmit={formHandler} noValidate>
+                    <input type="text" name="_honey" style={{ display: 'none' }} />
+    
                     <div className="form-floating col-12 col-md-6 mb-3 px-1">
-                        <input type="text" className="form-control" id="name" name="Nombre" ref={inputName} onChange={setMessageState} maxLength={30} required/>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="name" 
+                            value={formContent.name} 
+                            onChange={setFormContentState} 
+                            maxLength={30} 
+                            required 
+                        />
                         <label htmlFor="name">Nombre</label>
                         <p><small className='text-secondary'>*Solo letras</small></p>
                     </div>
+    
                     <div className="form-floating col-12 col-md-6 mb-3 px-1">
-                        <input type="phone-number" className="form-control" id="phone_number" name="Teléfono" ref={inputPhoneNumber} onChange={setMessageState} maxLength={14} required/>
+                        <input 
+                            type="tel"  
+                            className="form-control" 
+                            id="phone_number" 
+                            value={formContent.phone_number} 
+                            onChange={setFormContentState} 
+                            maxLength={10} 
+                            pattern="[0-9]{10}"
+                            required 
+                        />
                         <label htmlFor="phone_number">Número de Teléfono</label>
-                        <p><small className='text-secondary'>*Sin espacios ni guiones 1122223333</small></p>
+                        <p><small className='text-secondary'>*Sin el cero y sin espacios ni guiones. Ej: 1122223333</small></p>
                     </div>
+    
                     <div className="form-floating col-12 mb-3">
-                        <textarea className="form-control" id="message" name="Mensaje" style={{height: 100}} ref={inputMessage} onChange={setMessageState} maxLength={500} required />
+                        <textarea 
+                            className="form-control" 
+                            id="message" 
+                            style={{ height: 100 }} 
+                            value={formContent.message} 
+                            onChange={setFormContentState} 
+                            maxLength={500} 
+                            required 
+                        />
                         <label htmlFor="message">Mensaje</label>
                         <div className="d-flex justify-content-between">
                             <p><small className='text-secondary'>*Recibirá una respuesta vía WhatsApp lo más pronto posible.</small></p>
-                            <p><small>({count ?? 0}/{max_length} caracteres.)</small></p>
+                            <p><small>({count}/{max_length} caracteres)</small></p>
                         </div>
                     </div>
-                    <button className="btn main-btn-style" type="submit">Enviar</button>
+    
+                    <button 
+                        className="btn main-btn-style" 
+                        type="submit"
+                        disabled={isSubmitting}
+                    >
+                        {isSubmitting ? (
+                            <>
+                                <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                                Enviando...
+                            </>
+                        ) : 'Enviar'}
+                    </button>
                 </form>
             </div>
             <div className="row mt-3">
@@ -124,7 +202,7 @@ const Contact = () => {
                             <h5 className="card-title">Información de Contacto</h5>
                             <div className="container">
                                 {
-                                    arrInfoCardContent.map( ({type, value, icon}, index) => (
+                                    arrInfoCardContent.map(({type, value, icon}) => (
                                         <div key={type} className="row mb-2">
                                             <div className="col-1"><i className={icon}></i></div>
                                             <div className="col-11">{type}: {value}</div>
@@ -136,6 +214,7 @@ const Contact = () => {
                     </div>
                 </div>
             </div>
-        </div>);
+        </div>
+    );
 };
 export default Contact;
