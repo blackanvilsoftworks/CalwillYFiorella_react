@@ -6,14 +6,12 @@ import './Payments.scss';
 
 const Payments = () => {
 
-    const { objContainers, arrPayMethods } = useContext(DataContext);
+    const { arrPayMethods } = useContext(DataContext);
             
-    const data = objContainers.payment;
-
     return (
-        <div id={data.id} className={data.className}>
+        <div id='pay_methods_container' className='pay_methods_container container text-center'>
             <h2 className="mb-4">
-                { createTitle(data.title, data.icon) }
+                { createTitle('Métodos de Pago', 'bi bi-cash-coin') }
             </h2>
             <p>Aceptamos los siguientes métodos de pago:</p>
             <ul className="list-unstyled">

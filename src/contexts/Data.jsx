@@ -5,107 +5,41 @@ const DataContext = createContext();
 const DataContextProvider = ({ children }) => {
 
     const globalInfo = {
-        name        : 'calwill & fiorella',
+        name        : 'Calwill & Fiorella',
         phoneNumber : '+54 9 11-5959-0586',
         email       : 'calwillyfiorella@gmail.com',
         web         : 'https://calwillyfiorella.com'
     };
     
     const imagesPath = '/assets/images/';
-    
-    const nameRegex          = /^[A-Za-z\s]+$/;
-    const phoneNumberRegex   = /^[0-9]{10}$/;
-    const messageRegex       = /^[A-Za-z0-9\-\s]/g; // todo Que esto valide que no se metan símbolos extraños. Que se puedan poner , y .
-    
-    const objContainers = {
-        menu: {
-            id          : 'navbar_container',
-            className   : 'navbar navbar-expand-md navbar-light m-0 p-0 fixed-top shadow',
-            navbar      : '',
-            title       : '',
-            icon        : '',
-        },
-        hero: {
-            id          : 'hero_container',
-            className   : 'hero px-3',
-            navbar      : 'Inicio',
-            title       : '',
-            icon        : '',
-        },
-        about: {
-            id          : 'about_us_container',
-            className   : 'about_us_container container mt-3 mt-sm-5 pt-5 pb-3 text-center rounded-3',
-            navbar      : 'Sobre Nosotros',
-            title       : 'Sobre Nosotros',
-            icon        : 'bi bi-balloon-heart',
-        },
-        features: {
-            id          : 'features_container',
-            className   : 'container mt-2 mt-sm-4 py-5',
-            navbar      : 'Características',
-            title       : '¿Por Qué Elegirnos?',
-            icon        : 'bi bi-person-raised-hand',
-        },
-        products: {
-            id          : 'products_container',
-            className   : 'products_container container py-3 py-sm-4 py-md-5 rounded-3',
-            navbar      : 'Productos',
-            title       : 'Nuestros Productos',
-            icon        : 'bi bi-cart',
-        },
-        shipping: {
-            id          : 'shipping_container',
-            className   : 'container pt-5 text-center',
-            navbar      : 'Envíos',
-            title       : 'Opciones de Envío',
-            icon        : 'bi bi-rocket-takeoff',
-        },
-        payment: {
-            id          : 'pay_methods_container',
-            className   : 'pay_methods_container container text-center',
-            navbar      : 'Pagos',
-            title       : 'Métodos de Pago',
-            icon        : 'bi bi-cash-coin',
-        },
-        contact: {
-            id          : 'contact_form_container',
-            className   : 'contact_form_container container pt-5 rounded-3',
-            navbar      : 'Contacto',
-            title       : 'Contáctanos',
-            icon        : 'bi bi-mailbox-flag',
-        },
-        footer: {
-            id          : 'footer_container',
-            className   : 'text-center pt-4 mt-3',
-            navbar      : '',
-            title       : '',
-            icon        : '',
-        }
-    };
-    
+
     const arrProducts = [
         {
             id      : 'children',
             title   : 'Calzado Infantil',
             cards   : [
                 {
-                    title           : 'Zapatos para Niño',
+                    product         : 'Franciscana para Niña Art. 105',
                     description     : 'Zapatos cómodos y resistentes para los más pequeños, disponibles en varios colores.',
+                    price           : 15000,
                     images          : [1, 2, 3]
                 },
                 {
-                    title           : 'Zapatos para Niña',
+                    product         : 'Zapatos para Niña',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+                    price           : 15000,
                     images          : [1, 2, 3]
                 },
                 {
-                    title           : 'Zapatos para Bebé',
+                    product         : 'Zapatos para Bebé',
                     description     : 'Suaves y flexibles zapatos para bebés, diseñados para no molestar sus pies en desarrollo.',
+                    price           : 15000,
                     images          : [1, 2, 3]
                 },
                 {
-                    title           : 'Zapatos para Niño',
+                    product         : 'Zapatos para Niño',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+                    price           : 15000,
                     images          : [1, 2, 3]
                 }
             ]
@@ -115,23 +49,27 @@ const DataContextProvider = ({ children }) => {
             title   : 'Calzado para Mujeres',
             cards   : [
                 {
-                    title           : 'Zapatos para Mujer',
+                    product         : 'Zapatos para Mujer',
                     description     : 'Zapatos cómodos y resistentes para los más pequeños, disponibles en varios colores.',
+                    price           : 15000,
                     images          : [1, 2, 3]
                 },
                 {
-                    title           : 'Zapatos para Mujer',
+                    product         : 'Zapatos para Mujer',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+                    price           : 15000,
                     images          : [1, 2, 3]
                 },
                 {
-                    title           : 'Zapatos para Mujer',
+                    product         : 'Zapatos para Mujer',
                     description     : 'Suaves y flexibles zapatos para bebés, diseñados para no molestar sus pies en desarrollo.',
+                    price           : 15000,
                     images          : [1, 2, 3]
                 },
                 {
-                    title           : 'Zapatos para Mujer',
+                    product         : 'Zapatos para Mujer',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+                    price           : 15000,
                     images          : [1, 2, 3]
                 }
             ]
@@ -141,23 +79,27 @@ const DataContextProvider = ({ children }) => {
             title   : 'Calzado para Hombres',
             cards   : [
                 {
-                    title           : 'Zapatos para Hombres',
+                    product         : 'Zapatos para Hombres',
                     description     : 'Zapatos cómodos y resistentes para los más pequeños, disponibles en varios colores.',
+                    price           : 15000,
                     images          : [1, 2, 3]
                 },
                 {
-                    title           : 'Zapatos para Hombres',
+                    product         : 'Zapatos para Hombres',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+                    price           : 15000,
                     images          : [1, 2, 3]
                 },
                 {
-                    title           : 'Zapatos para Hombres',
+                    product         : 'Zapatos para Hombres',
                     description     : 'Suaves y flexibles zapatos para bebés, diseñados para no molestar sus pies en desarrollo.',
+                    price           : 15000,
                     images          : [1, 2, 3]
                 },
                 {
-                    title           : 'Zapatos para Hombres',
+                    product         : 'Zapatos para Hombres',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+                    price           : 15000,
                     images          : [1, 2, 3]
                 }
             ]
@@ -211,7 +153,7 @@ const DataContextProvider = ({ children }) => {
             name    : 'whatsapp',
             icon    : 'bi bi-whatsapp',
             color   : 'success',
-            url     : `https://wa.me/${globalInfo.phoneNumber.replace(/\D/g, '')}` // Quita todo lo que no sea número y que busque el array por tipo y no porindex
+            url     : `https://wa.me/${globalInfo.phoneNumber.replace(/\D/g, '')}` // Quita todo lo que no sea número y que busque el array por tipo y no por index
         }
     ];
     
@@ -256,10 +198,6 @@ const DataContextProvider = ({ children }) => {
     const value = { 
         globalInfo, 
         imagesPath, 
-        nameRegex, 
-        phoneNumberRegex, 
-        messageRegex, 
-        objContainers, 
         arrProducts, 
         arrFeatures, 
         arrInfoCardContent, 

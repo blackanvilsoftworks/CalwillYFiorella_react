@@ -8,23 +8,23 @@ import './Products.scss';
 
 const Products = () => {
 
-    const { objContainers, arrProducts } = useContext(DataContext);
+    const { arrProducts } = useContext(DataContext);
             
-    const data = objContainers.products;
-
     return (
-        <div id={data.id} className={data.className}>
+        <div id="products_container" className="products_container container py-3 py-sm-4 py-md-5 rounded-3">
             <div className="row justify-content-center">
                 <div className="col-10 col-lg-12 px-lg-5">
                     <div className="row">
                         <h2 className="text-center">
-                            { createTitle(data.title, data.icon) }
+                            { createTitle('Nuestros Productos', 'bi bi-cart') }
                         </h2>
+                        <div className='text-end text-secondary'>*Consultar por precio mayorista.</div>
                         <ul id="productsTab" className="nav nav-pills justify-content-center mb-4" role="tablist">
-                            <ProductsTabItem items={arrProducts} />
+                            { arrProducts ? <ProductsTabItem items={arrProducts} /> : null }
                         </ul>
                         <div id="productsTabContent" className="tab-content">
                             {
+                                // arrProducts ? 
                                 arrProducts.map(({ id, cards, images }, i) => {
                                     const isActive = i === 0 ? true : false;
                                     return (
@@ -35,8 +35,35 @@ const Products = () => {
                                         </div>
                                     );
                                 })
+                                // : (
+                                //     <div id="placeholder" className="tab-pane fade show active" role="tabpanel" aria-labelledby="placeholder-tab">
+                                //         <div className="row">
+                                //             <div className="col-12 col-md-6 col-lg-4">    
+                                //                 <div className="card product-card" aria-hidden="true">
+                                //                     <div className="carousel slide">
+                                //                         <div className="carousel-inner">
+                                //                             <div className="carousel-item active">
+                                //                                 <img src="/assets/images/placeholder.png" className="d-block w-100" alt="Cargando..." />
+                                //                             </div>
+                                //                         </div> 
+                                //                     </div> 
+                                //                     <div className="card-body">
+                                //                         <div className="card-title placeholder-glow"><span className="placeholder col-6"></span></div>
+                                //                         <p className="card-text placeholder-glow">
+                                //                             <span className="placeholder col-12"></span>
+                                //                             <span className="placeholder col-12"></span>
+                                //                             <span className="placeholder col-12"></span>
+                                //                             <span className="placeholder col-12"></span>
+                                //                         </p>
+                                //                     </div>
+                                //                 </div>
+                                //             </div>
+                                //         </div>
+                                //     </div>
+                                // )
                             }
-                        </div>
+
+                        </div>                        
                     </div>
                 </div>
             </div>
