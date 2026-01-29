@@ -1,7 +1,7 @@
 @use '../../styles/global/variables' as *;
 
 .contact_form_container {
-    background-color: $secondary-bg-color;
+    background: $secondary-bg-color;
     margin-top      : 75px;
     padding         : 25px;
     width           : 100%;
