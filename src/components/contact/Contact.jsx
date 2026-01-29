@@ -36,16 +36,16 @@ const Contact = () => {
 
     // Validaciones
     const validationResult = {
-        success: (message = '', value = '') => ({ 
+        success: (value) => ({ 
             isValid: true, 
-            message, 
+            message: '', 
             value 
         }),
         
-        error: (message, value = '') => ({ 
+        error: (message) => ({ 
             isValid: false, 
             message, 
-            value 
+            value: ''
         })
     };
 
@@ -95,9 +95,9 @@ const Contact = () => {
         const messageResult = messageValidation(formContent.message);
 
         setFieldErrors({
-            name        : nameResult.isValid    ? '' : nameResult.message,
-            phone_number: phoneResult.isValid   ? '' : phoneResult.message,
-            message     : messageResult.isValid ? '' : messageResult.message
+            name        : nameResult.message,
+            phone_number: phoneResult.message,
+            message     : messageResult.message
         });
 
         return nameResult.isValid && phoneResult.isValid && messageResult.isValid;
