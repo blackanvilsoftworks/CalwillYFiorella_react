@@ -6,54 +6,101 @@ import './Contact.scss';
 
 const Contact = () => {
     const { globalInfo, arrInfoCardContent } = useContext(DataContext);
+
     const max_length = 500;
 
     const initialState = {
         name        : '',
-        phone_number: '1122223333',
+        phone_number: '',
         message     : ''
     }
 
     const contactForm = useRef(null);
-    const [count, setCount] = useState(0);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
-    const [formContent, setFormContent] = useState(initialState);
+
+    const [ count        , setCount          ] = useState(0);
+    const [ isSubmitting , setIsSubmitting   ] = useState(false);
+    const [ submitStatus , setSubmitStatus   ] = useState(null); // 'success', 'error', null
+    const [ formContent  , setFormContent    ] = useState(initialState);
+    const [ fieldErrors  , setFieldErrors    ] = useState(initialState);
 
     const setFormContentState = (e) => {
         const { id, value } = e.target;
+        const upperValue    = value.toUpperCase();
         setFormContent((prevState) => ({
             ...prevState,
-            [id]: value.toUpperCase()
+            [id]: upperValue
         }));
+        // Validar campo al escribir
+        validateField(id, upperValue);
     };
 
     // Validaciones
+    const validationResult = {
+        success: (message = '', value = '') => ({ 
+            isValid: true, 
+            message, 
+            value 
+        }),
+        
+        error: (message, value = '') => ({ 
+            isValid: false, 
+            message, 
+            value 
+        })
+    };
+
     const nameValidation = (name) => {
         const cleanedName = name.trim();
-        if (!/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/.test(cleanedName)) {
-            alert('El nombre solo puede contener letras y espacios.');
-            return false;
-        }
-        return cleanedName.toUpperCase();
+        if (!cleanedName)                                       return validationResult.error('El nombre es requerido.');
+        if (!/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/.test(cleanedName))   return validationResult.error('El nombre solo puede contener letras y espacios.');
+        return validationResult.success(cleanedName.toUpperCase());
     };
 
     const phoneNumberValidation = (phone) => {
         const cleanedPhoneNumber = phone.trim().replace(/\D/g, '');
-        if (!/^[0-9]{10}$/.test(cleanedPhoneNumber)) {
-            alert('El número de teléfono debe tener exactamente 10 dígitos.');
-            return false;
-        }
-        return cleanedPhoneNumber;
+        if (!cleanedPhoneNumber)                        return validationResult.error('El número de teléfono es requerido.');
+        if (!/^[0-9]{10}$/.test(cleanedPhoneNumber))    return validationResult.error('El número debe tener exactamente 10 dígitos.');
+        return validationResult.success(cleanedPhoneNumber);
     };
 
     const messageValidation = (message) => {
         const cleanedMessage = message.trim();
-        if (!/^[A-Za-z0-9ÁáÉéÍíÓóÚúÑñÜü\s.,!?\-]{1,500}$/.test(cleanedMessage)) {
-            alert('El mensaje contiene caracteres no permitidos.');
-            return false;
+        if (!cleanedMessage)                                                    return validationResult.error('El mensaje es requerido.');
+        if (!/^[A-Za-z0-9ÁáÉéÍíÓóÚúÑñÜü\s.,!?\-]{1,500}$/.test(cleanedMessage)) return validationResult.error('El mensaje contiene caracteres no permitidos.');
+        return validationResult.success(cleanedMessage);
+    };
+
+    const validators = {
+        name        : nameValidation,
+        phone_number: phoneNumberValidation,
+        message     : messageValidation
+    };
+
+    // Validar un campo específico
+    const validateField = (fieldId, value) => {        
+        const result = validators[fieldId]?.(value);
+
+        if (result) {
+            setFieldErrors((prevErrors) => ({
+                ...prevErrors,
+                [fieldId]: result.isValid ? '' : result.message
+            }));
         }
-        return cleanedMessage;
+    };
+
+    // Validar todos los campos
+    const validateAllFields = () => {
+        const nameResult    = nameValidation(formContent.name);
+        const phoneResult   = phoneNumberValidation(formContent.phone_number);
+        const messageResult = messageValidation(formContent.message);
+
+        setFieldErrors({
+            name        : nameResult.isValid    ? '' : nameResult.message,
+            phone_number: phoneResult.isValid   ? '' : phoneResult.message,
+            message     : messageResult.isValid ? '' : messageResult.message
+        });
+
+        return nameResult.isValid && phoneResult.isValid && messageResult.isValid;
     };
 
     const formHandler = async (e) => {
@@ -61,15 +108,15 @@ const Contact = () => {
         setIsSubmitting(true);
         setSubmitStatus(null);
         
-        // Validaciones...
-        const validName     = nameValidation(formContent.name);
-        const validPhone    = phoneNumberValidation(formContent.phone_number);
-        const validMessage  = messageValidation(formContent.message);
+        // Validar todos los campos
+        const isFormValid = validateAllFields();
         
-        if (!validName || !validPhone || !validMessage) {
-            setIsSubmitting(false);
-            return;
-        }
+        if (!isFormValid) return setIsSubmitting(false);
+
+        // Obtener valores validados
+        const validName     = nameValidation(formContent.name).value;
+        const validPhone    = phoneNumberValidation(formContent.phone_number).value;
+        const validMessage  = messageValidation(formContent.message).value;
         
         try {
             const response = await fetch(`https://formsubmit.co/ajax/${globalInfo.email}`, {
@@ -93,6 +140,7 @@ const Contact = () => {
             if (data.success) {
                 setSubmitStatus('success');
                 setFormContent(initialState);
+                setFieldErrors(initialState);
                 // Auto-ocultar mensaje después de 5 segundos
                 setTimeout(() => setSubmitStatus(null), 5000);
             } else {
@@ -138,7 +186,7 @@ const Contact = () => {
                     <div className="form-floating col-12 col-md-6 mb-3 px-1">
                         <input 
                             type="text" 
-                            className="form-control" 
+                            className={`form-control ${fieldErrors.name ? 'is-invalid' : ''}`} 
                             id="name" 
                             value={formContent.name} 
                             onChange={setFormContentState} 
@@ -146,13 +194,18 @@ const Contact = () => {
                             required 
                         />
                         <label htmlFor="name">Nombre</label>
-                        <p><small className='text-secondary'>*Solo letras</small></p>
+                        <p className="m-0"><small className='text-secondary'>*Solo letras</small></p>
+                        {fieldErrors.name && (
+                            <div className="invalid-feedback d-block">
+                                {fieldErrors.name}
+                            </div>
+                        )}
                     </div>
     
                     <div className="form-floating col-12 col-md-6 mb-3 px-1">
                         <input 
                             type="tel"  
-                            className="form-control" 
+                            className={`form-control ${fieldErrors.phone_number ? 'is-invalid' : ''}`} 
                             id="phone_number" 
                             value={formContent.phone_number} 
                             onChange={setFormContentState} 
@@ -161,12 +214,17 @@ const Contact = () => {
                             required 
                         />
                         <label htmlFor="phone_number">Número de Teléfono</label>
-                        <p><small className='text-secondary'>*Sin el cero y sin espacios ni guiones. Ej: 1122223333</small></p>
+                        <p className="m-0"><small className='text-secondary'>*Sin el cero y sin espacios ni guiones. Ej: 1122223333</small></p>
+                        {fieldErrors.phone_number && (
+                            <div className="invalid-feedback d-block">
+                                {fieldErrors.phone_number}
+                            </div>
+                        )}
                     </div>
     
                     <div className="form-floating col-12 mb-3">
                         <textarea 
-                            className="form-control" 
+                            className={`form-control ${fieldErrors.message ? 'is-invalid' : ''}`} 
                             id="message" 
                             style={{ height: 100 }} 
                             value={formContent.message} 
@@ -176,9 +234,14 @@ const Contact = () => {
                         />
                         <label htmlFor="message">Mensaje</label>
                         <div className="d-flex justify-content-between">
-                            <p><small className='text-secondary'>*Recibirá una respuesta vía WhatsApp lo más pronto posible.</small></p>
-                            <p><small>({count}/{max_length} caracteres)</small></p>
+                            <p className="m-0"><small className='text-secondary'>*Recibirá una respuesta vía WhatsApp lo más pronto posible.</small></p>
+                            <p className="m-0"><small>({count}/{max_length} caracteres)</small></p>
                         </div>
+                        {fieldErrors.message && (
+                            <div className="invalid-feedback d-block">
+                                {fieldErrors.message}
+                            </div>
+                        )}
                     </div>
     
                     <button 
