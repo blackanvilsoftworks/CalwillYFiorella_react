@@ -77,7 +77,7 @@ const Contact = () => {
     };
 
     // Validar un campo específico
-    const validateField = (fieldId, value) => {        
+    const validateField = (fieldId, value) => {
         const result = validators[fieldId]?.(value);
 
         if (result) {
