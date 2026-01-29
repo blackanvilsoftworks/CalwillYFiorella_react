@@ -12,10 +12,10 @@ const Menu = () => {
     const { globalInfo } = useContext(DataContext);
 
     const links = [
-        { name: 'Inicio'        , path: '/'             },
-        { name: 'Productos'     , path: '/productos'    },
-        { name: 'Pagos y Envíos', path: '/pagos_envios' },
-        { name: 'Contacto'      , path: '/contacto'     },
+        { name: 'Inicio'                , path: '/'             },
+        { name: 'Catálogo de Productos' , path: '/productos'    },
+        { name: 'Pagos y Envíos'        , path: '/pagos_envios' },
+        { name: 'Contacto'              , path: '/contacto'     },
     ];
 
     return (<>

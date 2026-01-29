@@ -15,11 +15,11 @@ $charcoal-grey-color        : #313638;
 $primary-bg-color   : $white-color;
 $secondary-bg-color : linear-gradient(
     135deg,
-    $cream-white-color 0%,                 // Peach claro
-    $cream-white-color 80%,                // Transición a crema dorada
-    $antique-white-color 95%,     // Cream puro
+    $cream-white-color 0%,
+    $cream-white-color 80%,
+    $antique-white-color 95%,
     $antique-white-color 100%
-  );
+);
 
 // NAVBAR
 $navbar-bg-color: $antique-white-color;

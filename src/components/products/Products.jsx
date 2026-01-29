@@ -18,7 +18,6 @@ const Products = () => {
                         <h2 className="text-center">
                             { createTitle('Nuestros Productos', 'bi bi-cart') }
                         </h2>
-                        <div className='text-end text-secondary'>*Consultar por precio mayorista.</div>
                         <ul id="productsTab" className="nav nav-pills justify-content-center mb-4" role="tablist">
                             { arrProducts ? <ProductsTabItem items={arrProducts} /> : null }
                         </ul>
@@ -63,7 +62,8 @@ const Products = () => {
                                 // )
                             }
 
-                        </div>                        
+                        </div>
+                        <div className='text-secondary'>*Este es nuestro catálogo, para poder realizar un pedido, consultar por stock, o solicitar precio mayorista, deberá comunicarse con nosotros por medio de nuestros canales.</div>
                     </div>
                 </div>
             </div>
