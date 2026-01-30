@@ -66,7 +66,7 @@ const Contact = () => {
     const messageValidation = (message) => {
         const cleanedMessage = message.trim();
         if (!cleanedMessage)                                                    return validationResult.error('El mensaje es requerido.');
-        if (!/^[A-Za-z0-9ÁáÉéÍíÓóÚúÑñÜü\s.,!?\-]{1,500}$/.test(cleanedMessage)) return validationResult.error('El mensaje contiene caracteres no permitidos.');
+        if (!/^[A-Za-z0-9ÁáÉéÍíÓóÚúÑñÜü\s.,$!?\-]{1,500}$/.test(cleanedMessage)) return validationResult.error('El mensaje contiene caracteres no permitidos.');
         return validationResult.success(cleanedMessage);
     };
 

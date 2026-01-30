@@ -13,7 +13,13 @@ $charcoal-grey-color        : #313638;
 
 // BACKGRAUND COLORS
 $primary-bg-color   : $white-color;
-$secondary-bg-color : $cream-white-color;
+$secondary-bg-color : linear-gradient(
+    135deg,
+    $cream-white-color 0%,
+    $cream-white-color 80%,
+    $antique-white-color 95%,
+    $antique-white-color 100%
+);
 
 // NAVBAR
 $navbar-bg-color: $antique-white-color;

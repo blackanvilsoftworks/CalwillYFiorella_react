@@ -11,6 +11,7 @@ const ProductsTabItem = ({items}) => {
                 aria-selected={isActive} 
                 type="button"
                 role="tab"
+                style={{ width: 250 }}
             >{title}</button>
         </li>
         )
