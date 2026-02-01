@@ -1,4 +1,4 @@
-const ProductsTabItem = ({items}) => {
+const ProductsTabItem = ({items, }) => {
     return items.map(({ id, title }, i) => {
         const isActive = i === 0 ? true : false;
         return (
@@ -12,6 +12,7 @@ const ProductsTabItem = ({items}) => {
                 type="button"
                 role="tab"
                 style={{ width: 250 }}
+                onClick={() => loadProducts(id)}
             >{title}</button>
         </li>
         )
