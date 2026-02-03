@@ -11,6 +11,7 @@ import Layout   from './components/layout/Layout.jsx';
 
 import Home     from './pages/Home.jsx';
 import ProductsContainer     from './pages/ProductsContainer.jsx';
+import ProductsDetails     from './pages/ProductsDetails.jsx';
 import Page_404 from './pages/Page_404.jsx';
 import ContactContainer from './pages/ContactContainer.jsx';
 import Payment_Shipping from './pages/Payment_Shipping.jsx';
@@ -26,6 +27,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="productos" element={<ProductsContainer />} />
+            <Route path="productos/:id_product" element={<ProductsDetails />} />
             <Route path="pagos_envios" element={<Payment_Shipping />} />
             <Route path="contacto" element={<ContactContainer />} />
             <Route path='*' element={<Page_404 />} />

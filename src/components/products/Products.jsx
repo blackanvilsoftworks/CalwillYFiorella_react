@@ -14,7 +14,7 @@ import {
 } from '../../services/productService.js'
 
 import './Products.scss';
-import { Link } from 'react-router-dom';
+
 
 const Products = () => {
 
@@ -85,11 +85,7 @@ const Products = () => {
                             <div key={category} id={category} className={`tab-pane fade show active`} role="tabpanel" aria-labelledby={`${category}-tab`}>
                                 <div className="row">
                                     {!loading
-                                        ? products.map((product, i) => (
-                                            <Link key={i} to={`/product/${product.id_product}`}>
-                                                <ProductCard key={i} product={product} i={i} />
-                                            </Link>
-                                        ))
+                                        ? products.map((product, i) => (<ProductCard key={i} product={product} i={i} />))
                                         : (
                                             <div id="placeholder" className="tab-pane fade show active" role="tabpanel" aria-labelledby="placeholder-tab">
                                                 <div className="row">
