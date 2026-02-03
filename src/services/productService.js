@@ -1,21 +1,23 @@
 import { supabase } from '../config/supabase'
 
 /**
-    * Obtener todos los productos activos con sus imágenes
-    * @returns {Promise<Array>} Array de productos
+  * Obtener productos por categoría
+  * @param {string} category - 'children' || 'men' || 'women'
+  * @returns {Promise<Array>} Array de productos
  */
-export const getAllProducts = async () => {
+export const getProductsByCategory = async (category) => {
     try {
         const { data, error } = await supabase
-        .from('v_products_complete') // Usamos la vista que creamos en SQL
+        .from('v_products_complete')
         .select('*')
         .eq('status', 'active')
+        .eq('category', category)
         .order('created_at', { ascending: false })
 
         if (error) throw error
         return data
     } catch (error) {
-        console.error('Error fetching products:', error)
+        console.error('Error fetching products by category:', error)
         throw error
     }
 }
@@ -56,49 +58,6 @@ export const getProductById = async (productId) => {
         }
     } catch (error) {
         console.error('Error fetching product:', error)
-        throw error
-    }
-}
-
-/**
-  * Obtener productos por categoría
-  * @param {string} category - 'child', 'man', o 'woman'
-  * @returns {Promise<Array>} Array de productos
- */
-export const getProductsByCategory = async (category) => {
-    try {
-        const { data, error } = await supabase
-        .from('v_products_complete')
-        .select('*')
-        .eq('status', 'active')
-        .eq('category', category)
-        .order('created_at', { ascending: false })
-
-        if (error) throw error
-        return data
-    } catch (error) {
-        console.error('Error fetching products by category:', error)
-        throw error
-    }
-}
-
-/**
-  * Buscar productos por nombre
-  * @param {string} searchTerm - Término de búsqueda
-  * @returns {Promise<Array>} Array de productos
- */
-export const searchProducts = async (searchTerm) => {
-    try {
-        const { data, error } = await supabase
-        .from('v_products_complete')
-        .select('*')
-        .eq('status', 'active')
-        .ilike('name_product', `%${searchTerm}%`)
-
-        if (error) throw error
-        return data
-    } catch (error) {
-        console.error('Error searching products:', error)
         throw error
     }
 }

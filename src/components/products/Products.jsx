@@ -14,6 +14,7 @@ import {
 } from '../../services/productService.js'
 
 import './Products.scss';
+import { Link } from 'react-router-dom';
 
 const Products = () => {
 
@@ -81,108 +82,45 @@ const Products = () => {
                             }
                         </ul>
                         <div id="productsTabContent" className="tab-content">
-                        <div key={category} id={category} className={`tab-pane fade show active`} role="tabpanel" aria-labelledby={`${category}-tab`}>
-                                            <div className="row">
-
-
-
-                        
-                        {
-                        !loading ?
-                        products.map((product, i) => <ProductCard key={i} product={product} i={i} />)
-
-                        : (
-                                    <div id="placeholder" className="tab-pane fade show active" role="tabpanel" aria-labelledby="placeholder-tab">
-                                        <div className="row">
-                                            <div className="col-12 col-md-6 col-lg-4">    
-                                                <div className="card product-card" aria-hidden="true">
-                                                    <div className="carousel slide">
-                                                        <div className="carousel-inner">
-                                                            <div className="carousel-item active">
-                                                                <img src="/assets/images/placeholder.png" className="d-block w-100" alt="Cargando..." />
+                            <div key={category} id={category} className={`tab-pane fade show active`} role="tabpanel" aria-labelledby={`${category}-tab`}>
+                                <div className="row">
+                                    {!loading
+                                        ? products.map((product, i) => (
+                                            <Link key={i} to={`/product/${product.id_product}`}>
+                                                <ProductCard key={i} product={product} i={i} />
+                                            </Link>
+                                        ))
+                                        : (
+                                            <div id="placeholder" className="tab-pane fade show active" role="tabpanel" aria-labelledby="placeholder-tab">
+                                                <div className="row">
+                                                    <div className="col-12 col-md-6 col-lg-4">    
+                                                        <div className="card product-card" aria-hidden="true">
+                                                            <div className="carousel slide">
+                                                                <div className="carousel-inner">
+                                                                    <div className="carousel-item active">
+                                                                        <img src="/assets/images/placeholder.png" className="d-block w-100" alt="Cargando..." />
+                                                                    </div>
+                                                                </div> 
+                                                            </div> 
+                                                            <div className="card-body">
+                                                                <div className="card-title placeholder-glow"><span className="placeholder col-6"></span></div>
+                                                                <p className="card-text placeholder-glow">
+                                                                    <span className="placeholder col-12"></span>
+                                                                    <span className="placeholder col-12"></span>
+                                                                    <span className="placeholder col-12"></span>
+                                                                    <span className="placeholder col-12"></span>
+                                                                </p>
                                                             </div>
-                                                        </div> 
-                                                    </div> 
-                                                    <div className="card-body">
-                                                        <div className="card-title placeholder-glow"><span className="placeholder col-6"></span></div>
-                                                        <p className="card-text placeholder-glow">
-                                                            <span className="placeholder col-12"></span>
-                                                            <span className="placeholder col-12"></span>
-                                                            <span className="placeholder col-12"></span>
-                                                            <span className="placeholder col-12"></span>
-                                                        </p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                )
-                    }
-                        
+                                        )
+                                    }
+                                    {products.length === 0 && (<p className="no-products">No hay productos disponibles en esta categoría.</p>)}
 
-                        {products.length === 0 && (
-                        <p className="no-products">No hay productos disponibles en esta categoría.</p>
-                        )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            {/* {
-                                // loading ? 
-                                products.map(({ category }) => {
-                                    return (
-                                        <div key={category} id={category} className={`tab-pane fade show active`} role="tabpanel" aria-labelledby={`${category}-tab`}>
-                                            <div className="row">
-                                                <ProductCards id={category} cards={products} />
-                                            </div>
-                                        </div>
-                                    );
-                                })
-                                // : (
-                                //     <div id="placeholder" className="tab-pane fade show active" role="tabpanel" aria-labelledby="placeholder-tab">
-                                //         <div className="row">
-                                //             <div className="col-12 col-md-6 col-lg-4">    
-                                //                 <div className="card product-card" aria-hidden="true">
-                                //                     <div className="carousel slide">
-                                //                         <div className="carousel-inner">
-                                //                             <div className="carousel-item active">
-                                //                                 <img src="/assets/images/placeholder.png" className="d-block w-100" alt="Cargando..." />
-                                //                             </div>
-                                //                         </div> 
-                                //                     </div> 
-                                //                     <div className="card-body">
-                                //                         <div className="card-title placeholder-glow"><span className="placeholder col-6"></span></div>
-                                //                         <p className="card-text placeholder-glow">
-                                //                             <span className="placeholder col-12"></span>
-                                //                             <span className="placeholder col-12"></span>
-                                //                             <span className="placeholder col-12"></span>
-                                //                             <span className="placeholder col-12"></span>
-                                //                         </p>
-                                //                     </div>
-                                //                 </div>
-                                //             </div>
-                                //         </div>
-                                //     </div>
-                                // )
-                            } */}
-</div>
-                                        </div>
+                                </div>
+                            </div>
                         </div>
                         <div className='text-secondary'>*Este es nuestro catálogo, para poder realizar un pedido, consultar por stock, o solicitar precio mayorista, deberá comunicarse con nosotros por medio de nuestros canales.</div>
                     </div>
