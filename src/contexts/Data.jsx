@@ -108,20 +108,20 @@ const DataContextProvider = ({ children }) => {
     
     const arrFeatures = [
         {
-            icon        : 'bi bi-star-fill',
-            title       : 'Calidad Premium',
-            description : 'Utilizamos materiales de primera calidad para garantizar la durabilidad y comodidad de nuestro calzado.'
-        },
-        {
-            icon        : 'bi bi-tree-fill',
-            title       : 'Materiales Sustentables',
-            description : 'Nos preocupamos por el medio ambiente utilizando materiales ecológicos y procesos sostenibles.'
-        },
-        {
-            icon        : 'bi bi-heart-fill',
+            icon        : 'bi bi-heart',
             title       : 'Hecho con Amor',
-            description : 'Cada par de zapatos es fabricado con dedicación y atención a los detalles.'
-        }
+            description : 'Cada par de zapatos es diseñado con dedicación y atención a los detalles.'
+        },
+        {
+            icon        : 'bi bi-star',
+            title       : 'Clásicos Atemporales',
+            description : 'Modelos que no pasan de moda, pensados para verse bien en todo momento.'
+        },
+        {
+            icon        : 'bi bi-piggy-bank',
+            title       : 'Precio Accesible',
+            description : 'Opciones cuidadas para acompañar el crecimiento sin gastar de más.'
+        },
     ];
     
     const arrInfoCardContent = [
