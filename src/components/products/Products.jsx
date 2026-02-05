@@ -23,45 +23,29 @@ const Products = () => {
                         </ul>
                         <div id="productsTabContent" className="tab-content">
                             {
-                                // arrProducts ? 
                                 arrProducts.map(({ id, cards, images }, i) => {
                                     const isActive = i === 0 ? true : false;
                                     return (
-                                        <div key={id} id={id} className={`tab-pane fade show${isActive ? ' active' : ''}`} role="tabpanel" aria-labelledby={`${id}-tab`}>
-                                            <div className="row">
-                                                <ProductCards id={id} cards={cards} images={images} />
-                                            </div>
-                                        </div>
+                                        id !== 'Próximamente'
+                                            ? 
+                                                (
+                                                    <div key={id} id={id} className={`tab-pane fade show${isActive ? ' active' : ''}`} role="tabpanel" aria-labelledby={`${id}-tab`}>
+                                                        <div className="row">
+                                                            <ProductCards id={id} cards={cards} images={images} />
+                                                        </div>
+                                                    </div>
+                                                ) 
+                                            :
+                                                (
+                                                    <div key={id} id={id} className={`tab-pane fade show${isActive ? ' active' : ''}`} role="tabpanel" aria-labelledby={`${id}-tab`}>
+                                                        <div className="row text-center py-5 my-5">
+                                                            <h1>{id}</h1>
+                                                        </div>
+                                                    </div>
+                                                )
                                     );
                                 })
-                                // : (
-                                //     <div id="placeholder" className="tab-pane fade show active" role="tabpanel" aria-labelledby="placeholder-tab">
-                                //         <div className="row">
-                                //             <div className="col-12 col-md-6 col-lg-4">    
-                                //                 <div className="card product-card" aria-hidden="true">
-                                //                     <div className="carousel slide">
-                                //                         <div className="carousel-inner">
-                                //                             <div className="carousel-item active">
-                                //                                 <img src="/assets/images/placeholder.png" className="d-block w-100" alt="Cargando..." />
-                                //                             </div>
-                                //                         </div> 
-                                //                     </div> 
-                                //                     <div className="card-body">
-                                //                         <div className="card-title placeholder-glow"><span className="placeholder col-6"></span></div>
-                                //                         <p className="card-text placeholder-glow">
-                                //                             <span className="placeholder col-12"></span>
-                                //                             <span className="placeholder col-12"></span>
-                                //                             <span className="placeholder col-12"></span>
-                                //                             <span className="placeholder col-12"></span>
-                                //                         </p>
-                                //                     </div>
-                                //                 </div>
-                                //             </div>
-                                //         </div>
-                                //     </div>
-                                // )
                             }
-
                         </div>
                         <div className='text-secondary'>*Este es nuestro catálogo, para poder realizar un pedido, consultar por stock, o solicitar precio mayorista, deberá comunicarse con nosotros por medio de nuestros canales.</div>
                     </div>
