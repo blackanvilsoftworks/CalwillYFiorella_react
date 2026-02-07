@@ -1,16 +1,17 @@
 import { 
-    useContext,
+    // useContext,
     useState, 
     useEffect
  } from 'react';
-import { DataContext } from '../../contexts/Data.jsx';
+// import { DataContext } from '../../contexts/Data.jsx';
 import { createTitle } from '../../utils/createTitle.jsx';
 // import ProductsTabItem from './ProductsTabItem.jsx';
 import ProductCard from './ProductCard.jsx';
 
 import { 
+    getActiveCategories,
     // getAllProducts, 
-    getProductsByCategory 
+    getProductsForHomepage 
 } from '../../services/productService.js'
 
 import './Products.scss';
@@ -18,37 +19,41 @@ import './Products.scss';
 
 const Products = () => {
 
-    const { arrProducts } = useContext(DataContext);
+    // const { arrProducts } = useContext(DataContext);
     
-    const [products , setProducts   ] = useState([]);
-    const [loading  , setLoading    ] = useState(true);
-    const [error    , setError      ] = useState(null);
-    const [category , setCategory   ] = useState('children')
+    const [products     , setProducts   ] = useState([]);
+    const [categories   , setCategories ] = useState([]);
+    const [loading      , setLoading    ] = useState(true);
+    const [error        , setError      ] = useState(null);
+    const [category     , setCategory   ] = useState('');
 
     const renderProducts = async () => {
         try {
-            setLoading(true)
-            setError(null)
+            setLoading(true);
+            setError(null);
 
-            const data = await getProductsByCategory(category);
-            setProducts(data)
+            const arrCategories = await getActiveCategories();
+            setCategories(arrCategories);
+
+            const arrProducts = await getProductsForHomepage(category);
+            setProducts(arrProducts);
         } catch (err) {
-            setError(`Error al cargar los productos. Por favor, intentá de nuevo. (${err.message})`)
-            console.error(err)
-        } finally {
-            setLoading(false)
-        }
+            setError(`Error. Por favor, intentá de nuevo. (${err.message})`);
+            console.error(err);
+        } finally { setLoading(false); }
     }
 
-    const changeCategory = (e) => {
-        setCategory(e.target.name);
-    };
+    const changeCategory = (e) => setCategory(e.target.name);
 
     useEffect(() => {
-        renderProducts()
-    }, [category])
+        renderProducts();
+    }, [category]);
 
-    if (error)      return <div className="error">{error}</div>    
+    useEffect(() => {
+        if (categories.length > 0 && !category) setCategory(categories[0].description);
+    }, [categories]);
+
+    if (error) return <div className="error">{error}</div>
 
     return (
         <div id="products_container" className="products_container container py-3 py-sm-4 py-md-5 rounded-3">
@@ -59,26 +64,35 @@ const Products = () => {
                             { createTitle('Nuestros Productos', 'bi bi-cart') }
                         </h2>
                         <ul id="productsTab" className="nav nav-pills justify-content-center mb-4" role="tablist">
-                            { 
-                                arrProducts.map(({ id, title }, i) => {
+                            {!loading
+                                ? categories.map(({ description, title }, i) => {
                                     const isActive = i === 0 ? true : false;
                                     return (
-                                        <li key={id} className="nav-item" role="presentation">
-                                        <button
-                                            id={`${id}-tab`}
-                                            name={id}
-                                            className={`nav-link main-btn-style mx-1${isActive ? ' active': ''}`}
-                                            data-bs-toggle="pill"
-                                            data-bs-target={`#${id}`}
-                                            aria-selected={isActive} 
-                                            type="button"
-                                            role="tab"
-                                            style={{ width: 250 }}
-                                            onClick={changeCategory}
-                                        >{title}</button>
-                                    </li>
+                                        <li key={description} className="nav-item" role="presentation">
+                                            <button
+                                                id={`${description}-tab`}
+                                                name={description}
+                                                className={`nav-link main-btn-style mx-1${isActive ? ' active': ''}`}
+                                                data-bs-toggle="pill"
+                                                data-bs-target={`#${description}`}
+                                                aria-selected={isActive} 
+                                                type="button"
+                                                role="tab"
+                                                style={{ width: 250 }}
+                                                onClick={changeCategory}
+                                            >Calzado para {title}</button>
+                                        </li>
                                     )
                                 })
+                                : (
+                                    <li className="nav-item">
+                                        <button
+                                            className={'nav-link main-btn-style mx-1'}
+                                            type="button"
+                                            style={{ width: 250 }}
+                                        >Cargando...</button>
+                                    </li>
+                                )
                             }
                         </ul>
                         <div id="productsTabContent" className="tab-content">
@@ -114,7 +128,6 @@ const Products = () => {
                                         )
                                     }
                                     {products.length === 0 && (<p className="no-products">No hay productos disponibles en esta categoría.</p>)}
-
                                 </div>
                             </div>
                         </div>
