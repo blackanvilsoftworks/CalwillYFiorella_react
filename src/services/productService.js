@@ -18,13 +18,15 @@ export const getProductsForHomepage = async (category) => {
         .from('v_products_complete')
         .select(`
             id_product,
-            name_product,
-            description,
-            price,
-            desc_category,
-            main_image`)
-        .eq('desc_status', 'active')
-        .eq('desc_category', category)
+            product_name,
+            short_desc,
+            min_price,
+            category,
+            size_count,
+            color_count,
+            color_images`)
+        .eq('status', 'A')
+        .eq('category', category)
         .order('created_at', { ascending: false })
 
         if (error) throw error
@@ -113,9 +115,9 @@ export const getActiveCategories = async () => {
         const { data, error } = await supabase
         .from('categories')
         .select(`
-            description,
-            title`)
-        .eq('status', 1)
+            name,
+            description`)
+        .eq('cod_status', 'A')
         .order('created_at', { ascending: false })
 
         if (error) throw error

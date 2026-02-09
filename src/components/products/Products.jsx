@@ -65,22 +65,22 @@ const Products = () => {
                         </h2>
                         <ul id="productsTab" className="nav nav-pills justify-content-center mb-4" role="tablist">
                             {!loading
-                                ? categories.map(({ description, title }, i) => {
+                                ? categories.map(({ name, description }, i) => {
                                     const isActive = i === 0 ? true : false;
                                     return (
-                                        <li key={description} className="nav-item" role="presentation">
+                                        <li key={name} className="nav-item" role="presentation">
                                             <button
-                                                id={`${description}-tab`}
-                                                name={description}
+                                                id={`${name}-tab`}
+                                                name={name}
                                                 className={`nav-link main-btn-style mx-1${isActive ? ' active': ''}`}
                                                 data-bs-toggle="pill"
-                                                data-bs-target={`#${description}`}
+                                                data-bs-target={`#${name}`}
                                                 aria-selected={isActive} 
                                                 type="button"
                                                 role="tab"
                                                 style={{ width: 250 }}
                                                 onClick={changeCategory}
-                                            >Calzado para {title}</button>
+                                            >Calzado para {description.charAt(0).toUpperCase() + description.slice(1).toLowerCase()}</button>
                                         </li>
                                     )
                                 })

@@ -13,8 +13,7 @@ const ProductCarousel = ({category, images, i }) => {
                     images.map((image, j) => {
                         return (
                             <div key={`${category}-${i}-${j}`} className={`carousel-item${j === 0 ? ' active' : ''}`}>
-                                <img className="d-block w-100" src={image || '/assets/images/placeholder.png'} />
-                                {/* <img className="d-block w-100" src={`${imagesPath}productsContainer/${category}/product${i+1}_img${j+1}.jpg`} alt={`Imagen ${j+1}`} /> */}
+                                <img className="d-block w-100" src={image?.image_url || '/assets/images/placeholder.png'} />
                             </div>
                         );
                     })
