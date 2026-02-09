@@ -12,7 +12,7 @@ import { supabase } from '../config/supabase'
   * @param {string} category - 'children' || 'men' || 'women'
   * @returns {Promise<Array>} Array de productos
  */
-export const getProductsForHomepage = async (category) => {
+export const getProductsForHomepage = async (id_category) => {
     try {
         const { data, error } = await supabase
         .from('v_products_complete')
@@ -21,19 +21,19 @@ export const getProductsForHomepage = async (category) => {
             product_name,
             short_desc,
             min_price,
-            category,
+            cat_name,
             size_count,
             color_count,
-            color_images`)
+            main_image_url`)
         .eq('status', 'A')
-        .eq('category', category)
-        .order('created_at', { ascending: false })
+        .eq('id_category', id_category)
+        .order('created_at', { ascending: false });
 
-        if (error) throw error
-        return data
+        if (error) throw error;
+        return data;
     } catch (error) {
-        console.error('Error fetching products by category:', error)
-        throw error
+        console.error('Error fetching products by category:', error);
+        throw error;
     }
 }
 
@@ -86,20 +86,21 @@ export const getProductById = async (productId) => {
 
         if (productError) throw productError
 
-        // Obtener imágenes del producto
-        const { data: images, error: imagesError } = await supabase
-        .from('product_images')
-        .select('*')
-        .eq('id_product', productId)
-        .eq('id_status', 1) // Solo imágenes activas
-        .order('order_position', { ascending: true })
+        // // Obtener imágenes del producto
+        // const { data: images, error: imagesError } = await supabase
+        // .from('product_images')
+        // .select('*')
+        // .eq('id_product', productId)
+        // .eq('id_status', 1) // Solo imágenes activas
+        // .order('order_position', { ascending: true })
 
-        if (imagesError) throw imagesError
+        // if (imagesError) throw imagesError
 
-        return {
-        ...product,
-        images
-        }
+        return product;
+        // {
+        // ...product,
+        // // images
+        // }
     } catch (error) {
         console.error('Error fetching product:', error)
         throw error
@@ -115,6 +116,7 @@ export const getActiveCategories = async () => {
         const { data, error } = await supabase
         .from('categories')
         .select(`
+            id_category,
             name,
             description`)
         .eq('cod_status', 'A')

@@ -25,7 +25,7 @@ const Products = () => {
     const [categories   , setCategories ] = useState([]);
     const [loading      , setLoading    ] = useState(true);
     const [error        , setError      ] = useState(null);
-    const [category     , setCategory   ] = useState('');
+    const [category     , setCategory   ] = useState(0);
 
     const renderProducts = async () => {
         try {
@@ -50,7 +50,7 @@ const Products = () => {
     }, [category]);
 
     useEffect(() => {
-        if (categories.length > 0 && !category) setCategory(categories[0].description);
+        if (categories.length > 0 && !category) setCategory(categories[0].id_category);
     }, [categories]);
 
     if (error) return <div className="error">{error}</div>
@@ -64,14 +64,14 @@ const Products = () => {
                             { createTitle('Nuestros Productos', 'bi bi-cart') }
                         </h2>
                         <ul id="productsTab" className="nav nav-pills justify-content-center mb-4" role="tablist">
-                            {!loading
-                                ? categories.map(({ name, description }, i) => {
+                            {categories
+                                ? categories.map(({ id_category, name, description }, i) => {
                                     const isActive = i === 0 ? true : false;
                                     return (
                                         <li key={name} className="nav-item" role="presentation">
                                             <button
                                                 id={`${name}-tab`}
-                                                name={name}
+                                                name={id_category}
                                                 className={`nav-link main-btn-style mx-1${isActive ? ' active': ''}`}
                                                 data-bs-toggle="pill"
                                                 data-bs-target={`#${name}`}
