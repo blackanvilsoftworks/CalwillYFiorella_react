@@ -59,37 +59,31 @@ export const getProductsForHomepage = async (id_category) => {
 //     }
 // }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/* VIEW V_VARIANTS_BY_SIZE */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-  * Obtener talles activos por producto
-  * @param {string} category - 'children' || 'men' || 'women'
-  * @returns {Promise<Array>} Array de productos
- */
-export const getVariantsBySize = async (id_product) => {
-    try {
-        const { data, error } = await supabase
-        .from('v_variants_by_size')
-        .select(`
-            id_size,
-            size,
-            sort_order,
-            size_description`)
-        // .eq('status', 'A')
-        .eq('id_product', id_product)
-        .order('sort_order', { ascending: true });
+// /**
+//   * Obtener talles activos por producto
+//   * @param {string} category - 'children' || 'men' || 'women'
+//   * @returns {Promise<Array>} Array de productos
+//  */
+// export const getVariantsBySize = async (id_product) => {
+//     try {
+//         const { data, error } = await supabase
+//         .from('v_variants_by_size')
+//         .select(`
+//             id_size,
+//             size,
+//             sort_order,
+//             size_description`)
+//         // .eq('status', 'A')
+//         .eq('id_product', id_product)
+//         .order('sort_order', { ascending: true });
 
-        if (error) throw error;
-        return data || [];
-    } catch (error) {
-        console.error('Error fetching variants by size:', error);
-        throw error;
-    }
-}
-
+//         if (error) throw error;
+//         return data || [];
+//     } catch (error) {
+//         console.error('Error fetching variants by size:', error);
+//         throw error;
+//     }
+// }
 
 /**
  * Obtener información completa del producto para la página de detalle
@@ -130,6 +124,42 @@ export const getSizesByProduct = async (productId) => {
         return data || []
     } catch (error) {
         console.error('Error fetching sizes by product:', error)
+        throw error
+    }
+}
+
+/**
+ * Obtener todos los colores activos para un producto y talle
+ * (independientemente del stock)
+ * @param {string} productId - UUID del producto
+ * @param {number} sizeId - ID del talle
+ * @returns {Promise<Array>} Array de colores con info de la variante
+ */
+export const getColorsByProductAndSize = async (productId, sizeId) => {
+    try {
+        const { data, error } = await supabase
+            .from('product_variants')
+            .select(`
+                id_variant,
+                sku,
+                price,
+                stock,
+                colors (
+                    id_color,
+                    name,
+                    description,
+                    hex_code
+                )
+            `)
+            .eq('id_product', productId)
+            .eq('id_size', sizeId)
+            .eq('cod_status', 'A')
+            .order('id_color', { ascending: true })
+
+        if (error) throw error
+        return data || []
+    } catch (error) {
+        console.error('Error fetching colors by product and size:', error)
         throw error
     }
 }

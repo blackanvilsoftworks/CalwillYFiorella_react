@@ -9,7 +9,7 @@ const ProductCarousel = ({ images, size, color }) => {
     return (
         <div id={`carousel-${size}-${color}`} className="carousel slide">
             <div className="carousel-inner">
-                {
+                {images ?
                     images.map((image, i) => {
                         return (
                             <div key={image.id_image} className={`carousel-item${i === 0 ? ' active' : ''}`}>
@@ -21,6 +21,10 @@ const ProductCarousel = ({ images, size, color }) => {
                             </div>
                         );
                     })
+                    : (<img 
+                        className="d-block w-100" 
+                        src='/assets/images/placeholder.png'
+                    />)
                 }
             </div>            
             <button className="carousel-control-prev" data-bs-target={`#carousel-${size}-${color}`} data-bs-slide="prev" type="button">
