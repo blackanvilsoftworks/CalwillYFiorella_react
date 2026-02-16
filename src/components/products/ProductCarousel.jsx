@@ -14,7 +14,8 @@ const ProductCarousel = ({ images, size, color }) => {
                         return (
                             <div key={image.id_image} className={`carousel-item${i === 0 ? ' active' : ''}`}>
                                 <img 
-                                    className="d-block w-100" 
+                                    className="d-block w-100 rounded"
+                                    alt={image?.produc_name}
                                     src={image?.image_url} 
                                     onError={e => e.target.src = '/assets/images/placeholder.png'}
                                 />

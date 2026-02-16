@@ -32,15 +32,19 @@ const Products = () => {
             setLoading(true);
             setError(null);
 
-            const arrCategories = await getActiveCategories();
-            setCategories(arrCategories);
+            const [categoriesData, productsData] = await Promise.all([
+                getActiveCategories(),
+                getProductsForHomepage(category)
+            ])
 
-            const arrProducts = await getProductsForHomepage(category);
-            setProducts(arrProducts);
+            setCategories(categoriesData);
+            setProducts(productsData);
         } catch (err) {
             setError(`Error. Por favor, intentá de nuevo. (${err.message})`);
             console.error(err);
-        } finally { setLoading(false); }
+        } finally { 
+            setLoading(false); 
+        }
     }
 
     const changeCategory = (e) => setCategory(e.target.name);
