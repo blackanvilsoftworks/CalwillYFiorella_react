@@ -84,21 +84,12 @@ const Product = ({ id_product }) => {
     // ── 3. Cuando cambia el color → fetch de imágenes ───────────────────────
     useEffect(() => {
         if (!selectedColor?.id_variant) return
-        console.log(`
-            id_product: ${id_product},
-            id_variant: ${selectedColor.id_variant},
-            id_size: ${selectedSize.id_size},
-            id_color: ${selectedColor.colors.id_color}
-            `)
         const loadImages = async () => {
             try {
                 setImages([])
                 const imagesData = await getVariantImages(selectedColor.id_variant)
                 
-                console.log(imagesData)  //Está devolviendo un array vacío
                 setImages(imagesData)
-
-                // setCurrentImage(0)
             } catch (err) {
                 console.error('Error loading images:', err)
                 setImages([])

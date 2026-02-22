@@ -6,6 +6,8 @@
 
 body {
   font-family : $global-font;
-  margin-top  : 57px;
+  // margin-top  : 57px;
+  margin: 0; // Importante: resetear márgenes
+  padding: 0;
 }
 
