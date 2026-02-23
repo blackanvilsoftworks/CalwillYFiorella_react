@@ -4,44 +4,44 @@ import { supabase } from '../config/supabase'
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser]         = useState(null)
-    const [profile, setProfile]   = useState(null)
-    const [role, setRole]         = useState(null)
-    const [loading, setLoading]   = useState(true)
+    const [user     , setUser]      = useState(null)
+    const [profile  , setProfile]   = useState(null)
+    const [role     , setRole]      = useState(null)
+    const [loading  , setLoading]   = useState(true)
 
     useEffect(() => {
+        setLoading(true);
         // Verificar sesión inicial
-        checkUser()
+        checkUser();
 
         // Escuchar cambios de auth
         const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
             if (session?.user) {
-                await loadUserProfile(session.user)
+                await loadUserProfile(session.user);
             } else {
-                setUser(null)
-                setProfile(null)
-                setRole(null)
+                setUser(null);
+                setProfile(null);
+                setRole(null);
             }
-            setLoading(false)
-        })
+            setLoading(false);
+        });
 
         return () => {
             authListener?.subscription?.unsubscribe()
-        }
-    }, [])
+        };
+    }, []);
 
     const checkUser = async () => {
+        setLoading(true);
         try {
-            const { data: { session } } = await supabase.auth.getSession()
-            if (session?.user) {
-                await loadUserProfile(session.user)
-            }
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.user) await loadUserProfile(session.user);
         } catch (error) {
-            console.error('Error checking user:', error)
+            console.error('Error checking user:', error);
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
+    };
 
     const loadUserProfile = async (authUser) => {
         try {
@@ -56,17 +56,17 @@ export const AuthProvider = ({ children }) => {
                     )
                 `)
                 .eq('id', authUser.id)
-                .single()
+                .single();
 
-            if (error) throw error
+            if (error) throw error;
 
-            setUser(authUser)
-            setProfile(profileData)
-            setRole(profileData.roles?.name || null)
+            setUser(authUser);
+            setProfile(profileData);
+            setRole(profileData.roles?.name || null);
         } catch (error) {
-            console.error('Error loading profile:', error)
+            console.error('Error loading profile:', error);
         }
-    }
+    };
 
     // ── AUTH ACTIONS ─────────────────────────────────────────────────────────
 
@@ -78,37 +78,37 @@ export const AuthProvider = ({ children }) => {
                 options: {
                     data: metadata  // full_name, phone, etc.
                 }
-            })
+            });
 
-            if (error) throw error
-            return { data, error: null }
+            if (error) throw error;
+            return { data, error: null };
         } catch (error) {
-            return { data: null, error }
+            return { data: null, error };
         }
-    }
+    };
 
     const signIn = async (email, password) => {
         try {
             const { data, error } = await supabase.auth.signInWithPassword({
                 email,
                 password
-            })
+            });
 
-            if (error) throw error
-            return { data, error: null }
+            if (error) throw error;
+            return { data, error: null };
         } catch (error) {
-            return { data: null, error }
+            return { data: null, error };
         }
-    }
+    };
 
     const signInWithGoogle = async () => {
         try {
             const { data, error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: `${window.location.origin}/`
+                    redirectTo: `${window.location.origin}/` // Esto debería redirigir a la página de productos
                 }
-            })
+            });
 
             if (error) throw error
             return { data, error: null }

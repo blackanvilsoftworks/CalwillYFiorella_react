@@ -7,7 +7,7 @@ const Loader = () => {
                 <img 
                     src="/navbar-logo.png"
                     alt="Cargando..." 
-                    className="loader-image"
+                    className="loader-image rounded-5"
                 />
                 <div className="spinner-wrapper">
                     <div className="custom-spinner"></div>
