@@ -15,6 +15,7 @@ import {
 } from '../../services/productService.js'
 
 import './Products.scss';
+import Loader from '../loader/Loader.jsx';
 
 
 const Products = () => {
@@ -57,7 +58,8 @@ const Products = () => {
         if (categories.length > 0 && !category) setCategory(categories[0].id_category);
     }, [categories]);
 
-    if (error) return <div className="error">{error}</div>
+    if (error)      return <div className="error">{error}</div>
+    if (loading)    return <Loader />
 
     return (
         <div id="products_container" className="products_container container py-3 py-sm-4 py-md-5 rounded-3">
@@ -68,69 +70,30 @@ const Products = () => {
                             { createTitle('Nuestros Productos', 'bi bi-cart') }
                         </h2>
                         <ul id="productsTab" className="nav nav-pills justify-content-center mb-4" role="tablist">
-                            {categories
-                                ? categories.map(({ id_category, name, description }, i) => {
-                                    const isActive = i === 0 ? true : false;
-                                    return (
-                                        <li key={name} className="nav-item" role="presentation">
-                                            <button
-                                                id={`${name}-tab`}
-                                                name={id_category}
-                                                className={`nav-link main-btn-style mx-1${isActive ? ' active': ''}`}
-                                                data-bs-toggle="pill"
-                                                data-bs-target={`#${name}`}
-                                                aria-selected={isActive} 
-                                                type="button"
-                                                role="tab"
-                                                style={{ width: 250 }}
-                                                onClick={changeCategory}
-                                            >Calzado para {description.charAt(0).toUpperCase() + description.slice(1).toLowerCase()}</button>
-                                        </li>
-                                    )
-                                })
-                                : (
-                                    <li className="nav-item">
+                            {categories && categories.map(({ id_category, name, description }, i) => {
+                                const isActive = i === 0 ? true : false;
+                                return (
+                                    <li key={name} className="nav-item" role="presentation">
                                         <button
-                                            className={'nav-link main-btn-style mx-1'}
+                                            id={`${name}-tab`}
+                                            name={id_category}
+                                            className={`nav-link main-btn-style mx-1${isActive ? ' active': ''}`}
+                                            data-bs-toggle="pill"
+                                            data-bs-target={`#${name}`}
+                                            aria-selected={isActive} 
                                             type="button"
+                                            role="tab"
                                             style={{ width: 250 }}
-                                        >Cargando...</button>
+                                            onClick={changeCategory}
+                                        >Calzado para {description.charAt(0).toUpperCase() + description.slice(1).toLowerCase()}</button>
                                     </li>
                                 )
-                            }
+                            })}
                         </ul>
                         <div id="productsTabContent" className="tab-content">
                             <div key={category} id={category} className={`tab-pane fade show active`} role="tabpanel" aria-labelledby={`${category}-tab`}>
                                 <div className="row">
-                                    {!loading
-                                        ? products.map((product, i) => (<ProductCard key={i} product={product} i={i} />))
-                                        : (
-                                            <div id="placeholder" className="tab-pane fade show active" role="tabpanel" aria-labelledby="placeholder-tab">
-                                                <div className="row">
-                                                    <div className="col-12 col-md-6 col-lg-4">    
-                                                        <div className="card product-card" aria-hidden="true">
-                                                            <div className="carousel slide">
-                                                                <div className="carousel-inner">
-                                                                    <div className="carousel-item active">
-                                                                        <img src="/assets/images/placeholder.png" className="d-block w-100" alt="Cargando..." />
-                                                                    </div>
-                                                                </div> 
-                                                            </div> 
-                                                            <div className="card-body">
-                                                                <div className="card-title placeholder-glow"><span className="placeholder col-6"></span></div>
-                                                                <p className="card-text placeholder-glow">
-                                                                    <span className="placeholder col-12"></span>
-                                                                    <span className="placeholder col-12"></span>
-                                                                    <span className="placeholder col-12"></span>
-                                                                    <span className="placeholder col-12"></span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )
-                                    }
+                                    {products && products.map((product, i) => (<ProductCard key={i} product={product} i={i} />))}
                                     {products.length === 0 && (<p className="no-products">No hay productos disponibles en esta categoría.</p>)}
                                 </div>
                             </div>

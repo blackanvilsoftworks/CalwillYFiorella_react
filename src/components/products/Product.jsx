@@ -8,6 +8,7 @@ import {
 import ProductCarousel from './ProductCarousel';
 
 import './Product.scss';
+import Loader from '../loader/Loader';
 
 const Product = ({ id_product }) => {
 
@@ -130,7 +131,7 @@ const Product = ({ id_product }) => {
     }
 
     // ── Renders condicionales ───────────────────────────────────────────────
-    if (loading) return <div className="product-loading">Cargando producto...</div>
+    if (loading) return <Loader />
     if (error)   return <div className="product-error"><p>{error}</p></div>
     if (!product) return null
 

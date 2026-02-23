@@ -1,0 +1,73 @@
+@use '../../styles/global/variables' as *;
+
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9999;
+    
+    .loader-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        
+        .loader-image {
+            max-width: 200px;
+            height: auto;
+            animation: pulse 2s infinite ease-in-out;
+        }
+        
+        .spinner-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            
+            .custom-spinner {
+                width: 30px;
+                height: 30px;
+                border: 4px solid rgba(237, 155, 64, 0.3);
+                border-top-color: black;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+            
+            .loading-text {
+                font-size: 1.2rem;
+                color: black;
+                font-weight: 500;
+                letter-spacing: 0.5px;
+            }
+        }
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+// Versión para cuando está dentro de un contenedor (no full screen)
+.loader-container.inline {
+    position: relative;
+    height: 400px;
+    background-color: transparent;
+}
