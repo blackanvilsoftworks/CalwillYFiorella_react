@@ -9,6 +9,12 @@ export const AuthProvider = ({ children }) => {
     const [role     , setRole]      = useState(null)
     const [loading  , setLoading]   = useState(true)
 
+    const setStatesNull = () => {
+        setUser(null);
+        setProfile(null);
+        setRole(null);
+    };
+
     useEffect(() => {
         setLoading(true);
         // Verificar sesión inicial
@@ -19,9 +25,7 @@ export const AuthProvider = ({ children }) => {
             if (session?.user) {
                 await loadUserProfile(session.user);
             } else {
-                setUser(null);
-                setProfile(null);
-                setRole(null);
+                setStatesNull();
             }
             setLoading(false);
         });
@@ -110,27 +114,25 @@ export const AuthProvider = ({ children }) => {
                 }
             });
 
-            if (error) throw error
-            return { data, error: null }
+            if (error) throw error;
+            return { data, error: null };
         } catch (error) {
-            return { data: null, error }
+            return { data: null, error };
         }
-    }
+    };
 
     const signOut = async () => {
         try {
-            const { error } = await supabase.auth.signOut()
-            if (error) throw error
+            const { error } = await supabase.auth.signOut();
+            if (error) throw error;
 
-            setUser(null)
-            setProfile(null)
-            setRole(null)
+            setStatesNull();
 
-            return { error: null }
+            return { error: null };
         } catch (error) {
-            return { error }
+            return { error };
         }
-    }
+    };
 
     const updateProfile = async (updates) => {
         try {
@@ -139,43 +141,46 @@ export const AuthProvider = ({ children }) => {
                 .update(updates)
                 .eq('id', user.id)
                 .select()
-                .single()
+                .single();
 
-            if (error) throw error
+            if (error) throw error;
 
-            setProfile(data)
-            return { data, error: null }
+            setProfile(data);
+            return { data, error: null };
         } catch (error) {
-            return { data: null, error }
+            return { data: null, error };
         }
-    }
+    };
 
     // ── ROLE CHECKS ──────────────────────────────────────────────────────────
 
-    const isCustomer = role === 'customer'
-    const isWholesaler = role === 'wholesaler'
-    const isAdmin = role === 'admin' || role === 'superadmin'
-    const isSuperAdmin = role === 'superadmin'
+    const isCustomer    = role === 'customer';
+    const isWholesaler  = role === 'wholesaler';
+    const isAdmin       = role === 'admin' || role === 'superadmin';
+    const isSuperAdmin  = role === 'superadmin';
 
     const value = {
+        // General states
         user,
         profile,
         role,
         loading,
+        // Role checks
         isCustomer,
         isWholesaler,
         isAdmin,
         isSuperAdmin,
+        // Actions
         signUp,
         signIn,
         signInWithGoogle,
         signOut,
         updateProfile
-    }
+    };
 
     return (
         <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
-    )
+    );
 }
