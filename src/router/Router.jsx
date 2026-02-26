@@ -8,6 +8,9 @@ import ProductsDetails      from '../pages/ProductsDetails.jsx';
 import ContactContainer     from '../pages/ContactContainer.jsx';
 import Payment_Shipping     from '../pages/Payment_Shipping.jsx';
 
+import Login                from "../pages/login/Login.jsx";
+import Signup               from "../pages/login/Signup.jsx";
+
 import Error404             from '../pages/errors/Error404.jsx';
 
 const router = createBrowserRouter([
@@ -35,7 +38,15 @@ const router = createBrowserRouter([
             {
                 path: "contacto",
                 element: <ContactContainer />
-            }
+            },
+            {
+                path: "iniciar_sesion",
+                element: <Login />
+            },
+            {
+                path: "registro",
+                element: <Signup />
+            },
         ]
     }
 ]);

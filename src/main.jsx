@@ -6,10 +6,13 @@ import './index.scss';
 
 import { DataContextProvider } from './contexts/Data.jsx';
 import router from './router/Router.jsx';
+import { AuthProvider } from './contexts/AuthContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <DataContextProvider>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </DataContextProvider>
   </StrictMode>);

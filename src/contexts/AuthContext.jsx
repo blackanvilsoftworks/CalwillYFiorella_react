@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from 'react'
 import { supabase } from '../config/supabase'
 
-export const AuthContext = createContext()
+const AuthContext = createContext()
 
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
     const [user     , setUser]      = useState(null)
     const [profile  , setProfile]   = useState(null)
     const [role     , setRole]      = useState(null)
@@ -184,3 +184,5 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 }
+
+export { AuthContext, AuthProvider };
