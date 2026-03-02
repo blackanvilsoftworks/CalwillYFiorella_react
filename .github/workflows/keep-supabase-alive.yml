@@ -1,0 +1,22 @@
+name: Keep Supabase Alive
+
+on:
+  schedule:
+    # Ejecutar todos los días a las 12:00 UTC (09:00 Argentina)
+    - cron: '0 12 * * *'
+  workflow_dispatch:  # Permite ejecutarlo manualmente desde la interfaz de GitHub
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Ping Supabase health endpoint
+        run: |
+          echo "🔄 Pinging Supabase project to prevent auto-pause..."
+          curl -X GET "${{ secrets.VITE_SUPABASE_URL }}/auth/v1/health" \
+            -H "apikey: ${{ secrets.VITE_SUPABASE_ANON_KEY }}" \
+            -H "Content-Type: application/json" \
+            -w "\n✅ Response code: %{http_code}\n"
