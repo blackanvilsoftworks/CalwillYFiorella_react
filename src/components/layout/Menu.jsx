@@ -12,10 +12,12 @@ const Menu = () => {
     const { globalInfo } = useContext(DataContext);
 
     const links = [
-        { name: 'Inicio'                , path: '/'             },
-        { name: 'Catálogo de Productos' , path: '/productos'    },
-        { name: 'Pagos y Envíos'        , path: '/pagos_envios' },
-        { name: 'Contacto'              , path: '/contacto'     },
+        { name: 'Inicio'                , path: '/'                 },
+        { name: 'Catálogo de Productos' , path: '/productos'        },
+        { name: 'Pagos y Envíos'        , path: '/pagos_envios'     },
+        { name: 'Contacto'              , path: '/contacto'         },
+        { name: 'Iniciar Seción'        , path: '/iniciar_sesion'   },
+        { name: 'Registrarse'           , path: '/registrarse'      }
     ];
 
     const menuBtn   = useRef(null);

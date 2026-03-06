@@ -10,6 +10,7 @@ $red-color                  : rgb(188, 4, 5); /* titles and navbar */
 $bright-terracotta-color    : #ed9b40;
 $steel-blue-color           : #4e89ae;
 $charcoal-grey-color        : #313638;
+$light-grey-color           : #6c757d;
 
 // BACKGRAUND COLORS
 $primary-bg-color   : $white-color;
@@ -40,6 +41,10 @@ $footer-txt-color   : $white-color;
 
 // LOADER
 $spinner-bg-color: $cream-white-color;
+
+// LOGIN/SIGNUP
+$pwd-toggle-btn-color: $light-grey-color;
+$pwd-toggle-btn-focus-color: $bright-terracotta-color;
 
 // OTHER COLORS
 $secondary-color: $red-color;

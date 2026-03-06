@@ -1,118 +1,137 @@
-import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import useAuth from '../../hooks/useAuth'
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import './Login.scss';
 
 const Login = () => {
-    const navigate = useNavigate()
-    const { signIn, signInWithGoogle } = useAuth()
+    const navigate = useNavigate();
+    const { signIn, signInWithGoogle } = useAuth();
 
-    const [email, setEmail]       = useState('')
-    const [password, setPassword] = useState('')
-    const [loading, setLoading]   = useState(false)
-    const [error, setError]       = useState(null)
+    const [email    , setEmail]     = useState('');
+    const [password , setPassword]  = useState('');
+    const [loading  , setLoading]   = useState(false);
+    const [error    , setError]     = useState(null);
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleEmailLogin = async (e) => {
-        e.preventDefault()
-        setLoading(true)
-        setError(null)
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
 
-        const { data, error: signInError } = await signIn(email, password)
+        const { data, error: signInError } = await signIn(email, password);
 
         if (signInError) {
-            setError(signInError.message)
-            setLoading(false)
-            return
+            setError(signInError.message);
+            setLoading(false);
+            return;
         }
 
         // Redirigir después de login exitoso
-        navigate('/')
-    }
+        navigate('/productos');
+    };
 
     const handleGoogleLogin = async () => {
-        setLoading(true)
-        setError(null)
+        setLoading(true);
+        setError(null);
 
-        const { error: googleError } = await signInWithGoogle()
+        const { error: googleError } = await signInWithGoogle();
 
         if (googleError) {
-            setError(googleError.message)
-            setLoading(false)
+            setError(googleError.message);
+            setLoading(false);
         }
         // El redirect es automático con OAuth
-    }
+    };
+
+    const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
     return (
-        <div className="login-container">
-            <div className="login-card">
-                <h2>Iniciar Sesión</h2>
+        <div className="login_container container py-3 py-sm-4 py-md-5 rounded-3">
+            <div className="row d-flex justify-content-center align-items-center">
+                <div className="col-6 text-center">
+                    <h2>Iniciar Sesión</h2>
 
-                {error && (
-                    <div className="error-message">
-                        {error}
-                    </div>
-                )}
+                    {error && (
+                        <div className="alert alert-danger" role="alert">
+                            {error}
+                        </div>
+                    )}
 
-                {/* LOGIN CON GOOGLE */}
-                <button
-                    type="button"
-                    onClick={handleGoogleLogin}
-                    disabled={loading}
-                    className="btn-google"
-                >
-                    <img src="/assets/icons/google.svg" alt="Google" />
-                    Continuar con Google
-                </button>
-
-                <div className="divider">
-                    <span>O</span>
-                </div>
-
-                {/* LOGIN CON EMAIL/PASSWORD */}
-                <form onSubmit={handleEmailLogin}>
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            id="email"
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            disabled={loading}
-                            placeholder="tu@email.com"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="password">Contraseña</label>
-                        <input
-                            id="password"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            disabled={loading}
-                            placeholder="••••••••"
-                        />
-                    </div>
-
+                    {/* LOGIN CON GOOGLE */}
                     <button
-                        type="submit"
+                        type="button"
+                        onClick={handleGoogleLogin}
                         disabled={loading}
-                        className="btn-submit"
+                        className="main-btn-style mt-3"
                     >
-                        {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+                        Continuar con <i className="bi bi-google"></i>
                     </button>
-                </form>
 
-                <div className="footer-links">
-                    <p>
-                        ¿No tenés cuenta?{' '}
-                        <Link to="/register">Registrate</Link>
-                    </p>
+                    <hr className='my-3'/>
+
+                    {/* LOGIN CON EMAIL/PASSWORD */}
+                    <form onSubmit={handleEmailLogin}>
+                        
+                        <div className="form-floating mb-3">
+                            <input
+                                id="email"
+                                type="email"
+                                className='form-control'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                disabled={loading}
+                                placeholder="Email"
+                            />
+                            <label htmlFor="email">Email</label>
+                        </div>
+
+                        <div className="password-input-container mb-3">
+                            <div className="form-floating position-relative">
+                                <input
+                                    id="password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    className="form-control"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    disabled={loading}
+                                    placeholder="Contraseña"
+                                />
+                                <label htmlFor="password">Contraseña</label>
+                                
+                                <button
+                                    type="button"
+                                    className="password-toggle-btn"
+                                    onClick={togglePasswordVisibility}
+                                    tabIndex="-1"
+                                    disabled={loading}
+                                >
+                                    <i className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`}></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="main-btn-style mb-3"
+                        >
+                            {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+                        </button>
+                    </form>
+
+                    <div>
+                        <p>
+                            ¿No tenés cuenta?{' '}
+                            <Link to="/registrarse">Registrate</Link>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

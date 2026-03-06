@@ -1,0 +1,67 @@
+@use '../../styles/global/variables' as *;
+
+.signup_container {
+    background: $secondary-bg-color;
+    margin-top: 75px;
+
+    .password-input-container {
+        position: relative;
+        
+        .password-toggle-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            z-index: 10;
+            padding: 5px;
+            font-size: 1.2rem;
+            
+            &:hover {
+                color: $pwd-toggle-btn-focus-color;
+            }
+            
+            &:focus {
+                outline: none;
+                color: $pwd-toggle-btn-focus-color;
+            }
+            
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+            
+            i {
+                pointer-events: none; // Evita que el icono capture el click
+            }
+        }
+        
+        // Ajuste para que el input no se superponga con el botón
+        .form-control {
+            padding-right: 45px !important;
+        }
+    }
+}
+
+// Para mantener consistencia con Bootstrap
+.form-floating {
+    position: relative;
+    
+    > .form-control {
+        height: calc(3.5rem + 2px);
+        line-height: 1.25;
+        padding: 1rem 0.75rem;
+        
+        &:focus {
+            border-color: $pwd-toggle-btn-focus-color;
+            box-shadow: 0 0 0 0.25rem rgba(237, 155, 64, 0.25);
+        }
+    }
+    
+    > label {
+        padding: 1rem 0.75rem;
+    }
+}
