@@ -110,7 +110,7 @@ const AuthProvider = ({ children }) => {
             const { data, error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: `${window.location.origin}/` // Esto debería redirigir a la página de productos
+                    redirectTo: "http://localhost:5173/productos"
                 }
             });
 

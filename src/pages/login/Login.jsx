@@ -5,7 +5,9 @@ import './Login.scss';
 
 const Login = () => {
     const navigate = useNavigate();
-    const { signIn, signInWithGoogle } = useAuth();
+    const { user, signIn, signInWithGoogle } = useAuth();
+
+    if (user) return navigate('/mi_cuenta');
 
     const [email    , setEmail]     = useState('');
     const [password , setPassword]  = useState('');

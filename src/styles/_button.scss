@@ -18,3 +18,21 @@
     transform       : translateY(-5px);
   }
 }
+
+.main-btn-style-inverted {
+  background-color: $btn-primary-color;
+  border-color    : $btn-primary-color;
+  color           : $btn-secondary-color;
+  padding         : 10px 25px;
+  border-radius   : 30px;
+  font-weight     : 600;
+  transition      : transform 0.3s;
+
+  &:hover, 
+  &.active {
+    background-color: $btn-secondary-color  !important;
+    border-color    : $btn-primary-color    !important;
+    color           : $btn-primary-color    !important;
+    transform       : translateY(-5px);
+  }
+}

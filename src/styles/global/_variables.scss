@@ -12,6 +12,7 @@ $steel-blue-color           : #4e89ae;
 $charcoal-grey-color        : #313638;
 $light-grey-color           : #6c757d;
 
+
 // BACKGRAUND COLORS
 $primary-bg-color   : $white-color;
 $secondary-bg-color : linear-gradient(
@@ -43,8 +44,22 @@ $footer-txt-color   : $white-color;
 $spinner-bg-color: $cream-white-color;
 
 // LOGIN/SIGNUP
-$pwd-toggle-btn-color: $light-grey-color;
-$pwd-toggle-btn-focus-color: $bright-terracotta-color;
+$pwd-toggle-btn-color       : $light-grey-color;
+$pwd-toggle-btn-focus-color : $bright-terracotta-color;
+
+// ERROR 404
+$error-bg-color         : linear-gradient(
+    135deg, 
+    $cream-white-color 0%, 
+    $antique-white-color 100%
+);
+$error-digit-color      : $bright-terracotta-color;
+$error-smile-icon-color : $bright-terracotta-color;
+$error-title-color      : $black-color;
+$error-description-color: $light-grey-color;
+$error-divider-color    : $steel-blue-color;
+$error-desc-bg-color    : $bright-terracotta-color;
+$error-icon-color       : $steel-blue-color;
 
 // OTHER COLORS
 $secondary-color: $red-color;

@@ -5,7 +5,9 @@ import './Signup.scss';
 
 const Signup = () => {
     const navigate = useNavigate();
-    const { signUp, signInWithGoogle } = useAuth();
+    const { user, signUp, signInWithGoogle } = useAuth();
+
+    if (user) return navigate('/mi_cuenta');
 
     const [formData, setFormData] = useState({
         full_name       : '',
@@ -232,7 +234,7 @@ const Signup = () => {
                     <div>
                         <p>
                             ¿Ya tenés cuenta?{' '}
-                            <Link to="/login">Iniciá sesión</Link>
+                            <Link to="/iniciar_sesion">Iniciá sesión</Link>
                         </p>
                     </div>
                 </div>

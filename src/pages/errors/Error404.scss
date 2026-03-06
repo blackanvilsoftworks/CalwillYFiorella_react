@@ -1,0 +1,272 @@
+@use '../../styles/global/variables' as *;
+
+.error-404-container {
+    background  : $error-bg-color;
+    min-height  : 100vh;
+    position    : relative;
+    overflow    : hidden;
+
+    // Efecto de fondo con partículas
+    &::before {
+        content     : '';
+        position    : absolute;
+        top         : 0;
+        left        : 0;
+        right       : 0;
+        bottom      : 0;
+        background  : 
+            radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+            radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+            radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+            radial-gradient(circle at 90% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
+        animation   : float 20s infinite linear;
+    }
+
+    .error-card {
+        background      : rgba(255, 255, 255, 0.95);
+        backdrop-filter : blur(10px);
+        border-radius   : 30px;
+        padding         : 3rem 2rem;
+        box-shadow      : 
+            0 20px 40px rgba(0, 0, 0, 0.2),
+            0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        position        : relative;
+        overflow        : hidden;
+
+        &::before {
+            content     : '';
+            position    : absolute;
+            top         : -50%;
+            right       : -50%;
+            width       : 200%;
+            height      : 200%;
+            background  : radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            animation   : rotate 30s infinite linear;
+        }
+    }
+
+    .error-number {
+        font-size       : 8rem;
+        font-weight     : 800;
+        line-height     : 1;
+        margin-bottom   : 1rem;
+        position        : relative;
+        display         : flex;
+        justify-content : center;
+        align-items     : center;
+
+        .digit {
+            color       : $error-digit-color;
+            text-shadow : 
+                3px 3px 0 rgba(0, 0, 0, 0.1),
+                6px 6px 0 rgba(0, 0, 0, 0.05);
+            animation   : bounce 2s infinite ease-in-out;
+            
+            &:nth-child(1) { animation-delay: 0s;   }
+            &:nth-child(2) { animation-delay: 0.3s; }
+            &:nth-child(3) { animation-delay: 0.6s; }
+        }
+
+        .zero {
+            color   : $error-digit-color;
+            position: relative;
+            
+            &::before {
+                content     : '';
+                position    : absolute;
+                top         : 50%;
+                left        : 50%;
+                transform   : translate(-50%, -50%);
+                width       : 120%;
+                height      : 120%;
+                background  : radial-gradient(circle, $error-digit-color 0%, transparent 70%);
+                opacity     : 0.2;
+                animation   : pulse 2s infinite;
+            }
+        }
+    }
+
+    .error-icon {
+        font-size   : 4rem;
+        color       : $error-smile-icon-color;
+        margin      : 1rem 0;
+        animation   : wobble 3s infinite;
+        
+        i {
+            filter: drop-shadow(0 5px 15px rgba(251, 191, 36, 0.4));
+        }
+    }
+
+    .error-title {
+        font-size       : 2rem;
+        font-weight     : 600;
+        color           : $error-title-color;
+        margin-bottom   : 1rem;
+        
+        @media (min-width: 768px) {
+            font-size: 2.5rem;
+        }
+    }
+
+    .error-description {
+        color       : $error-description-color;
+        font-size   : 1.1rem;
+        max-width   : 500px;
+        margin      : 0 auto 2rem;
+        line-height : 1.6;
+    }
+
+    .error-divider {
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        gap             : 1rem;
+        margin          : 2rem 0;
+        
+        span {
+            width       : 50px;
+            height      : 2px;
+            background  : linear-gradient(90deg, transparent, $error-divider-color, transparent);
+        }
+        
+        i {
+            color       : $error-divider-color;
+            font-size   : 1.5rem;
+            animation   : shieldGlow 2s infinite;
+        }
+    }
+
+    .error-suggestions {
+        background      : rgba($error-desc-bg-color, 0.1);
+        border-radius   : 20px;
+        padding         : 1.5rem;
+        margin          : 2rem 0;
+        text-align      : left;
+
+        .suggestion-text {
+            color           : $error-description-color;
+            font-weight     : 500;
+            margin-bottom   : 1rem;
+            
+            i {
+                color       : $error-smile-icon-color;
+                margin-right: 0.5rem;
+            }
+        }
+
+        .suggestion-list {
+            list-style  : none;
+            padding     : 0;
+            margin      : 0;
+
+            li {
+                margin-bottom   : 0.8rem;
+                display         : flex;
+                align-items     : center;
+                
+                i {
+                    width: 25px;
+                    color: $error-icon-color;
+                }
+                
+                .suggestion-link {
+                    color           : $error-description-color;
+                    text-decoration : none;
+                    transition      : all 0.3s;
+                    position        : relative;
+                    
+                    &::after {
+                        content     : '';
+                        position    : absolute;
+                        bottom      : -2px;
+                        left        : 0;
+                        width       : 0;
+                        height      : 2px;
+                        background  : $accent-color;
+                        transition  : width 0.3s;
+                    }
+                    
+                    &:hover {
+                        color: $accent-color;
+                        
+                        &::after {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .error-actions {
+        display         : flex;
+        gap             : 1rem;
+        justify-content : center;
+        flex-wrap       : wrap;
+        margin-top      : 2rem;
+
+        .btn {
+            padding         : 0.75rem 1.5rem;
+            border-radius   : 50px;
+            font-weight     : 500;
+            transition      : all 0.3s;
+            position        : relative;
+            overflow        : hidden;
+
+            &::before {
+                content         : '';
+                position        : absolute;
+                top             : 50%;
+                left            : 50%;
+                width           : 0;
+                height          : 0;
+                border-radius   : 50%;
+                background      : rgba(255, 255, 255, 0.2);
+                transform       : translate(-50%, -50%);
+                transition      : width 0.6s, height 0.6s;
+            }
+
+            &:hover::before {
+                width   : 300px;
+                height  : 300px;
+            }
+        }
+    }
+
+    .error-code {
+        font-size   : 0.9rem;
+        opacity     : 0.7;
+    }
+}
+
+// Animaciones
+@keyframes bounce {
+    0%, 100%    { transform: translateY(0);     }
+    50%         { transform: translateY(-20px); }
+}
+
+@keyframes pulse {
+    0%, 100%    { opacity: 0.2; transform: translate(-50%, -50%) scale(1);      }
+    50%         { opacity: 0.3; transform: translate(-50%, -50%) scale(1.2);    }
+}
+
+@keyframes wobble {
+    0%, 100%    { transform: rotate(0deg);      }
+    25%         { transform: rotate(-10deg);    }
+    75%         { transform: rotate(10deg);     }
+}
+
+@keyframes float {
+    0%      { transform: translate(0, 0);           }
+    100%    { transform: translate(10px, -10px);    }
+}
+
+@keyframes rotate {
+    0%      { transform: rotate(0deg);      }
+    100%    { transform: rotate(360deg);    }
+}
+
+@keyframes shieldGlow {
+    0%, 100%    { filter: drop-shadow(0 0 5px   rgba(102, 126, 234, 0.5));  }
+    50%         { filter: drop-shadow(0 0 20px  rgba(102, 126, 234, 0.8));  }
+}

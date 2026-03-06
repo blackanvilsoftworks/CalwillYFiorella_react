@@ -1,34 +1,43 @@
 import { DataContext } from '../../contexts/Data.jsx';
+import useAuth from '../../hooks/useAuth.js';
 import { 
     NavLink, 
-    Link 
+    Link, 
+    useNavigate
 } from 'react-router-dom';
 
 import './Menu.scss';
 import { useContext, useRef } from 'react';
+import MenuNavLink from './MenuNavLink.jsx';
 
 const Menu = () => {
-
     const { globalInfo } = useContext(DataContext);
+    const { user, isAdmin, signOut } = useAuth();
+
+    const navigate = useNavigate();
 
     const links = [
         { name: 'Inicio'                , path: '/'                 },
         { name: 'Catálogo de Productos' , path: '/productos'        },
         { name: 'Pagos y Envíos'        , path: '/pagos_envios'     },
-        { name: 'Contacto'              , path: '/contacto'         },
-        { name: 'Iniciar Seción'        , path: '/iniciar_sesion'   },
-        { name: 'Registrarse'           , path: '/registrarse'      }
+        { name: 'Contacto'              , path: '/contacto'         }
     ];
 
     const menuBtn   = useRef(null);
     const menuList  = useRef(null);
 
-    const collpaseMenu = () => {
+    const collapseMenu = () => {
         if (!menuBtn.current.classList.contains('collapsed')) {
             menuBtn.current.classList.add('collapsed');
             menuBtn.current.setAttribute('aria-expanded', 'false');
             menuList.current.classList.remove('show');
         }
+    };
+
+    const signOutSession = () => {
+        signOut();
+        collapseMenu();
+        navigate ('/');
     };
 
     return (
@@ -44,10 +53,32 @@ const Menu = () => {
                 <div ref={menuList} id="navbarNav" className="collapse navbar-collapse text-center ps-auto">
                     <ul className="navbar-nav ms-auto">
                         {
-                            links.map(({ name, path }, i) => (
-                                <li key={name} className='nav-item'><NavLink className="nav-link" to={path} onClick={collpaseMenu}>{name}</NavLink></li>
+                            links.map(({ name, path }) => (
+                                <MenuNavLink key={name} name={name} path={path} collapseMenu={collapseMenu} />
                             ))
                         }
+                        {
+                            isAdmin && (
+                                <MenuNavLink name='Panel de Administración' path='/adminDashboard' collapseMenu={collapseMenu} />
+                            )
+                        }
+                        {
+                            user 
+                                ?
+                                    (
+                                        <>
+                                            <MenuNavLink name='Mi Cuenta' path='/mi_cuenta' collapseMenu={collapseMenu} />
+                                            <li className='nav-item'>
+                                                <button type="button" className='btn btn-outline-danger' onClick={signOutSession}>Cerrar Sesión</button>
+                                            </li>
+                                        </>
+                                    )
+                                :
+                                    (
+                                        <MenuNavLink name='Iniciar Sesión' path='/iniciar_sesion' collapseMenu={collapseMenu} />
+                                    )
+                        }
+                        <MenuNavLink name={<i className="bi bi-cart4"></i>} path='/carrito' collapseMenu={collapseMenu} />
                     </ul>
                 </div>
             </div>
