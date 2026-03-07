@@ -7,7 +7,8 @@ const Signup = () => {
     const navigate = useNavigate();
     const { user, signUp, signInWithGoogle } = useAuth();
 
-    if (user) return navigate('/mi_cuenta');
+    // Si hay usuario pero NO estamos en proceso de login (viene de sesión activa)
+    if (user && !redirecting) navigate('/mi_cuenta');
 
     const [formData, setFormData] = useState({
         full_name       : '',

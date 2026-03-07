@@ -7,14 +7,15 @@ const Login = () => {
     const navigate = useNavigate();
     const { user, signIn, signInWithGoogle } = useAuth();
 
-    if (user) return navigate('/mi_cuenta');
-
     const [email    , setEmail]     = useState('');
     const [password , setPassword]  = useState('');
     const [loading  , setLoading]   = useState(false);
     const [error    , setError]     = useState(null);
 
     const [showPassword, setShowPassword] = useState(false);
+
+    // Si hay usuario pero NO estamos en proceso de login (viene de sesión activa)
+    if (user && !redirecting) navigate('/mi_cuenta');
 
     const handleEmailLogin = async (e) => {
         e.preventDefault();

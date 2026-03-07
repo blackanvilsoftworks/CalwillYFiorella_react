@@ -57,28 +57,20 @@ const Menu = () => {
                                 <MenuNavLink key={name} name={name} path={path} collapseMenu={collapseMenu} />
                             ))
                         }
-                        {
-                            isAdmin && (
-                                <MenuNavLink name='Panel de Administración' path='/adminDashboard' collapseMenu={collapseMenu} />
-                            )
-                        }
+                        { isAdmin && ( <MenuNavLink name='Panel de Administración' path='/adminDashboard' collapseMenu={collapseMenu} /> ) }
                         {
                             user 
-                                ?
-                                    (
-                                        <>
-                                            <MenuNavLink name='Mi Cuenta' path='/mi_cuenta' collapseMenu={collapseMenu} />
-                                            <li className='nav-item'>
-                                                <button type="button" className='btn btn-outline-danger' onClick={signOutSession}>Cerrar Sesión</button>
-                                            </li>
-                                        </>
-                                    )
-                                :
-                                    (
-                                        <MenuNavLink name='Iniciar Sesión' path='/iniciar_sesion' collapseMenu={collapseMenu} />
-                                    )
+                                ? ( <MenuNavLink name='Mi Cuenta'       path='/mi_cuenta'       collapseMenu={collapseMenu} /> )
+                                : ( <MenuNavLink name='Iniciar Sesión'  path='/iniciar_sesion'  collapseMenu={collapseMenu} /> )
                         }
                         <MenuNavLink name={<i className="bi bi-cart4"></i>} path='/carrito' collapseMenu={collapseMenu} />
+                        {
+                            user && (
+                                <li className='nav-item'>
+                                    <button type="button" className='btn btn-outline-danger' onClick={signOutSession}>Cerrar Sesión</button>
+                                </li>
+                            )
+                        }
                     </ul>
                 </div>
             </div>
