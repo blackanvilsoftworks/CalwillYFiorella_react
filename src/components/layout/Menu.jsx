@@ -9,10 +9,11 @@ import {
 import './Menu.scss';
 import { useContext, useRef } from 'react';
 import MenuNavLink from './MenuNavLink.jsx';
+import RoleGate from '../auth/RoleGate.jsx';
 
 const Menu = () => {
     const { globalInfo } = useContext(DataContext);
-    const { user, isAdmin, signOut } = useAuth();
+    const { user, profile, role, isAdmin, signOut } = useAuth();
 
     const navigate = useNavigate();
 
@@ -63,7 +64,14 @@ const Menu = () => {
                                 ? ( <MenuNavLink name='Mi Cuenta'       path='/mi_cuenta'       collapseMenu={collapseMenu} /> )
                                 : ( <MenuNavLink name='Iniciar Sesión'  path='/iniciar_sesion'  collapseMenu={collapseMenu} /> )
                         }
-                        <MenuNavLink name={<i className="bi bi-cart4"></i>} path='/carrito' collapseMenu={collapseMenu} />
+                        <li className="nav-item">
+                            <NavLink className="nav-link position-relative" to="/carrito" onClick={collapseMenu}>
+                                <i className="bi bi-cart3 fs-5"></i>
+                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    0
+                                </span>
+                            </NavLink>
+                        </li>
                         {
                             user && (
                                 <li className='nav-item'>
@@ -71,6 +79,87 @@ const Menu = () => {
                                 </li>
                             )
                         }
+                        {/* HASTA ACA */}
+                        
+                        {user && (
+                            <li className="nav-item dropdown">
+                                <a
+                                    className="nav-link dropdown-toggle"
+                                    href="#"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                >
+                                    <i className="bi bi-person-circle me-1"></i>
+                                    {profile?.full_name || user?.email}
+                                </a>
+                                <ul className="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <span className="dropdown-item-text">
+                                            <small className="text-muted">
+                                                Rol: <strong>{role}</strong>
+                                            </small>
+                                        </span>
+                                    </li>
+                                
+                                </ul>
+                            </li>
+
+                        )}
+                        
+                        
+                        
+                        {/* 
+                        
+
+
+                        {user && (
+                            <>
+                                <RoleGate allowedRoles={['admin', 'superadmin']}>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/admin">
+                                            <i className="bi bi-gear-fill me-1"></i>
+                                            Panel Admin
+                                        </Link>
+                                    </li>
+                                </RoleGate>
+
+                                
+                                        <li>
+                                            <span className="dropdown-item-text">
+                                                <small className="text-muted">
+                                                    Rol: <strong>{role}</strong>
+                                                </small>
+                                            </span>
+                                        </li>
+                                        <li><hr className="dropdown-divider" /></li>
+                                        <li>
+                                            <Link className="dropdown-item" to="/mi-cuenta">
+                                                <i className="bi bi-person me-2"></i>
+                                                Mi Cuenta
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link className="dropdown-item" to="/mis-pedidos">
+                                                <i className="bi bi-bag me-2"></i>
+                                                Mis Pedidos
+                                            </Link>
+                                        </li>
+                                        <li><hr className="dropdown-divider" /></li>
+                                        <li>
+                                            <button
+                                                className="dropdown-item text-danger"
+                                                onClick={signOut}
+                                            >
+                                                <i className="bi bi-box-arrow-right me-2"></i>
+                                                Cerrar Sesión
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </>
+                        )}
+
+                         */}
                     </ul>
                 </div>
             </div>
