@@ -12,6 +12,7 @@ import Login                from "../pages/login/Login.jsx";
 import Signup               from "../pages/login/Signup.jsx";
 
 import Error404             from '../pages/errors/Error404.jsx';
+import AdminHome from "../pages/admin/AdminHome.jsx";
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
             {
                 path: "registrarse",
                 element: <Signup />
+            },
+            {
+                path: "admin",
+                element: <AdminHome />
             },
         ]
     }
