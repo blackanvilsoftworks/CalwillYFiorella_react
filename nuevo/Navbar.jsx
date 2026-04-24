@@ -3,7 +3,7 @@ import useAuth from '../../hooks/useAuth';
 import RoleGate from '../auth/RoleGate';
 
 const Navbar = () => {
-    const { user, profile, role, isAdmin, signOut } = useAuth();
+    const { user, profile, role,/* isAdmin,*/ signOut } = useAuth();
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
