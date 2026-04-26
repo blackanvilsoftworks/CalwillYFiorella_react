@@ -15,95 +15,139 @@ const DataContextProvider = ({ children }) => {
 
     const arrProducts = [
         {
-            id      : 'children',
+            id      : 'children', 
             title   : 'Calzado Infantil',
             cards   : [
                 {
-                    product         : 'Franciscana para Niña Art. 105',
+                    product         : 'Art. 103 (para niño)',
                     description     : 'Zapatos cómodos y resistentes para los más pequeños, disponibles en varios colores.',
+                    features        : ['Material: cuero sintético'],
                     price           : 15000,
-                    images          : [1, 2, 3]
+                    images          : [1, 2, 3, 4, 5]
                 },
                 {
-                    product         : 'Zapatos para Niña',
+                    product         : 'Art. 105 (para niña)',
                     description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+                    features        : ['Material: cuero sintético'],
                     price           : 15000,
-                    images          : [1, 2, 3]
+                    images          : [1, 2, 3, 4, 5]
                 },
                 {
-                    product         : 'Zapatos para Bebé',
+                    product         : 'Art. 107 (para niña)',
                     description     : 'Suaves y flexibles zapatos para bebés, diseñados para no molestar sus pies en desarrollo.',
+                    features        : ['Material: cuero sintético'],
+                    price           : 15000,
+                    images          : [1]
+                },
+                {
+                    product         : 'Guillermina - Art. 114 (para niña)',
+                    description     : 'Zapatito infantil estilo Guillermina, de diseño clásico y delicado. Confeccionado en cuero sintético, presenta un detalle de bordado de flores que le aporta un toque especial y femenino. Su base de goma EVA lo hace liviano y flexible, acompañando el movimiento natural de los pies en sus primeros pasos. Ideal para un look prolijo y cómodo en el día a día.',
+                    features        : [
+                        'Material: cuero sintético',
+                        'Base de goma EVA (liviana y flexible)',
+                        'Bordado de flores',
+                        'Costura reforzada en el borde',
+                        'Etiqueta de marca',
+                        'Diseño clásico y versátil'
+                    ],
                     price           : 15000,
                     images          : [1, 2, 3]
                 },
                 {
-                    product         : 'Zapatos para Niño',
-                    description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+                    product         : 'Botitas de Pana - Art. 122 (para niña)',
+                    description     : 'Botitas infantiles confeccionadas en pana, con interior de corderito que aporta abrigo y suavidad. Su diseño combina textura y funcionalidad, con acolchado en el tobillo para mayor comodidad. La base de goma EVA brinda ligereza y flexibilidad, ideal para el uso diario en días más frescos.',
+                    features        : [
+                        'Exterior de pana',
+                        'Forro interno de corderito',
+                        'Base de goma EVA (liviana y flexible)',
+                        'Acolchado en el tobillo',
+                        'Ojalillos y cordones',
+                        'Costura en el borde',
+                        'Etiqueta de marca',
+                        'Abrigadas y cómodas'
+                    ],
                     price           : 15000,
-                    images          : [1, 2, 3]
-                }
-            ]
-        },
-        {
-            id      : 'women',
-            title   : 'Calzado para Mujeres',
-            cards   : [
-                {
-                    product         : 'Zapatos para Mujer',
-                    description     : 'Zapatos cómodos y resistentes para los más pequeños, disponibles en varios colores.',
-                    price           : 15000,
-                    images          : [1, 2, 3]
+                    images          : [1]
                 },
                 {
-                    product         : 'Zapatos para Mujer',
-                    description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+                    product         : 'Botitas con Velcro - Art. 123 (para niña)',
+                    description     : 'Botitas infantiles de pana con interior de corderito, pensadas para brindar abrigo y practicidad. Su apertura con velcro facilita el calce, mientras que el detalle de corazón aporta un toque tierno y distintivo. La base de goma EVA asegura un andar liviano y flexible, acompañando el movimiento natural de los más chicos.',
+                    features        : [
+                        'Exterior de pana',
+                        'Forro de corderito',
+                        'Base de goma EVA (liviana y flexible)',
+                        'Cierre con velcro (fácil de poner y sacar)',
+                        'Detalle de corazón',
+                        'Costura en el borde',
+                        'Etiqueta de marca',
+                        'Diseño simple y funcional'
+                    ],
                     price           : 15000,
-                    images          : [1, 2, 3]
-                },
-                {
-                    product         : 'Zapatos para Mujer',
-                    description     : 'Suaves y flexibles zapatos para bebés, diseñados para no molestar sus pies en desarrollo.',
-                    price           : 15000,
-                    images          : [1, 2, 3]
-                },
-                {
-                    product         : 'Zapatos para Mujer',
-                    description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
-                    price           : 15000,
-                    images          : [1, 2, 3]
-                }
-            ]
-        },
-        {
-            id      : 'men',
-            title   : 'Calzado para Hombres',
-            cards   : [
-                {
-                    product         : 'Zapatos para Hombres',
-                    description     : 'Zapatos cómodos y resistentes para los más pequeños, disponibles en varios colores.',
-                    price           : 15000,
-                    images          : [1, 2, 3]
-                },
-                {
-                    product         : 'Zapatos para Hombres',
-                    description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
-                    price           : 15000,
-                    images          : [1, 2, 3]
-                },
-                {
-                    product         : 'Zapatos para Hombres',
-                    description     : 'Suaves y flexibles zapatos para bebés, diseñados para no molestar sus pies en desarrollo.',
-                    price           : 15000,
-                    images          : [1, 2, 3]
-                },
-                {
-                    product         : 'Zapatos para Hombres',
-                    description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
-                    price           : 15000,
-                    images          : [1, 2, 3]
+                    images          : [1]
                 }
             ]
         }
+        // ,
+        // {
+        //     id      : 'women',
+        //     title   : 'Calzado para Mujeres',
+        //     cards   : [
+        //         {
+        //             product         : 'Zapatos para Mujer',
+        //             description     : 'Zapatos cómodos y resistentes para los más pequeños, disponibles en varios colores.',
+        //             price           : 15000,
+        //             images          : [1, 2, 3]
+        //         },
+        //         {
+        //             product         : 'Zapatos para Mujer',
+        //             description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+        //             price           : 15000,
+        //             images          : [1, 2, 3]
+        //         },
+        //         {
+        //             product         : 'Zapatos para Mujer',
+        //             description     : 'Suaves y flexibles zapatos para bebés, diseñados para no molestar sus pies en desarrollo.',
+        //             price           : 15000,
+        //             images          : [1, 2, 3]
+        //         },
+        //         {
+        //             product         : 'Zapatos para Mujer',
+        //             description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+        //             price           : 15000,
+        //             images          : [1, 2, 3]
+        //         }
+        //     ]
+        // },
+        // {
+        //     id      : 'men',
+        //     title   : 'Calzado para Hombres',
+        //     cards   : [
+        //         {
+        //             product         : 'Zapatos para Hombres',
+        //             description     : 'Zapatos cómodos y resistentes para los más pequeños, disponibles en varios colores.',
+        //             price           : 15000,
+        //             images          : [1, 2, 3]
+        //         },
+        //         {
+        //             product         : 'Zapatos para Hombres',
+        //             description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+        //             price           : 15000,
+        //             images          : [1, 2, 3]
+        //         },
+        //         {
+        //             product         : 'Zapatos para Hombres',
+        //             description     : 'Suaves y flexibles zapatos para bebés, diseñados para no molestar sus pies en desarrollo.',
+        //             price           : 15000,
+        //             images          : [1, 2, 3]
+        //         },
+        //         {
+        //             product         : 'Zapatos para Hombres',
+        //             description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
+        //             price           : 15000,
+        //             images          : [1, 2, 3]
+        //         }
+        //     ]
+        // }
     ];
     
     const arrFeatures = [
