@@ -13,6 +13,8 @@ const DataContextProvider = ({ children }) => {
     
     const imagesPath = '/assets/images/';
 
+    const msjBotitasGeneral = 'Sandalias Franciscanas hechas de goma eva que le aportan suavidad, ligereza y flexibilidad. Ideal para los más chicos, ya que acompaña el movimiento de sus pies.';
+
     const arrProducts = [
         {
             id      : 'children', 
@@ -20,28 +22,28 @@ const DataContextProvider = ({ children }) => {
             cards   : [
                 {
                     product         : 'Art. 103 (para niño)',
-                    description     : 'Zapatos cómodos y resistentes para los más pequeños, disponibles en varios colores.',
-                    features        : ['Material: cuero sintético'],
+                    description     : msjBotitasGeneral,
+                    features        : [],
                     price           : 15000,
                     images          : [1, 2, 3, 4, 5]
                 },
                 {
                     product         : 'Art. 105 (para niña)',
-                    description     : 'Bonitos y cómodos zapatos para niñas, perfectos para ocasiones especiales y uso diario.',
-                    features        : ['Material: cuero sintético'],
+                    description     : msjBotitasGeneral,
+                    features        : [],
                     price           : 15000,
                     images          : [1, 2, 3, 4, 5]
                 },
                 {
                     product         : 'Art. 107 (para niña)',
-                    description     : 'Suaves y flexibles zapatos para bebés, diseñados para no molestar sus pies en desarrollo.',
-                    features        : ['Material: cuero sintético'],
+                    description     : msjBotitasGeneral,
+                    features        : [],
                     price           : 15000,
                     images          : [1]
                 },
                 {
                     product         : 'Guillermina - Art. 114 (para niña)',
-                    description     : 'Zapatito infantil estilo Guillermina, de diseño clásico y delicado. Confeccionado en cuero sintético, presenta un detalle de bordado de flores que le aporta un toque especial y femenino. Su base de goma EVA lo hace liviano y flexible, acompañando el movimiento natural de los pies en sus primeros pasos. Ideal para un look prolijo y cómodo en el día a día.',
+                    description     : 'Zapatito infantil estilo Guillermina. Confeccionado en cuero sintético, presenta un detalle de bordado de flores. Su base de goma eva lo hace liviano y flexible. Es un diseño clásico, prolijo y cómodo.',
                     features        : [
                         'Material: cuero sintético',
                         'Base de goma EVA (liviana y flexible)',
@@ -55,7 +57,7 @@ const DataContextProvider = ({ children }) => {
                 },
                 {
                     product         : 'Botitas de Pana - Art. 122 (para niña)',
-                    description     : 'Botitas infantiles confeccionadas en pana, con interior de corderito que aporta abrigo y suavidad. Su diseño combina textura y funcionalidad, con acolchado en el tobillo para mayor comodidad. La base de goma EVA brinda ligereza y flexibilidad, ideal para el uso diario en días más frescos.',
+                    description     : 'Botitas infantiles confeccionadas en pana, con interior de corderito que aporta abrigo y suavidad. Está diseñado con acolchado en el tobillo para mayor comodidad. La base de goma eva brinda ligereza y flexibilidad, ideal para el uso diario.',
                     features        : [
                         'Exterior de pana',
                         'Forro interno de corderito',
@@ -67,11 +69,11 @@ const DataContextProvider = ({ children }) => {
                         'Abrigadas y cómodas'
                     ],
                     price           : 15000,
-                    images          : [1]
+                    images          : [1, 2, 3, 4]
                 },
                 {
                     product         : 'Botitas con Velcro - Art. 123 (para niña)',
-                    description     : 'Botitas infantiles de pana con interior de corderito, pensadas para brindar abrigo y practicidad. Su apertura con velcro facilita el calce, mientras que el detalle de corazón aporta un toque tierno y distintivo. La base de goma EVA asegura un andar liviano y flexible, acompañando el movimiento natural de los más chicos.',
+                    description     : 'Botitas infantiles de pana con interior de corderito. Su apertura con velcro facilita el calce. La base de goma eva brinda ligereza y flexibilidad, ideal para el uso diario.',
                     features        : [
                         'Exterior de pana',
                         'Forro de corderito',
@@ -83,7 +85,7 @@ const DataContextProvider = ({ children }) => {
                         'Diseño simple y funcional'
                     ],
                     price           : 15000,
-                    images          : [1]
+                    images          : [1, 2]
                 }
             ]
         }
