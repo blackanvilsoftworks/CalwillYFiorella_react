@@ -4,8 +4,8 @@ import './Hero.scss';
 const Hero = () => {
     return (
         <div id="hero_container" className="hero px-3">
-            <h1 className="display-4 fw-bold mb-4">Calzados para Toda la Familia</h1>
-            <p className="lead mb-4 fw-semibold">Somos distribuidores de una gran variedad de modelos de calzado infantil y calzado para adultos.</p>
+            <h1 className="display-4 fw-bold mb-4">Calzados que acompañan a los más pequeños</h1>
+            <p className="lead mb-4 fw-semibold">Somos distribuidores de una gran variedad de modelos de calzado infantil.</p>
             <Link className="btn main-btn-style btn-lg" to='/productos'>Ver Productos</Link>
         </div>
     );
