@@ -56,7 +56,7 @@ const DataContextProvider = ({ children }) => {
                     images          : [1, 2, 3]
                 },
                 {
-                    product         : 'Botitas de Pana - Art. 122 (para niña)',
+                    product         : 'Botitas de Pana - Art. 122 (mixto)',
                     description     : 'Botitas infantiles confeccionadas en pana, con interior de corderito que aporta abrigo y suavidad. Está diseñado con acolchado en el tobillo para mayor comodidad. La base de goma eva brinda ligereza y flexibilidad, ideal para el uso diario.',
                     features        : [
                         'Exterior de pana',
