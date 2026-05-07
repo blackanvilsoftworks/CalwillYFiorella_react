@@ -4,26 +4,37 @@ import { DataContext } from '../../contexts/Data.jsx';
 import './Footer.scss';
 
 const Footer = () => {
-
     const msgBtnFailed = 'Se detectó un problema con este botón y actualmente no está funcionando. Estamos trabajando para resolverlo. Le pedimos disculpas por las molestias ocasionadas.';
 
-    const { globalInfo, arrSocialMedia } = useContext(DataContext);
+    const { globalInfo } = useContext(DataContext);
+
+    const arrSocialMedia = [
+        {
+            name    : 'facebook',
+            icon    : 'bi bi-facebook',
+            color   : 'primary',
+            url     : 'https://www.facebook.com/share/16FkGbSYi4/?mibextid=wwXIfr'
+        },
+        {
+            name    : 'whatsapp',
+            icon    : 'bi bi-whatsapp',
+            color   : 'success',
+            url     : `https://wa.me/${globalInfo.phoneNumber.replace(/\D/g, '')}` // Quita todo lo que no sea número y que busque el array por tipo y no por index
+        }
+    ];
 
     const facebookBtnHandler = ()=> {
         const facebookItem = arrSocialMedia.find(item => item.name === 'facebook');
         
-        facebookItem ?
-            window.open(facebookItem.url, '_blank') :
-            alert(msgBtnFailed);
+        facebookItem 
+            ? window.open(facebookItem.url, '_blank') 
+            : alert(msgBtnFailed);
     };
     
     const whatsappBtnHandler = ()=> {
         const whatsappItem = arrSocialMedia.find(item => item.name === 'whatsapp');
         
-        if (!whatsappItem) {
-            alert(msgBtnFailed);
-            return;
-        }
+        if (!whatsappItem) return alert(msgBtnFailed);
         
         const whatsappName      = "NOMBRE_AQUI";
         const whatsappMessage   = "MENSAJE_AQUI";
@@ -33,14 +44,9 @@ const Footer = () => {
 
     const clickBtnHandler = (e) => {
         switch (e.currentTarget.id) {
-            case 'facebook':
-                facebookBtnHandler();
-                break;
-            case 'whatsapp':
-                whatsappBtnHandler();
-                break;
-            default:
-                alert(msgBtnFailed);
+            case 'facebook' : facebookBtnHandler(); break;
+            case 'whatsapp' : whatsappBtnHandler(); break;
+            default         : alert(msgBtnFailed);
         }
     };
 
@@ -50,15 +56,11 @@ const Footer = () => {
                 <div className="row justify-content-center">
                     <div className="col-12 col-md-8">
                         <div className="row">
-                            {
-                                arrSocialMedia.map(({ name, color, icon }, i) => {
-                                    return (
-                                        <div key={name} className="col-12 col-sm-6 mb-3">
-                                            <button id={name} className={`btn btn-outline-${color} w-100`} type="button" onClick={clickBtnHandler}><i className={icon}></i> {name.charAt(0).toUpperCase() + name.slice(1)}</button>
-                                        </div>
-                                    );
-                                })
-                            }
+                            {arrSocialMedia.map(({ name, color, icon }) => (
+                                <div key={name} className="col-12 col-sm-6 mb-3">
+                                    <button id={name} className={`btn btn-outline-${color} w-100`} type="button" onClick={clickBtnHandler}><i className={icon}></i> {name.charAt(0).toUpperCase() + name.slice(1)}</button>
+                                </div>
+                            ))}
                         </div>
                         <hr />
                         <div className="row">

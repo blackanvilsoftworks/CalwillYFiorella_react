@@ -156,7 +156,7 @@ const AuthProvider = ({ children }) => {
 
     const isCustomer    = role === 'customer';
     const isWholesaler  = role === 'wholesaler';
-    const isAdmin       = role === 'admin' || role === 'superadmin';
+    const isAdmin       = ['admin', 'superadmin'].includes(role);
     const isSuperAdmin  = role === 'superadmin';
 
     const value = {

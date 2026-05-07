@@ -1,13 +1,7 @@
-import { useContext } from 'react';
-import { DataContext } from '../../contexts/Data.jsx';
 import { createTitle } from '../../utils/createTitle.jsx';
-
 import './Payments.scss';
 
 const Payments = () => {
-
-    const { arrPayMethods } = useContext(DataContext);
-            
     return (
         <div id='pay_methods_container' className='pay_methods_container container text-center'>
             <h2 className="mb-4">
@@ -15,9 +9,8 @@ const Payments = () => {
             </h2>
             <p>Aceptamos los siguientes métodos de pago:</p>
             <ul className="list-unstyled">
-                {
-                    arrPayMethods.map((method) => (<li key={method}>- {method}</li>))
-                }
+                <li><i className="bi bi-bank"></i> Transferencia bancaria a cuenta de Mercado Pago</li>
+                <li><i className="bi bi-cash-stack"></i> Efectivo (10% de descuento)</li>
             </ul>
         </div>
     );

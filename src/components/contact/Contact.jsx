@@ -1,13 +1,29 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { DataContext } from '../../contexts/Data.jsx';
+import { useEffect, useRef, useState } from 'react';
+import useMainData from '../../hooks/useMainData.js';
 import { createTitle } from '../../utils/createTitle.jsx';
 
 import './Contact.scss';
 
 const Contact = () => {
-    const { globalInfo, arrInfoCardContent } = useContext(DataContext);
+    const { globalInfo } = useMainData();
 
-    const max_length = 500;
+    const arrInfoCardContent = [
+        {
+            type    : 'Email',
+            value   : globalInfo.email,
+            icon    : 'bi bi-envelope-fill'
+        },
+        {
+            type    : 'Teléfono',
+            value   : globalInfo.phoneNumber,
+            icon    : 'bi bi-telephone-fill'
+        },
+        {
+            type    : 'Horario',
+            value   : 'Lunes a Sábado de 09:00 a 18:00',
+            icon    : 'bi bi-clock-fill'
+        }
+    ];
 
     const initialState = {
         name        : '',
@@ -66,7 +82,7 @@ const Contact = () => {
     const messageValidation = (message) => {
         const cleanedMessage = message.trim();
         if (!cleanedMessage)                                                    return validationResult.error('El mensaje es requerido.');
-        if (!/^[A-Za-z0-9ÁáÉéÍíÓóÚúÑñÜü\s.,$!?\-]{1,500}$/.test(cleanedMessage)) return validationResult.error('El mensaje contiene caracteres no permitidos.');
+        if (!/^[A-Za-z0-9ÁáÉéÍíÓóÚúÑñÜü\s.,$!?-]{1,500}$/.test(cleanedMessage)) return validationResult.error('El mensaje contiene caracteres no permitidos.');
         return validationResult.success(cleanedMessage);
     };
 
@@ -235,7 +251,7 @@ const Contact = () => {
                         <label htmlFor="message">Mensaje</label>
                         <div className="d-flex justify-content-between">
                             <p className="m-0"><small className='text-secondary'>*Recibirá una respuesta vía WhatsApp lo más pronto posible.</small></p>
-                            <p className="m-0"><small>({count}/{max_length} caracteres)</small></p>
+                            <p className="m-0"><small>({count}/500 caracteres)</small></p>
                         </div>
                         {fieldErrors.message && (
                             <div className="invalid-feedback d-block">

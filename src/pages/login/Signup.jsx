@@ -8,7 +8,7 @@ const Signup = () => {
     const { user, signUp, signInWithGoogle } = useAuth();
 
     // Si hay usuario pero NO estamos en proceso de login (viene de sesión activa)
-    if (user && !redirecting) navigate('/mi_cuenta');
+    if (user /*&& !redirecting*/) navigate('/mi_cuenta');
 
     const [formData, setFormData] = useState({
         full_name       : '',
@@ -103,7 +103,7 @@ const Signup = () => {
                     )}
 
                     {success && (
-                        <div class="alert alert-success" role="alert">
+                        <div className="alert alert-success" role="alert">
                             ¡Cuenta creada! Revisá tu email para confirmar tu cuenta.
                         </div>
                     )}

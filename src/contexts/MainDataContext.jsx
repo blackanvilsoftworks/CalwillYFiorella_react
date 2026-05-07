@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
-const DataContext = createContext();
+const MainDataContext = createContext();
 
-const DataContextProvider = ({ children }) => {
+const MainDataProvider = ({ children }) => {
 
     const globalInfo = {
         name        : 'Calwill & Fiorella',
@@ -19,10 +19,10 @@ const DataContextProvider = ({ children }) => {
     };
 
     return (
-        <DataContext.Provider value={value}>
+        <MainDataContext.Provider value={value}>
             { children }
-        </DataContext.Provider>
+        </MainDataContext.Provider>
     );
 };
 
-export { DataContext, DataContextProvider };
+export { MainDataContext, MainDataProvider };

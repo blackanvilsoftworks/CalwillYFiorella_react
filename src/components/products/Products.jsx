@@ -3,7 +3,6 @@ import {
     useState, 
     useEffect
  } from 'react';
-// import { DataContext } from '../../contexts/Data.jsx';
 import { createTitle } from '../../utils/createTitle.jsx';
 // import ProductsTabItem from './ProductsTabItem.jsx';
 import ProductCard from './ProductCard.jsx';
@@ -17,11 +16,7 @@ import {
 import './Products.scss';
 import Loader from '../loader/Loader.jsx';
 
-
 const Products = () => {
-
-    // const { arrProducts } = useContext(DataContext);
-    
     const [products     , setProducts   ] = useState([]);
     const [categories   , setCategories ] = useState([]);
     const [loading      , setLoading    ] = useState(true);
@@ -46,9 +41,10 @@ const Products = () => {
         } finally { 
             setLoading(false); 
         }
-    }
+    };
 
-    const changeCategory = (e) => setCategory(e.target.name);
+    // const changeCategory = (e) => setCategory(e.target.name);
+    const changeCategory = (e) => setCategory(e.target.value);
 
     useEffect(() => {
         renderProducts();
@@ -69,27 +65,22 @@ const Products = () => {
                         <h2 className="text-center">
                             { createTitle('Nuestros Productos', 'bi bi-cart') }
                         </h2>
-                        <ul id="productsTab" className="nav nav-pills justify-content-center mb-4" role="tablist">
-                            {categories && categories.map(({ id_category, name, description }, i) => {
-                                const isActive = i === 0 ? true : false;
-                                return (
-                                    <li key={name} className="nav-item" role="presentation">
-                                        <button
-                                            id={`${name}-tab`}
-                                            name={id_category}
-                                            className={`nav-link main-btn-style mx-1${isActive ? ' active': ''}`}
-                                            data-bs-toggle="pill"
-                                            data-bs-target={`#${name}`}
-                                            aria-selected={isActive} 
-                                            type="button"
-                                            role="tab"
-                                            style={{ width: 250 }}
-                                            onClick={changeCategory}
-                                        >Calzado para {description.charAt(0).toUpperCase() + description.slice(1).toLowerCase()}</button>
-                                    </li>
-                                )
-                            })}
-                        </ul>
+                        <div className='d-flex justify-content-center align-items-center my-4'>
+                            <select 
+                                className="main-btn-style text-center" 
+                                style={{ width: 400, cursor: 'pointer' }}
+                                value={category}
+                                onChange={changeCategory}
+                                disabled={loading}
+                            >
+                                {categories && categories.map(({ id_category, description }) => (
+                                    <option
+                                        key={id_category}
+                                        value={id_category}
+                                    >Calzado para {description.charAt(0).toUpperCase() + description.slice(1).toLowerCase()}</option>
+                                ))}
+                            </select>
+                        </div>
                         <div id="productsTabContent" className="tab-content">
                             <div key={category} id={category} className={`tab-pane fade show active`} role="tabpanel" aria-labelledby={`${category}-tab`}>
                                 <div className="row">

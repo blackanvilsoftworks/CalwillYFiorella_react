@@ -84,27 +84,24 @@ const Menu = () => {
                                             </small>
                                         </span>
                                     </li>
-                                    {
-                                        isAdmin && (
-                                            <MenuNavLink name='Panel Admin' path='/admin' 
-                                                collapseMenu={collapseMenu} 
-                                                icon={<i className="bi bi-gear-fill me-1"></i>} 
-                                                className='dropdown-item'/>
-                                        )
-                                    }
+                                    {isAdmin && (
+                                        <MenuNavLink name='Panel Admin' path='/admin' 
+                                            collapseMenu={collapseMenu} 
+                                            icon={<i className="bi bi-gear-fill me-1"></i>} 
+                                            className='dropdown-item'
+                                        />
+                                    )}
                                     <li><hr /></li>
-                                    <li>
-                                        <MenuNavLink name='Mi Cuenta' path='/mi_cuenta' 
-                                            collapseMenu={collapseMenu} 
-                                            icon={<i className="bi bi-person me-2"></i>} 
-                                            className='dropdown-item'/>
-                                    </li>
-                                    <li>
-                                        <MenuNavLink name='Mis Pedidos' path='/mis_pedidos' 
-                                            collapseMenu={collapseMenu} 
-                                            icon={<i className="bi bi-bag me-2"></i>} 
-                                            className='dropdown-item'/>
-                                    </li>
+                                    <MenuNavLink name='Mi Cuenta' path='/mi_cuenta' 
+                                        collapseMenu={collapseMenu} 
+                                        icon={<i className="bi bi-person me-2"></i>} 
+                                        className='dropdown-item'
+                                    />
+                                    <MenuNavLink name='Mis Pedidos' path='/mis_pedidos' 
+                                        collapseMenu={collapseMenu} 
+                                        icon={<i className="bi bi-bag me-2"></i>} 
+                                        className='dropdown-item'
+                                    />
                                     <li><hr /></li>
                                     <li className='nav-item'>
                                         <button 
