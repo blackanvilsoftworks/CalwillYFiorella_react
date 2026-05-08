@@ -15,6 +15,11 @@ import Error404             from '../pages/errors/Error404.jsx';
 // import AdminHome            from "../pages/admin/AdminHome.jsx";
 import AdminPanel           from "../pages/AdminPanel.jsx";
 
+// import Cart                 from "../pages/user/Cart.jsx";
+import CartPage from "../pages/user/Cart.jsx";
+import MyAccountPage from "../pages/user/MyAccount.jsx";
+import MyOrdersPage from "../pages/user/MyOrdersPage.jsx";
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -48,6 +53,18 @@ const router = createBrowserRouter([
             {
                 path: "registrarse",
                 element: <Signup />
+            },
+            {
+                path: "carrito",
+                element: <CartPage />
+            },
+            {
+                path: "mi_cuenta",
+                element: <MyAccountPage />
+            },
+            {
+                path: "mis_pedidos",
+                element: <MyOrdersPage />
             },
             {
                 path: "admin",
