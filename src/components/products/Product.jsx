@@ -12,108 +12,100 @@ import Loader from '../loader/Loader';
 import useMainData from '../../hooks/useMainData';
 
 const Product = ({ id_product }) => {
-
     const { placeholder } = useMainData();
 
     // ── Datos cargados desde la BD ──────────────────────────────────────────
-    const [product,         setProduct        ] = useState(null)
-    const [sizes,           setSizes          ] = useState([])
-    const [availableColors, setAvailableColors] = useState([])
-    const [images,          setImages         ] = useState([])
+    const [product,         setProduct        ] = useState(null);
+    const [sizes,           setSizes          ] = useState([]);
+    const [availableColors, setAvailableColors] = useState([]);
+    const [images,          setImages         ] = useState([]);
 
     // ── Selección activa ────────────────────────────────────────────────────
-    const [selectedSize,  setSelectedSize ] = useState(null)
-    const [selectedColor, setSelectedColor] = useState(null)
+    const [selectedSize,  setSelectedSize ] = useState(null);
+    const [selectedColor, setSelectedColor] = useState(null);
 
     // ── UI ──────────────────────────────────────────────────────────────────
     // const [currentImage, setCurrentImage] = useState(0)
-    const [quantity,     setQuantity    ] = useState(1)
-    const [loading,      setLoading     ] = useState(true)
-    const [error,        setError       ] = useState(null)
+    const [quantity,     setQuantity    ] = useState(1);
+    const [loading,      setLoading     ] = useState(true);
+    const [error,        setError       ] = useState(null);
 
     // ── 1. Cargar producto y talles en paralelo al montar ───────────────────
     useEffect(() => {
         const load = async () => {
             try {
-                setLoading(true)
-                setError(null)
+                setLoading(true);
+                setError(null);
 
                 const [productData, sizesData] = await Promise.all([
                     getProductDetail(id_product),
                     getSizesByProduct(id_product)
-                ])
+                ]);
 
-                setProduct(productData)
-                setSizes(sizesData)
+                setProduct(productData);
+                setSizes(sizesData);
 
-                if (sizesData.length > 0) setSelectedSize(sizesData[0])
+                if (sizesData.length > 0) setSelectedSize(sizesData[0]);
 
             } catch (err) {
-                setError('Error al cargar el producto')
-                console.error(err)
+                setError('Error al cargar el producto');
+                console.error(err);
             } finally {
-                setLoading(false)
+                setLoading(false);
             }
-        }
-        load()
-    }, [id_product])
+        };
+        load();
+    }, [id_product]);
 
     // ── 2. Cuando cambia el talle → fetch de colores ────────────────────────
     useEffect(() => {
-        if (!selectedSize || !id_product) return
+        if (!selectedSize || !id_product) return;
 
         const loadColors = async () => {
+            setAvailableColors([]);
             try {
-                setAvailableColors([])
-                setSelectedColor(null)
+                setSelectedColor(null);
 
-                const colorsData = await getColorsByProductAndSize(id_product, selectedSize.id_size)
+                const colorsData = await getColorsByProductAndSize(id_product, selectedSize.id_size);
 
-                setAvailableColors(colorsData)
+                setAvailableColors(colorsData);
 
-                // Auto-seleccionar primer color con stock
-                // const firstWithStock = colorsData.find(c => c.stock > 0)
-                // if (firstWithStock) setSelectedColor(firstWithStock)
-                if (colorsData.length > 0) setSelectedColor(colorsData[0])
-
+                if (colorsData.length > 0) setSelectedColor(colorsData[0]);
             } catch (err) {
-                console.error('Error loading colors:', err)
-                setAvailableColors([])
+                console.error('Error loading colors:', err);
             }
-        }
-        loadColors()
-        setQuantity(1)
-    }, [selectedSize])
+        };
+        loadColors();
+        setQuantity(1);
+    }, [id_product,selectedSize]);
 
     // ── 3. Cuando cambia el color → fetch de imágenes ───────────────────────
     useEffect(() => {
-        if (!selectedColor?.id_variant) return
+        if (!selectedColor?.id_variant) return;
         const loadImages = async () => {
+            setImages([]);
             try {
-                setImages([])
-                const imagesData = await getVariantImages(selectedColor.id_variant)
-                
-                setImages(imagesData)
+                const imagesData = await getVariantImages(selectedColor.id_variant);
+                setImages(imagesData);
             } catch (err) {
-                console.error('Error loading images:', err)
-                setImages([])
+                console.error('Error loading images:', err);
             }
-        }
-        loadImages()
-    }, [selectedColor])
+        };
+        loadImages();
+    }, [selectedColor]);
 
     // ── Handlers ────────────────────────────────────────────────────────────
 
     const handleSizeSelect = (size) => {
-        if (size.id_size === selectedSize?.id_size) return
-        setSelectedSize(size)
-    }
+        if (size.id_size === selectedSize?.id_size) return;
+        setSelectedSize(size);
+    };
 
     const handleColorSelect = (color) => {
-        if (color.id_variant === selectedColor?.id_variant) return
-        setSelectedColor(color)
-        setQuantity(1)
-    }
+        if (color.id_variant === selectedColor?.id_variant) return;
+        setSelectedColor(color);
+        setQuantity(1);
+    };
 
     const handleAddToCart = () => {
         if (!selectedColor || !selectedSize) return;

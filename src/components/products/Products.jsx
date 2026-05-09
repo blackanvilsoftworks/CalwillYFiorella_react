@@ -21,35 +21,34 @@ const Products = () => {
     const [error        , setError      ] = useState(null);
     const [category     , setCategory   ] = useState(0);
 
-    const renderProducts = async () => {
-        try {
-            setLoading(true);
-            setError(null);
-
-            const [categoriesData, productsData] = await Promise.all([
-                getActiveCategories(),
-                getProductsForHomepage(category)
-            ]);
-
-            setCategories(categoriesData);
-            setProducts(productsData);
-        } catch (err) {
-            setError(`Error. Por favor, intentá de nuevo. (${err.message})`);
-            console.error(err);
-        } finally { 
-            setLoading(false); 
-        }
-    };
-
     const changeCategory = (e) => setCategory(e.target.value);
 
     useEffect(() => {
-        renderProducts();
+        // Rendering products.
+        (async () => {
+            try {
+                setLoading(true);
+                setError(null);
+    
+                const [categoriesData, productsData] = await Promise.all([
+                    getActiveCategories(),
+                    getProductsForHomepage(category)
+                ]);
+    
+                setCategories(categoriesData);
+                setProducts(productsData);
+            } catch (err) {
+                setError(`Error. Por favor, intentá de nuevo. (${err.message})`);
+                console.error(err);
+            } finally { 
+                setLoading(false); 
+            }
+        })();
     }, [category]);
 
     useEffect(() => {
         if (categories.length > 0 && !category) setCategory(categories[0].id_category);
-    }, [categories]);
+    }, [categories, category]);
 
     if (error)      return <div className="error">{error}</div>
     if (loading)    return <Loader />
