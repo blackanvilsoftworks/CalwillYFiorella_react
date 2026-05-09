@@ -1,20 +1,18 @@
 import { 
-    // useContext,
     useState, 
     useEffect
  } from 'react';
 import { createTitle } from '../../utils/createTitle.jsx';
-// import ProductsTabItem from './ProductsTabItem.jsx';
 import ProductCard from './ProductCard.jsx';
 
 import { 
     getActiveCategories,
-    // getAllProducts, 
-    getProductsForHomepage 
+    getProductsForHomepage
 } from '../../services/productService.js'
 
 import './Products.scss';
 import Loader from '../loader/Loader.jsx';
+import { capitalize } from '../../utils/helpers.js';
 
 const Products = () => {
     const [products     , setProducts   ] = useState([]);
@@ -31,7 +29,7 @@ const Products = () => {
             const [categoriesData, productsData] = await Promise.all([
                 getActiveCategories(),
                 getProductsForHomepage(category)
-            ])
+            ]);
 
             setCategories(categoriesData);
             setProducts(productsData);
@@ -43,7 +41,6 @@ const Products = () => {
         }
     };
 
-    // const changeCategory = (e) => setCategory(e.target.name);
     const changeCategory = (e) => setCategory(e.target.value);
 
     useEffect(() => {
@@ -77,14 +74,14 @@ const Products = () => {
                                     <option
                                         key={id_category}
                                         value={id_category}
-                                    >Calzado para {description.charAt(0).toUpperCase() + description.slice(1).toLowerCase()}</option>
+                                    >Calzado para {capitalize(description)}</option>
                                 ))}
                             </select>
                         </div>
                         <div id="productsTabContent" className="tab-content">
                             <div key={category} id={category} className={`tab-pane fade show active`} role="tabpanel" aria-labelledby={`${category}-tab`}>
                                 <div className="row">
-                                    {products && products.map((product, i) => (<ProductCard key={i} product={product} i={i} />))}
+                                    {products && products.map((product, idx) => (<ProductCard key={idx} product={product} idx={idx} />))}
                                     {products.length === 0 && (<p className="no-products">No hay productos disponibles en esta categoría.</p>)}
                                 </div>
                             </div>

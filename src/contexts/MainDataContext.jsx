@@ -12,10 +12,12 @@ const MainDataProvider = ({ children }) => {
     };
     
     const imagesPath = '/assets/images/';
+    const placeholder = '/assets/images/placeholder.png';
 
     const value = { 
         globalInfo, 
-        imagesPath
+        imagesPath,
+        placeholder
     };
 
     return (

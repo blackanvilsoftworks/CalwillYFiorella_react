@@ -9,8 +9,11 @@ import ProductCarousel from './ProductCarousel';
 
 import './Product.scss';
 import Loader from '../loader/Loader';
+import useMainData from '../../hooks/useMainData';
 
 const Product = ({ id_product }) => {
+
+    const { placeholder } = useMainData();
 
     // ── Datos cargados desde la BD ──────────────────────────────────────────
     const [product,         setProduct        ] = useState(null)
@@ -113,7 +116,7 @@ const Product = ({ id_product }) => {
     }
 
     const handleAddToCart = () => {
-        if (!selectedColor || !selectedSize) return
+        if (!selectedColor || !selectedSize) return;
 
         const cartItem = {
             id_variant:          selectedColor.id_variant,
@@ -123,19 +126,17 @@ const Product = ({ id_product }) => {
             price:               selectedColor.price,
             quantity,
             subtotal:            selectedColor.price * quantity,
-            image:               images[0]?.image_url || null
-        }
+            image:               images[0]?.image_url || placeholder
+        };
 
-        console.log('Agregar al carrito:', cartItem)
+        console.log('Agregar al carrito:', cartItem);
         // TODO: llamar a la función del contexto del carrito
-    }
+    };
 
     // ── Renders condicionales ───────────────────────────────────────────────
-    if (loading) return <Loader />
-    if (error)   return <div className="product-error"><p>{error}</p></div>
-    if (!product) return null
-
-    const maxQty = selectedColor?.stock || 1
+    if (loading)    return <Loader />;
+    if (error)      return <div className="product-error"><p>{error}</p></div>;
+    if (!product)   return null; // TODO: Hay que armar algo para mostrar cuando se pone un id_product de un producto que ya no esté disponible
 
     return (
         <div id="product_container" className="product_container container py-3 py-sm-4 py-md-5 rounded-3">
@@ -231,7 +232,7 @@ const Product = ({ id_product }) => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Product;

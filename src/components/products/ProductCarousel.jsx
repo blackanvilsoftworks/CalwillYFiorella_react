@@ -3,14 +3,14 @@
 
 import './ProductCarousel.scss';
 
-const ProductCarousel = ({ images, size, color }) => {
+const ProductCarousel = ({ images, id_size, id_color }) => {
     // const { imagesPath } = useContext(DataContext);
 
     return (
-        <div id={`carousel-${size}-${color}`} className="carousel slide">
+        <div id={`carousel-${id_size}-${id_color}`} className="carousel slide">
             <div className="carousel-inner">
-                {images ?
-                    images.map((image, i) => {
+                {images
+                    ? images.map((image, i) => {
                         return (
                             <div key={image.id_image} className={`carousel-item${i === 0 ? ' active' : ''}`}>
                                 <img 
@@ -28,11 +28,11 @@ const ProductCarousel = ({ images, size, color }) => {
                     />)
                 }
             </div>            
-            <button className="carousel-control-prev" data-bs-target={`#carousel-${size}-${color}`} data-bs-slide="prev" type="button">
+            <button className="carousel-control-prev" data-bs-target={`#carousel-${id_size}-${id_color}`} data-bs-slide="prev" type="button">
                 <span className="carousel-control-prev-icon"></span>
                 <span className="visually-hidden">Previous</span>
             </button>
-            <button className="carousel-control-next" data-bs-target={`#carousel-${size}-${color}`} data-bs-slide="next" type="button">
+            <button className="carousel-control-next" data-bs-target={`#carousel-${id_size}-${id_color}`} data-bs-slide="next" type="button">
                 <span className="carousel-control-next-icon"></span>
                 <span className="visually-hidden">Next</span>
             </button>
