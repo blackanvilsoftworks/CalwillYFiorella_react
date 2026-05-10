@@ -1,14 +1,14 @@
 import { 
-    useState, 
+    useState,
     useEffect
- } from 'react';
+} from 'react';
 import { createTitle } from '../../utils/createTitle.jsx';
 import ProductCard from './ProductCard.jsx';
 
-import { 
+import {
     getActiveCategories,
     getProductsForHomepage
-} from '../../services/productService.js'
+} from '../../services/productService.js';
 
 import './Products.scss';
 import Loader from '../loader/Loader.jsx';
@@ -50,8 +50,8 @@ const Products = () => {
         if (categories.length > 0 && !category) setCategory(categories[0].id_category);
     }, [categories, category]);
 
-    if (error)      return <div className="error">{error}</div>
-    if (loading)    return <Loader />
+    if (error)      return <div className="error">{error}</div>;
+    if (loading)    return <Loader />;
 
     return (
         <div id="products_container" className="products_container container py-3 py-sm-4 py-md-5 rounded-3">
