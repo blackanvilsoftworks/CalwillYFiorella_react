@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { 
     getProductDetail, 
     getSizesByProduct,
     getColorsByProductAndSize,
     getVariantImages 
 } from '../../services/productService';
-import ProductCarousel from './ProductCarousel';
+import ProductCarousel from './carousel/ProductCarousel';
 
 import './Product.scss';
 import Loader from '../loader/Loader';
@@ -109,14 +109,14 @@ const Product = ({ id_product }) => {
         // TODO: Dar alguna advertencia de que no se puede agregar al carrito dependiendo de lo que falte
 
         const cartItem = {
-            id_variant:          selectedColor.id_variant,
-            product_name:        product.product_name,
-            variant_description: `${selectedColor.colors.description} - Talle ${selectedSize.size}`,
-            sku:                 selectedColor.sku,
-            price:               selectedColor.price,
-            quantity,
-            subtotal:            selectedColor.price * quantity,
-            image:               images[0]?.image_url || placeholder
+            id_variant          : selectedColor.id_variant,
+            product_name        : product.product_name,
+            variant_description : `${selectedColor.colors.description} - Talle ${selectedSize.size}`,
+            sku                 :selectedColor.sku,
+            price               : selectedColor.price,
+            quantity            : quantity,
+            subtotal            : selectedColor.price * quantity,
+            image               : images[0]?.image_url || placeholder
         };
 
         console.log(`Agregar al carrito: ${cartItem}`);
@@ -135,7 +135,7 @@ const Product = ({ id_product }) => {
                 {/* ── COLUMNA IZQUIERDA: Carousel + Selectores ── */}
                 <div className="col-12 col-md-6 px-lg-5">
                     <ProductCarousel 
-                        images={images}                        
+                        images={images}
                         size={selectedSize?.id_size}
                         color={selectedColor?.colors?.id_color}
                     />

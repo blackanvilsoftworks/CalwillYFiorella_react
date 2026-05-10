@@ -5,7 +5,6 @@ import './Footer.scss';
 
 const Footer = () => {
     const { globalInfo } = useMainData();
-
     return (
         <footer id="footer_container" className="text-center pt-4 mt-3">
             <div className="container pt-0">

@@ -1,11 +1,9 @@
-import { useContext } from 'react';
 import './AboutUs.scss';
 import { createTitle } from '../../utils/createTitle.jsx';
-import { DataContext } from '../../contexts/Data.jsx';
+import useMainData from '../../hooks/useMainData.js';
 
 const AboutUs = () => {
-    const { imagesPath, globalInfo } = useContext(DataContext);
-    
+    const { globalInfo, LOGO } = useMainData();
     return (
         <div id="about_us_container" className="about_us_container container mt-3 mt-sm-5 pt-5 pb-3 text-center rounded-3">
             <div className="row justify-content-center">
@@ -15,7 +13,7 @@ const AboutUs = () => {
                             { createTitle('Sobre Nosotros', 'bi bi-balloon-heart') } 
                         </h2>
                         <div className="col-12 col-md-5 col-lg-5 align-content-center">
-                            <img className="img-fluid" src={`${imagesPath}logo.jpg`} alt={`${globalInfo.name} Logo`} />
+                            <img className="img-fluid" src={LOGO} alt={`${globalInfo.name} Logo`} />
                         </div>
                         <div className="col-12 col-md-7 col-lg-7 px-5 align-self-center">
                             <p>En {globalInfo.name} nos especializamos en la fabricación de calzado infantil de la más alta calidad, con diseños únicos y materiales sostenibles.</p>

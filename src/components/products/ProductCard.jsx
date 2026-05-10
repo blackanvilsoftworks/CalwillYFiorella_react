@@ -1,18 +1,18 @@
 import { Link } from 'react-router-dom';
-import './ProductCard.scss';
 import useMainData from '../../hooks/useMainData';
+import './ProductCard.scss';
 
 const ProductCard = ({ product, idx }) => {
     const { id_product, cat_name, product_name, short_desc, min_price, size_count, color_count, main_image_url } = product;
-    const { placeholder } = useMainData();
+    const { PLACEHOLDER_IMG } = useMainData();
     return (
         <div key={`${cat_name}-${idx}`} className="col-12 col-md-6 col-lg-4">
             <div className="card product-card">
                 <div className={`item active`}>
                     <img className="d-block w-100" 
-                        src={main_image_url ?? placeholder} 
+                        src={main_image_url || PLACEHOLDER_IMG}
                         alt={product_name} 
-                        onError={e => e.target.src = placeholder }
+                        onError={e => e.target.src = PLACEHOLDER_IMG }
                     />
                 </div>
                 <div className="card-body">
