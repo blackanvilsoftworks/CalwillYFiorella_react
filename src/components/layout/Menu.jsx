@@ -1,18 +1,17 @@
-import { DataContext } from '../../contexts/Data.jsx';
 import useAuth from '../../hooks/useAuth.js';
+import useMainData from '../../hooks/useMainData.js';
 import { 
-    NavLink, 
     Link, 
     useNavigate
 } from 'react-router-dom';
 
 import './Menu.scss';
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import MenuNavLink from './MenuNavLink.jsx';
 
 const Menu = () => {
-    const { globalInfo } = useContext(DataContext);
     const { user, profile, role, isAdmin, signOut } = useAuth();
+    const { globalInfo } = useMainData();
 
     const navigate = useNavigate();
 
@@ -37,7 +36,7 @@ const Menu = () => {
     const signOutSession = () => {
         signOut();
         collapseMenu();
-        navigate ('/');
+        navigate('/');
     };
 
     return (

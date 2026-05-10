@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './ProductCards.scss';
+import './ProductCard.scss';
 import useMainData from '../../hooks/useMainData';
 
 const ProductCard = ({ product, idx }) => {

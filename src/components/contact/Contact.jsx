@@ -4,6 +4,8 @@ import { createTitle } from '../../utils/createTitle.jsx';
 
 import './Contact.scss';
 
+// HACER QUE PONGA POR DEFECTO EL NOMBRE Y NUMERO DE TELEFONO DEL USUARIO SI ES QUE ESTÁ LOGGEADO
+
 const Contact = () => {
     const { globalInfo } = useMainData();
 
@@ -29,7 +31,7 @@ const Contact = () => {
         name        : '',
         phone_number: '',
         message     : ''
-    }
+    };
 
     const contactForm = useRef(null);
 

@@ -32,11 +32,11 @@ const Product = ({ id_product }) => {
 
     // ── 1. Cargar producto y talles en paralelo al montar ───────────────────
     useEffect(() => {
-        const load = async () => {
+        // Loading product
+        (async () => {
+            setLoading(true);
+            setError(null);
             try {
-                setLoading(true);
-                setError(null);
-
                 const [productData, sizesData] = await Promise.all([
                     getProductDetail(id_product),
                     getSizesByProduct(id_product)
@@ -44,58 +44,56 @@ const Product = ({ id_product }) => {
 
                 setProduct(productData);
                 setSizes(sizesData);
-
                 if (sizesData.length > 0) setSelectedSize(sizesData[0]);
 
             } catch (err) {
-                setError('Error al cargar el producto');
+                setError(`Error al cargar el producto: ${err.message}`);
                 console.error(err);
             } finally {
                 setLoading(false);
             }
-        };
-        load();
+        })();
     }, [id_product]);
 
     // ── 2. Cuando cambia el talle → fetch de colores ────────────────────────
     useEffect(() => {
         if (!selectedSize || !id_product) return;
 
-        const loadColors = async () => {
+        // Loading variant colors when size changes
+        (async () => {
             setAvailableColors([]);
+            setSelectedColor(null);
             try {
-                setSelectedColor(null);
-
                 const colorsData = await getColorsByProductAndSize(id_product, selectedSize.id_size);
-
+                
                 setAvailableColors(colorsData);
-
+                
                 if (colorsData.length > 0) setSelectedColor(colorsData[0]);
             } catch (err) {
-                console.error('Error loading colors:', err);
+                console.error(`Error al cargar los colores disponibles: ${err.message}`);
             }
-        };
-        loadColors();
+        })();
         setQuantity(1);
-    }, [id_product,selectedSize]);
+    }, [id_product, selectedSize]);
 
     // ── 3. Cuando cambia el color → fetch de imágenes ───────────────────────
     useEffect(() => {
         if (!selectedColor?.id_variant) return;
-        const loadImages = async () => {
+
+        // Loading variant images when color changes
+        (async () => {
             setImages([]);
             try {
                 const imagesData = await getVariantImages(selectedColor.id_variant);
                 setImages(imagesData);
             } catch (err) {
-                console.error('Error loading images:', err);
+                console.error(`Error al cargar las imágenes: ${err.message}`);
             }
-        };
-        loadImages();
+        })();
+        setQuantity(1);
     }, [selectedColor]);
 
     // ── Handlers ────────────────────────────────────────────────────────────
-
     const handleSizeSelect = (size) => {
         if (size.id_size === selectedSize?.id_size) return;
         setSelectedSize(size);
@@ -104,11 +102,11 @@ const Product = ({ id_product }) => {
     const handleColorSelect = (color) => {
         if (color.id_variant === selectedColor?.id_variant) return;
         setSelectedColor(color);
-        setQuantity(1);
     };
 
     const handleAddToCart = () => {
         if (!selectedColor || !selectedSize) return;
+        // TODO: Dar alguna advertencia de que no se puede agregar al carrito dependiendo de lo que falte
 
         const cartItem = {
             id_variant:          selectedColor.id_variant,
@@ -121,7 +119,7 @@ const Product = ({ id_product }) => {
             image:               images[0]?.image_url || placeholder
         };
 
-        console.log('Agregar al carrito:', cartItem);
+        console.log(`Agregar al carrito: ${cartItem}`);
         // TODO: llamar a la función del contexto del carrito
     };
 

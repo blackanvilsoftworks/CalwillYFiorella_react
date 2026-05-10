@@ -1,13 +1,13 @@
-import { createContext, useState, useEffect } from 'react'
-import { supabase } from '../config/supabase'
+import { createContext, useState, useEffect } from 'react';
+import { supabase } from '../config/supabase';
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const [user     , setUser]      = useState(null)
-    const [profile  , setProfile]   = useState(null)
-    const [role     , setRole]      = useState(null)
-    const [loading  , setLoading]   = useState(true)
+    const [user     , setUser]      = useState(null);
+    const [profile  , setProfile]   = useState(null);
+    const [role     , setRole]      = useState(null);
+    const [loading  , setLoading]   = useState(true);
 
     const setStatesNull = () => {
         setUser(null);
@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
         });
 
         return () => {
-            authListener?.subscription?.unsubscribe()
+            authListener?.subscription?.unsubscribe();
         };
     }, []);
 
@@ -183,6 +183,6 @@ const AuthProvider = ({ children }) => {
             {children}
         </AuthContext.Provider>
     );
-}
+};
 
 export { AuthContext, AuthProvider };

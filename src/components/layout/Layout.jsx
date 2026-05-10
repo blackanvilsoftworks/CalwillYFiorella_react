@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Menu from './Menu.jsx';
-import Footer from './Footer.jsx';
+import Footer from './footer/Footer.jsx';
 
 import './Layout.scss';
 
