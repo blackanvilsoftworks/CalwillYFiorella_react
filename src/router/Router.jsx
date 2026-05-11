@@ -4,7 +4,7 @@ import Layout from '../components/layout/Layout.jsx';
 
 import Home                 from '../pages/Home.jsx';
 import ProductsContainer    from '../pages/ProductsContainer.jsx';
-import ProductsDetails      from '../pages/ProductsDetails.jsx';
+import ProductDetails       from '../pages/ProductDetails.jsx';
 import ContactContainer     from '../pages/ContactContainer.jsx';
 import Payment_Shipping     from '../pages/Payment_Shipping.jsx';
 
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "productos/:id_product",
-                element: <ProductsDetails />
+                element: <ProductDetails />
             },
             {
                 path: "pagos_envios",

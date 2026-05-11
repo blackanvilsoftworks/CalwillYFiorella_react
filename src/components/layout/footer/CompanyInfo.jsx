@@ -8,5 +8,4 @@ const CompanyInfo = ({ name }) => {
         </div>
     );
 };
-
 export default CompanyInfo;

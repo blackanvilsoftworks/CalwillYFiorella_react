@@ -7,5 +7,4 @@ const MenuNavLink = ({ name, path, collapseMenu, icon = null, className = 'nav-l
     </li>
   );
 };
-
 export default MenuNavLink;

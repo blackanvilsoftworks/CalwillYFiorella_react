@@ -1,5 +1,5 @@
 const PriceAndStock = ({ selectedColor }) => {
-    const stock = selectedColor.stock;
+    const stock = selectedColor && selectedColor.stock;
     return (
         <>
             {selectedColor && (

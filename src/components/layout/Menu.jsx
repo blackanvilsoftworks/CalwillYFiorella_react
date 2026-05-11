@@ -51,12 +51,8 @@ const Menu = () => {
                 </button>
                 <div ref={menuList} id="navbarNav" className="collapse navbar-collapse text-center ps-auto">
                     <ul className="navbar-nav ms-auto">
-                        {
-                            LINKS.map(({ name, path }) => (<MenuNavLink key={name} name={name} path={path} collapseMenu={collapseMenu} />))
-                        }
-                        {
-                            !user && (<MenuNavLink name='Iniciar Sesión' path='/iniciar_sesion' collapseMenu={collapseMenu} />)
-                        }
+                        { LINKS.map(({ name, path }) => (<MenuNavLink key={name} name={name} path={path} collapseMenu={collapseMenu} />)) }
+                        { !user && (<MenuNavLink name='Iniciar Sesión' path='/iniciar_sesion' collapseMenu={collapseMenu} />) }
                         <MenuNavLink 
                             name={<span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>}
                             path='/carrito' 

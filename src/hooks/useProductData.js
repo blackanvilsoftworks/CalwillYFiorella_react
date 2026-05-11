@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
     getProductDetail,
     getSizesByProduct,
@@ -8,7 +8,7 @@ import {
 
 import useMainData from './useMainData';
 
-const useProductData = ({ id_product }) => {
+const useProductData = ( id_product ) => {
     const { PLACEHOLDER_IMG } = useMainData();
 
     // ── Datos cargados desde la BD ──────────────────────────────────────────
@@ -43,8 +43,8 @@ const useProductData = ({ id_product }) => {
                 setSizes(sizesData);
                 if (sizesData.length > 0) setSelectedSize(sizesData[0]);
             } catch (err) {
-                setError(`Error al cargar el producto: ${err.message}`);
-                console.error(err);
+                setError('Error al cargar el producto');
+                console.error(`Error al cargar el producto: ${err}`);
             } finally {
                 setLoading(false);
             }
@@ -90,22 +90,22 @@ const useProductData = ({ id_product }) => {
     }, [selectedColor]);
 
     // ── Handlers ────────────────────────────────────────────────────────────
-    const onSelectedSize = (size) => {
+    const onSelectedSize = useCallback((size) => {
         if (size.id_size === selectedSize?.id_size) return;
         setSelectedSize(size);
-    };
+    }, [selectedSize]);
 
-    const onSelectedColor = (color) => {
+    const onSelectedColor = useCallback((color) => {
         if (color.id_variant === selectedColor?.id_variant) return;
         setSelectedColor(color);
-    };
+    }, [selectedColor]);
 
-    const onChangeQuantity = (event) => {
+    const onChangeQuantity = useCallback((event) => {
         const q = parseInt(event.target.value);
         (q > 0 && q <= selectedColor.stock)
             ? setQuantity(q)
             : alert('La cantidad ingresada no puede ser mayor a la que figura en el stock. En caso de desear realizar un pedido que supere la cantidad en stock por favor comuníquese con nosotros por nuestros canales.');
-    };
+    }, [selectedColor]);
 
     const onAddToCart = () => {
         if (!selectedColor || !selectedSize) return;
