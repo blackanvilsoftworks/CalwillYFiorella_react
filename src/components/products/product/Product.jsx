@@ -3,6 +3,9 @@ import ProductCarousel from './carousel/ProductCarousel';
 import './Product.scss';
 import Loader from '../../loader/Loader';
 import useProductData from '../../../hooks/useProductData';
+import SizeSelector from './SizeSelector';
+import PriceAndStock from './PriceAndStock';
+import ColorSelector from './ColorSelector';
 const Product = ({ id_product }) => {
     const {
         product,
@@ -45,78 +48,29 @@ const Product = ({ id_product }) => {
                     <p>{product.long_desc}</p>
 
                     {/* Price and Stock */}
-                    {selectedColor && (
-                        <div className="price-section">
-                            <p className="price">Precio del artículo seleccionado: ${selectedColor.price.toFixed(2)}</p>
-                            <p className={`stock ${selectedColor.stock === 0 ? 'out' : ''}`}>
-                                {selectedColor.stock > 0
-                                    ? `Stock disponible: ${selectedColor.stock}.`
-                                    : 'Sin stock.'}
-                            </p>
-                        </div>
-                    )}
+                    <PriceAndStock selectedColor={selectedColor} />
 
                     {/* Size selector */}
-                    <div className="selector-group">
-                        <label>Talles:</label>
-                        <div className="size-options">
-                            {sizes.map(size => (
-                                <button
-                                    key={size.id_size}
-                                    className={`my-2 mx-1 main-btn-style ${selectedSize?.id_size === size.id_size ? 'active' : ''}`}
-                                    onClick={() => onSelectedSize(size)}>
-                                    {size.size}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
+                    <SizeSelector
+                        sizes={sizes}
+                        selectedSize={selectedSize}
+                        onSelectedSize={onSelectedSize}
+                    />
 
                     {/* Color selector */}
-                    {availableColors.length > 0 && (
-                        <div className="selector-group">
-                            <label>
-                                Color actual: <strong>{selectedColor?.colors?.description || 'Seleccioná un color'}</strong>
-                            </label>
-                            <div className="my-2 d-flex">
-                                {availableColors.map(color => (
-                                    <button
-                                        key={color.colors.id_color}
-                                        className={`rounded-4 p-3 mx-1
-                                            ${selectedColor?.id_variant === color.id_variant ? 'active' : ''}
-                                            ${color.stock === 0 ? 'disabled' : ''}`}
-                                        onClick={() => onSelectedColor(color)}
-                                        disabled={color.stock === 0}
-                                        title={color.stock === 0
-                                            ? `${color.colors.description} - Sin stock`
-                                            : color.colors.description}
-                                        style={{ backgroundColor: color.colors.hex_code }}
-                                    ></button>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+                    <ColorSelector 
+                        availableColors={availableColors}
+                        selectedColor={selectedColor}
+                        onSelectedColor={onSelectedColor}
+                    />
 
                     {/* Quantity selector and Add to Cart button*/}
-                    {selectedColor?.stock > 0 && (
-                        <div className="purchase-section">
-                            <div className="quantity-controls">
-                                <input
-                                    type="number"
-                                    className="form-control w-auto d-inline-block"
-                                    defaultValue={quantity}
-                                    min="1"
-                                    max={selectedColor.stock}
-                                    onBlur={onChangeQuantity}
-                                />
-                            </div>
-                            <button 
-                                className="my-2 main-btn-style" 
-                                onClick={onAddToCart}
-                            >
-                                Agregar al carrito
-                            </button>
-                        </div>
-                    )}
+                    <QuantitySelector
+                        selectedColor={selectedColor}
+                        quantity={quantity}
+                        onChangeQuantity={onChangeQuantity}
+                        onAddToCart={onAddToCart}
+                    />
                 </div>
             </div>
         </div>

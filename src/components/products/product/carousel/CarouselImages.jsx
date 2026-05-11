@@ -1,4 +1,4 @@
-import useMainData from '../../../hooks/useMainData';
+import useMainData from '../../../../hooks/useMainData';
 
 const CarouselImages = ({ images }) => {
     const { PLACEHOLDER_IMG } = useMainData();

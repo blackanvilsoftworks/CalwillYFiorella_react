@@ -10,7 +10,7 @@ const AboutUs = () => {
                 <div className="col-10">
                     <div className="row">
                         <h2 className="col-12">
-                            { createTitle('Sobre Nosotros', 'bi bi-balloon-heart') } 
+                            { createTitle('Sobre Nosotros', 'bi bi-balloon-heart') }
                         </h2>
                         <div className="col-12 col-md-5 col-lg-5 align-content-center">
                             <img className="img-fluid" src={LOGO} alt={`${globalInfo.name} Logo`} />

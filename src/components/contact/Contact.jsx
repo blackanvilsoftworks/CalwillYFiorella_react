@@ -1,15 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import useMainData from '../../hooks/useMainData.js';
 import { createTitle } from '../../utils/createTitle.jsx';
 
 import './Contact.scss';
-
-// HACER QUE PONGA POR DEFECTO EL NOMBRE Y NUMERO DE TELEFONO DEL USUARIO SI ES QUE ESTÁ LOGGEADO
+import useAuth from '../../hooks/useAuth.js';
 
 const Contact = () => {
+    const { profile } = useAuth();
     const { globalInfo } = useMainData();
 
-    const arrInfoCardContent = [
+    const ARR_INFO_CARD_CONTENT = useMemo(() => [
         {
             type    : 'Email',
             value   : globalInfo.email,
@@ -25,11 +25,11 @@ const Contact = () => {
             value   : 'Lunes a Sábado de 09:00 a 18:00',
             icon    : 'bi bi-clock-fill'
         }
-    ];
+    ], [globalInfo]);
 
-    const initialState = {
-        name        : '',
-        phone_number: '',
+    const INITIAL_STATE = {
+        name        : profile?.full_name.toUpperCase() || '',
+        phone_number: profile?.number || '',
         message     : ''
     };
 
@@ -38,8 +38,8 @@ const Contact = () => {
     const [ count        , setCount          ] = useState(0);
     const [ isSubmitting , setIsSubmitting   ] = useState(false);
     const [ submitStatus , setSubmitStatus   ] = useState(null); // 'success', 'error', null
-    const [ formContent  , setFormContent    ] = useState(initialState);
-    const [ fieldErrors  , setFieldErrors    ] = useState(initialState);
+    const [ formContent  , setFormContent    ] = useState(INITIAL_STATE);
+    const [ fieldErrors  , setFieldErrors    ] = useState(INITIAL_STATE);
 
     const setFormContentState = (e) => {
         const { id, value } = e.target;
@@ -157,8 +157,8 @@ const Contact = () => {
             
             if (data.success) {
                 setSubmitStatus('success');
-                setFormContent(initialState);
-                setFieldErrors(initialState);
+                setFormContent(INITIAL_STATE);
+                setFieldErrors(INITIAL_STATE);
                 // Auto-ocultar mensaje después de 5 segundos
                 setTimeout(() => setSubmitStatus(null), 5000);
             } else {
@@ -283,7 +283,7 @@ const Contact = () => {
                             <h5 className="card-title">Información de Contacto</h5>
                             <div className="container">
                                 {
-                                    arrInfoCardContent.map(({type, value, icon}) => (
+                                    ARR_INFO_CARD_CONTENT.map(({type, value, icon}) => (
                                         <div key={type} className="row mb-2">
                                             <div className="col-1"><i className={icon}></i></div>
                                             <div className="col-11">{type}: {value}</div>

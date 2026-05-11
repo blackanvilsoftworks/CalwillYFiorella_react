@@ -9,18 +9,18 @@ import './Menu.scss';
 import { useRef } from 'react';
 import MenuNavLink from './MenuNavLink.jsx';
 
+const LINKS = [
+    { name: 'Inicio'                , path: '/'                 },
+    { name: 'Catálogo de Productos' , path: '/productos'        },
+    { name: 'Pagos y Envíos'        , path: '/pagos_envios'     },
+    { name: 'Contacto'              , path: '/contacto'         }
+];
+
 const Menu = () => {
     const { user, profile, role, isAdmin, signOut } = useAuth();
     const { globalInfo } = useMainData();
 
     const navigate = useNavigate();
-
-    const links = [
-        { name: 'Inicio'                , path: '/'                 },
-        { name: 'Catálogo de Productos' , path: '/productos'        },
-        { name: 'Pagos y Envíos'        , path: '/pagos_envios'     },
-        { name: 'Contacto'              , path: '/contacto'         }
-    ];
 
     const menuBtn   = useRef(null);
     const menuList  = useRef(null);
@@ -52,7 +52,7 @@ const Menu = () => {
                 <div ref={menuList} id="navbarNav" className="collapse navbar-collapse text-center ps-auto">
                     <ul className="navbar-nav ms-auto">
                         {
-                            links.map(({ name, path }) => (<MenuNavLink key={name} name={name} path={path} collapseMenu={collapseMenu} />))
+                            LINKS.map(({ name, path }) => (<MenuNavLink key={name} name={name} path={path} collapseMenu={collapseMenu} />))
                         }
                         {
                             !user && (<MenuNavLink name='Iniciar Sesión' path='/iniciar_sesion' collapseMenu={collapseMenu} />)
