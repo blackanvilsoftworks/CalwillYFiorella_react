@@ -1,6 +1,4 @@
-import { supabase } from '../config/supabase'
-
-
+import { supabase } from '../config/supabase';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,7 +33,7 @@ export const getProductsForHomepage = async (id_category) => {
         console.error('Error fetching products by category:', error);
         throw error;
     }
-}
+};
 
 // /**
 //   * Obtener productos por categoría para panel del administrador
@@ -96,15 +94,15 @@ export const getProductDetail = async (productId) => {
             .from('v_product_detail')
             .select('*')
             .eq('id_product', productId)
-            .single()
+            .single();
 
-        if (error) throw error
-        return data
+        if (error) throw error;
+        return data;
     } catch (error) {
-        console.error('Error fetching product detail:', error)
-        throw error
+        console.error('Error fetching product detail:', error);
+        throw error;
     }
-}
+};
 
 /**
  * Obtener talles disponibles con sus colores para un producto
@@ -118,15 +116,15 @@ export const getSizesByProduct = async (productId) => {
             .from('v_variants_by_size')
             .select('*')
             .eq('id_product', productId)
-            .order('sort_order', { ascending: true })
+            .order('sort_order', { ascending: true });
 
-        if (error) throw error
-        return data || []
+        if (error) throw error;
+        return data || [];
     } catch (error) {
-        console.error('Error fetching sizes by product:', error)
-        throw error
+        console.error('Error fetching sizes by product:', error);
+        throw error;
     }
-}
+};
 
 /**
  * Obtener todos los colores activos para un producto y talle
@@ -154,15 +152,15 @@ export const getColorsByProductAndSize = async (productId, sizeId) => {
             .eq('id_product', productId)
             .eq('id_size', sizeId)
             .eq('cod_status', 'A')
-            .order('id_color', { ascending: true })
+            .order('id_color', { ascending: true });
 
-        if (error) throw error
-        return data || []
+        if (error) throw error;
+        return data || [];
     } catch (error) {
-        console.error('Error fetching colors by product and size:', error)
-        throw error
+        console.error('Error fetching colors by product and size:', error);
+        throw error;
     }
-}
+};
 
 /**
  * Obtener imágenes de una variante específica (para carousel)
@@ -175,15 +173,15 @@ export const getVariantImages = async (variantId) => {
             .from('v_variant_images')
             .select('id_image, image_url, order_position')
             .eq('id_variant', variantId)
-            .order('order_position', { ascending: true })
+            .order('order_position', { ascending: true });
 
-        if (error) throw error
-        return data || []
+        if (error) throw error;
+        return data || [];
     } catch (error) {
-        console.error('Error fetching variant images:', error)
-        throw error
+        console.error('Error fetching variant images:', error);
+        throw error;
     }
-}
+};
 
 
 
@@ -215,9 +213,9 @@ export const getProductById = async (productId) => {
             status (description)
         `)
         .eq('id_product', productId)
-        .single()
+        .single();
 
-        if (productError) throw productError
+        if (productError) throw productError;
 
         // // Obtener imágenes del producto
         // const { data: images, error: imagesError } = await supabase
@@ -235,10 +233,10 @@ export const getProductById = async (productId) => {
         // // images
         // }
     } catch (error) {
-        console.error('Error fetching product:', error)
-        throw error
+        console.error('Error fetching product:', error);
+        throw error;
     }
-}
+};
 
 /**
   * Obtener productos por categoría con valores mínimos solo para hompage
@@ -253,12 +251,12 @@ export const getActiveCategories = async () => {
             name,
             description`)
         .eq('cod_status', 'A')
-        .order('created_at', { ascending: false })
+        .order('created_at', { ascending: false });
 
-        if (error) throw error
-        return data
+        if (error) throw error;
+        return data;
     } catch (error) {
-        console.error('Error fetching active categories:', error)
-        throw error
+        console.error('Error fetching active categories:', error);
+        throw error;
     }
-}
+};
