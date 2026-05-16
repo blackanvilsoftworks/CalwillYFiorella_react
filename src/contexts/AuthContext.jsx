@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useCallback } from 'react';
 import { supabase } from '../config/supabase';
 
 const AuthContext = createContext();
@@ -15,6 +15,18 @@ const AuthProvider = ({ children }) => {
         setRole(null);
     };
 
+    const checkUser = useCallback(async () => {
+        setLoading(true);
+        try {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.user) await loadUserProfile(session.user);
+        } catch (error) {
+            console.error('Error checking user:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+    
     useEffect(() => {
         setLoading(true);
         // Verificar sesión inicial
@@ -33,19 +45,7 @@ const AuthProvider = ({ children }) => {
         return () => {
             authListener?.subscription?.unsubscribe();
         };
-    }, []);
-
-    const checkUser = async () => {
-        setLoading(true);
-        try {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session?.user) await loadUserProfile(session.user);
-        } catch (error) {
-            console.error('Error checking user:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    }, [checkUser]);
 
     const loadUserProfile = async (authUser) => {
         try {

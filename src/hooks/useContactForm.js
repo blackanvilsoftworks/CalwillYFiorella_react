@@ -10,15 +10,21 @@ const MESSAGE_REGEX     = /^[A-Za-z0-9ÁáÉéÍíÓóÚúÑñÜü\s.,$!?-]{1,50
 const VALIDATION_RESULT = {
     success: (value) => ({ 
         isValid: true, 
-        message: '', 
-        value 
+        value,
+        message: ''
     }),
     error: (message) => ({ 
-        isValid: false, 
-        message, 
-        value: ''
+        isValid : false,
+        value   : '',
+        message
     })
 };
+
+const getFormData = (profile = null) => ({
+    name        : profile?.full_name?.toUpperCase() || '',
+    phone_number: profile?.phone || '',
+    message     : ''
+});
 
 const useContactForm = () => {
     const { profile } = useAuth();
@@ -43,33 +49,22 @@ const useContactForm = () => {
         }
     ], [globalInfo]);
 
-    // Initial state based on profile (only for the first load)
-    const getInitialState = useCallback(() => ({
-        name        : profile?.full_name?.toUpperCase() || '',
-        phone_number: profile?.number || '',
-        message     : ''
-    }), [profile]);
-
-    const contactForm = useRef(null);
+    const submitBtn = useRef();
 
     const [ isSubmitting , setIsSubmitting   ] = useState(false);
     const [ submitStatus , setSubmitStatus   ] = useState(null); // 'success', 'error', null
-    const [ formContent  , setFormContent    ] = useState(() => getInitialState());
-    const [ fieldErrors  , setFieldErrors    ] = useState(() => getInitialState());
+    const [ formContent  , setFormContent    ] = useState(getFormData());
+    const [ fieldErrors  , setFieldErrors    ] = useState(getFormData());
 
-    // Control para no sobrescribir el formulario si el usuario ya escribió
-    const [ hasLoadedProfile, setHasLoadedProfile ] = useState(false);
-    
-    // Recomendación de React: Ajustar estado en renderizado en lugar de useEffect para evitar renders en cascada
+    // Reset form fields to user data from profile (only for the first load)
+    const [hasLoadedProfile, setHasLoadedProfile] = useState(false);
     if (profile && !hasLoadedProfile) {
+        setFormContent(prev => ({...prev, ...getFormData(profile)}));
         setHasLoadedProfile(true);
-        const initialState = getInitialState();
-        setFormContent(initialState);
-        setFieldErrors(initialState);
     }
 
-    // El contador de caracteres es un estado derivado, no necesita useState ni useEffect
-    const count = formContent.message.length;
+    // Message character counter
+    const count = useMemo(() => formContent?.message.length || 0, [formContent.message]);
 
     const nameValidation = useCallback((name) => {
         const cleanedName = name.trim();
@@ -98,16 +93,31 @@ const useContactForm = () => {
         message     : messageValidation
     }), [nameValidation, phoneNumberValidation, messageValidation]);
 
+
+    const _handleValidationResult = useCallback((id, value, result) => {
+        if (result.isValid) {
+            setFormContent(prev => ({...prev, [id]: result.value}));
+            setFieldErrors(prev => ({...prev, [id]: ''}));            
+            submitBtn.current.hidden = false;
+        } else {
+            setFormContent(prev => ({...prev, [id]: value}));
+            setFieldErrors(prev => ({...prev, [id]: result.message}));
+            submitBtn.current.hidden = true;
+        }
+    }, []);
+
     const setFormContentState = useCallback((e) => {
         const { id, value } = e.target;
-        const upperValue    = value.toUpperCase();
-        setFormContent((prev) => ({...prev, [id]: upperValue}));
-        // Validate specific field while typing
-        const result = VALIDATORS[id]?.(upperValue);
-        if (result) setFieldErrors(prev => ({...prev, [id]: result.isValid ? '' : result.message}));
-    }, [VALIDATORS]);
+        const upperValue = value.toUpperCase();
 
-    const formHandler = useCallback(async (e) => {
+        // Message field is not validated while typing
+        if (id === 'message') return setFormContent(prev => ({...prev, [id]: upperValue}));
+
+        // Validate specific field while typing
+        _handleValidationResult(id, upperValue, VALIDATORS[id]?.(upperValue));
+    }, [VALIDATORS, _handleValidationResult]);
+
+    const onSubmitFormHandler = useCallback(async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
         setSubmitStatus(null);
@@ -117,40 +127,31 @@ const useContactForm = () => {
         const currentPhone      = formContent.phone_number;
         const currentMessage    = formContent.message;
 
-        // Validate all fields
-        const nameResult    = nameValidation(currentName);
-        const phoneResult   = phoneNumberValidation(currentPhone);
-        const messageResult = messageValidation(currentMessage);
-
-        setFieldErrors({
-            name        : nameResult.message,
-            phone_number: phoneResult.message,
-            message     : messageResult.message
-        });
-    
-        if (!nameResult.isValid || !phoneResult.isValid || !messageResult.isValid) return setIsSubmitting(false);
+        // Check message is not empty
+        const msgValidation = VALIDATORS.message?.(currentMessage);
+        _handleValidationResult('message', currentMessage, msgValidation);
+        if (!msgValidation.isValid) return setIsSubmitting(false);
 
         // Send the email with useSubmitMail hook
         const result = await sendMail('Nueva consulta desde la web', {
-            Nombre  : nameResult.value,
-            Numero  : phoneResult.value,
-            WhatsApp: `https://wa.me/549${phoneResult.value}`,
-            Mensaje : messageResult.value
+            Nombre  : currentName,
+            Numero  : currentPhone,
+            WhatsApp: `https://wa.me/549${currentPhone}`,
+            Mensaje : currentMessage
         });
 
         if (result.success) {
             setSubmitStatus('success');
             // Reset form to initial state (without overwriting with profile if it has changed)
-            const resetState = getInitialState();
-            setFormContent(resetState);
-            setFieldErrors(resetState);
+            setFormContent(getFormData());
+            setFieldErrors(getFormData());
             setTimeout(() => setSubmitStatus(null), 5000);
         } else {
             setSubmitStatus('error');
         }
 
         setIsSubmitting(false);
-    }, [formContent, nameValidation, phoneNumberValidation, messageValidation, sendMail, getInitialState]);
+    }, [formContent, VALIDATORS, sendMail]);
 
     return {
         ARR_INFO_CARD_CONTENT,
@@ -159,9 +160,9 @@ const useContactForm = () => {
         count,
         isSubmitting,
         submitStatus,
-        contactForm,
+        submitBtn,
         setFormContentState,
-        formHandler
+        onSubmitFormHandler
     };
 };
 export default useContactForm;

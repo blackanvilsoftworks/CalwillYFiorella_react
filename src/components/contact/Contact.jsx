@@ -12,9 +12,9 @@ const Contact = () => {
         isSubmitting,
         submitStatus,
         setSubmitStatus,
-        contactForm,
+        submitBtn,
         setFormContentState,
-        formHandler
+        onSubmitFormHandler
     } = useContactForm();
 
     return (
@@ -39,7 +39,7 @@ const Contact = () => {
             )}
 
             <div id="form-row" className="row">
-                <form id="contact_form" ref={contactForm} onSubmit={formHandler} noValidate>
+                <form id="contact_form" onSubmit={onSubmitFormHandler} noValidate>
                     <input type="text" name="_honey" style={{ display: 'none' }} />
     
                     <div className="form-floating col-12 col-md-6 mb-3 px-1">
@@ -106,6 +106,7 @@ const Contact = () => {
                     <button 
                         className="btn main-btn-style" 
                         type="submit"
+                        ref={submitBtn}
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? (
