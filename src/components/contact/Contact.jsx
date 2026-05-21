@@ -12,8 +12,7 @@ const Contact = () => {
         isSubmitting,
         submitStatus,
         setSubmitStatus,
-        submitBtn,
-        setFormContentState,
+        setContentFormState,
         onSubmitFormHandler
     } = useContactForm();
 
@@ -48,7 +47,7 @@ const Contact = () => {
                             className={`form-control ${fieldErrors.name ? 'is-invalid' : ''}`} 
                             id="name" 
                             value={formContent.name} 
-                            onChange={setFormContentState} 
+                            onChange={setContentFormState} 
                             maxLength={30} 
                             required 
                         />
@@ -67,7 +66,7 @@ const Contact = () => {
                             className={`form-control ${fieldErrors.phone_number ? 'is-invalid' : ''}`} 
                             id="phone_number" 
                             value={formContent.phone_number} 
-                            onChange={setFormContentState} 
+                            onChange={setContentFormState} 
                             maxLength={10} 
                             pattern="[0-9]{10}"
                             required 
@@ -87,7 +86,7 @@ const Contact = () => {
                             id="message" 
                             style={{ height: 100 }} 
                             value={formContent.message} 
-                            onChange={setFormContentState} 
+                            onChange={setContentFormState} 
                             maxLength={500} 
                             required 
                         />
@@ -106,7 +105,6 @@ const Contact = () => {
                     <button 
                         className="btn main-btn-style" 
                         type="submit"
-                        ref={submitBtn}
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? (
