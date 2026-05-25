@@ -4,50 +4,47 @@ import { supabase } from '../config/supabase';
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const [user     , setUser]      = useState(null);
-    const [profile  , setProfile]   = useState(null);
-    const [role     , setRole]      = useState(null);
-    const [loading  , setLoading]   = useState(true);
+    const [user, setUser] = useState(null);
+    const [profile, setProfile] = useState(null);
+    const [role, setRole] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    const setStatesNull = () => {
+    const _setStatesNull = () => {
         setUser(null);
         setProfile(null);
         setRole(null);
     };
 
-    const checkUser = useCallback(async () => {
-        setLoading(true);
-        try {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session?.user) await loadUserProfile(session.user);
-        } catch (error) {
-            console.error('Error checking user:', error);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-    
     useEffect(() => {
         setLoading(true);
-        // Verificar sesión inicial
-        checkUser();
 
-        // Escuchar cambios de auth
+        // Check user
+        (async () => {
+            try {
+                const { data: session } = await supabase.auth.getSession();
+                if (session?.user) await _loadUserProfile(session.user);
+            } catch (err) {
+                console.error(`Error checking user: ${err}`);
+            } finally {
+                setLoading(false);
+            }
+        })();
+
+        // Auth listener
         const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+            setLoading(true);
             if (session?.user) {
-                await loadUserProfile(session.user);
+                await _loadUserProfile(session.user);
             } else {
-                setStatesNull();
+                _setStatesNull();
             }
             setLoading(false);
         });
 
-        return () => {
-            authListener?.subscription?.unsubscribe();
-        };
-    }, [checkUser]);
+        return () => authListener?.subscription?.unsubscribe();
+    }, []);
 
-    const loadUserProfile = async (authUser) => {
+    const _loadUserProfile = async (authUser) => {
         try {
             const { data: profileData, error } = await supabase
                 .from('user_profiles')
@@ -67,8 +64,8 @@ const AuthProvider = ({ children }) => {
             setUser(authUser);
             setProfile(profileData);
             setRole(profileData.roles?.name || null);
-        } catch (error) {
-            console.error('Error loading profile:', error);
+        } catch (err) {
+            console.error(`Error loading profile: ${err}`);
         }
     };
 
@@ -126,7 +123,7 @@ const AuthProvider = ({ children }) => {
             const { error } = await supabase.auth.signOut();
             if (error) throw error;
 
-            setStatesNull();
+            _setStatesNull();
 
             return { error: null };
         } catch (error) {
@@ -154,10 +151,10 @@ const AuthProvider = ({ children }) => {
 
     // ── ROLE CHECKS ──────────────────────────────────────────────────────────
 
-    const isCustomer    = role === 'customer';
-    const isWholesaler  = role === 'wholesaler';
-    const isAdmin       = ['admin', 'superadmin'].includes(role);
-    const isSuperAdmin  = role === 'superadmin';
+    const isCustomer = role === 'customer';
+    const isWholesaler = role === 'wholesaler';
+    const isAdmin = ['admin', 'superadmin'].includes(role);
+    const isSuperAdmin = role === 'superadmin';
 
     const value = {
         // General states

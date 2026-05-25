@@ -2,21 +2,21 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Layout from '../components/layout/Layout.jsx';
 
-import Home                 from '../pages/Home.jsx';
-import ProductsContainer    from '../pages/ProductsContainer.jsx';
-import ProductDetails       from '../pages/ProductDetails.jsx';
-import ContactContainer     from '../pages/ContactContainer.jsx';
-import Payment_Shipping     from '../pages/Payment_Shipping.jsx';
+import Home from '../pages/Home.jsx';
+import ProductsContainer from '../pages/ProductsContainer.jsx';
+import ProductDetails from '../pages/ProductDetails.jsx';
+import ContactContainer from '../pages/ContactContainer.jsx';
+import Payment_Shipping from '../pages/Payment_Shipping.jsx';
 
-import Login                from "../pages/login/Login.jsx";
-import Signup               from "../pages/login/Signup.jsx";
+import Login from "../pages/login/Login.jsx";
+import Signup from "../pages/login/Signup.jsx";
 
-import Error404             from '../pages/errors/Error404.jsx';
+import Error404 from '../pages/errors/Error404.jsx';
 // import AdminHome            from "../pages/admin/AdminHome.jsx";
-import AdminPanel           from "../pages/AdminPanel.jsx";
+import AdminPanel from "../pages/AdminPanel.jsx";
 
 // import Cart                 from "../pages/user/Cart.jsx";
-import CartPage from "../pages/user/Cart.jsx";
+import Cart from "../pages/user/Cart.jsx";
 import MyAccountPage from "../pages/user/MyAccount.jsx";
 import MyOrdersPage from "../pages/user/MyOrdersPage.jsx";
 
@@ -56,7 +56,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "carrito",
-                element: <CartPage />
+                element: <Cart />
             },
             {
                 path: "mi_cuenta",

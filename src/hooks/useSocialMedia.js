@@ -1,7 +1,7 @@
 import { useMemo, useCallback } from 'react';
 import useAuth from './useAuth';
 
-const MSG_BTN_FAILED = 'Se detectó un problema con este botón y actualmente no está funcionando. Estamos trabajando para resolverlo. Le pedimos disculpas por las molestias ocasionadas.';
+const _MSG_BTN_FAILED = 'Se detectó un problema con este botón y actualmente no está funcionando. Estamos trabajando para resolverlo. Le pedimos disculpas por las molestias ocasionadas.';
 
 const useSocialMedia = (globalInfo) => {
     const { profile } = useAuth();
@@ -24,10 +24,10 @@ const useSocialMedia = (globalInfo) => {
     // Handler para eventos de click
     const onClickHandler = useCallback((e) => {
         const socialMediaItem = arrSocialMedia.find(item => item.name === e.currentTarget.id);
-        
+
         socialMediaItem?.url
             ? window.open(socialMediaItem.url, '_blank', 'noopener,noreferrer')
-            : alert(MSG_BTN_FAILED);
+            : alert(_MSG_BTN_FAILED);
     }, [arrSocialMedia]);
 
     return {

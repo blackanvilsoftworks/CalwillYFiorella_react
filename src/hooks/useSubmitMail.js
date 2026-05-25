@@ -4,9 +4,9 @@ import useMainData from './useMainData';
 const useSubmitMail = () => {
     const { globalInfo } = useMainData();
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(false);
+    const [loading  , setLoading]   = useState(false);
+    const [error    , setError]     = useState(null);
+    const [success  , setSuccess]   = useState(false);
 
     const sendMail = async (subject, formData) => {
         setLoading(true);
@@ -15,12 +15,12 @@ const useSubmitMail = () => {
 
         try {
             const response = await fetch(`https://formsubmit.co/ajax/${globalInfo.email}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                method  : 'POST',
+                headers : {
+                    'Content-Type'  : 'application/json',
+                    'Accept'        : 'application/json'
                 },
-                body: JSON.stringify({
+                body    : JSON.stringify({
                     _subject: subject,
                     _captcha: 'false',
                     ...formData

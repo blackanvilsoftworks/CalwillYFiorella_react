@@ -7,8 +7,9 @@ import {
 } from '../services/productService';
 
 import useMainData from './useMainData';
+import useCart from './useCart';
 
-const useProductData = ( id_product ) => {
+const useProductData = (id_product) => {
     const { PLACEHOLDER_IMG } = useMainData();
 
     // ── Datos cargados desde la BD ──────────────────────────────────────────
@@ -61,9 +62,9 @@ const useProductData = ( id_product ) => {
             setSelectedColor(null);
             try {
                 const colorsData = await getColorsByProductAndSize(id_product, selectedSize.id_size);
-                
+
                 setAvailableColors(colorsData);
-                
+
                 if (colorsData.length > 0) setSelectedColor(colorsData[0]);
             } catch (err) {
                 console.error(`Error al cargar los colores disponibles: ${err.message}`);
@@ -107,23 +108,24 @@ const useProductData = ( id_product ) => {
             : alert('La cantidad ingresada no puede ser mayor a la que figura en el stock. En caso de desear realizar un pedido que supere la cantidad en stock por favor comuníquese con nosotros por nuestros canales.');
     }, [selectedColor]);
 
+    const { addToCart } = useCart();
+
     const onAddToCart = () => {
         if (!selectedColor || !selectedSize) return;
         // TODO: Dar alguna advertencia de que no se puede agregar al carrito dependiendo de lo que falte
 
         const cartItem = {
-            id_variant          : selectedColor.id_variant,
-            product_name        : product.product_name,
-            variant_description : `${selectedColor.colors.description} - Talle ${selectedSize.size}`,
-            sku                 : selectedColor.sku,
-            price               : selectedColor.price,
-            quantity            : quantity,
-            subtotal            : selectedColor.price * quantity,
-            image               : images[0]?.image_url || PLACEHOLDER_IMG
+            id_variant: selectedColor.id_variant,
+            product_name: product.product_name,
+            variant_description: `${selectedColor.colors.description} - Talle ${selectedSize.size}`,
+            sku: selectedColor.sku,
+            price: selectedColor.price,
+            quantity: quantity,
+            image: images[0]?.image_url || PLACEHOLDER_IMG
         };
 
-        console.log(`Agregar al carrito: ${cartItem}`);
-        // TODO: llamar a la función del contexto del carrito
+        addToCart(cartItem);
+        setQuantity(1);
     };
 
     return {

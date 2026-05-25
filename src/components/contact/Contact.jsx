@@ -23,16 +23,9 @@ const Contact = () => {
             </h2>
             
             {/* Mensajes de estado */}
-            {submitStatus === 'success' && (
-                <div className="alert alert-success alert-dismissible fade show" role="alert">
-                    ¡Mensaje enviado con éxito! Te contactaremos pronto.
-                    <button type="button" className="btn-close" onClick={() => setSubmitStatus(null)}></button>
-                </div>
-            )}
-            
-            {submitStatus === 'error' && (
-                <div className="alert alert-danger alert-dismissible fade show" role="alert">
-                    Error al enviar el mensaje. Por favor, intenta nuevamente.
+            {submitStatus.status && (
+                <div className={`alert alert-${submitStatus.status === 'success' ? 'success' : 'danger'} alert-dismissible fade show`} role="alert">
+                    {submitStatus.message}
                     <button type="button" className="btn-close" onClick={() => setSubmitStatus(null)}></button>
                 </div>
             )}

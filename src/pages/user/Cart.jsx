@@ -1,7 +1,5 @@
-import Cart from "../../components/cart/Cart.jsx";
+import Cart from '../../components/cart/Cart.jsx';
 
-const CartPage = () => {
-    return (<Cart />);
-};
+const CartPage = () => <Cart />;
 
 export default CartPage;

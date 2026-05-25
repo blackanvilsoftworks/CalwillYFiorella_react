@@ -4,12 +4,21 @@ import useMainData from './useMainData.js';
 import useAuth from './useAuth.js';
 import useSubmitMail from './useSubmitMail.js';
 
-const NAME_REGEX        = /^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/;
-const PHONE_REGEX       = /^[0-9]{10}$/;
-const MESSAGE_REGEX     = /^[A-Za-z0-9ÁáÉéÍíÓóÚúÑñÜü\s.,$!?-]{1,500}$/;
-const VALIDATION_RESULT = {
-    success: (value) => ({ 
-        isValid: true, 
+const _INITIAL_SUBMIT_STATUS_STATE = {
+    status  : null, // 'success', 'error', null
+    message : ''
+};
+const _SUBMIT_STATUS_MESSAGES = {
+    success     : '¡Mensaje enviado con éxito! Te contactaremos pronto.',
+    error       : 'Error al enviar el mensaje. Por favor, intenta nuevamente.',
+    fieldError  : 'Hay errores en el formulario. Por favor, revisa los campos antes de enviar.'
+};
+const _NAME_REGEX        = /^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/;
+const _PHONE_REGEX       = /^[0-9]{10}$/;
+const _MESSAGE_REGEX     = /^[A-Za-z0-9ÁáÉéÍíÓóÚúÑñÜü\s.,$!?-]{1,500}$/;
+const _VALIDATION_RESULT = {
+    success: (value) => ({
+        isValid: true,
         value,
         message: ''
     }),
@@ -20,16 +29,16 @@ const VALIDATION_RESULT = {
     })
 };
 
-const getFormData = (profile = null) => ({
+const _getFormData = (profile = null) => ({
     name        : profile?.full_name?.toUpperCase() || '',
-    phone_number: profile?.phone || '',
+    phone_number: profile?.phone                    || '',
     message     : ''
 });
 
 const useContactForm = () => {
-    const { profile } = useAuth();
-    const { globalInfo } = useMainData();
-    const { sendMail } = useSubmitMail();
+    const { profile }       = useAuth();
+    const { globalInfo }    = useMainData();
+    const { sendMail }      = useSubmitMail();
 
     const ARR_INFO_CARD_CONTENT = useMemo(() => [
         {
@@ -49,82 +58,67 @@ const useContactForm = () => {
         }
     ], [globalInfo]);
 
+    const [ formContent  , setFormContent    ] = useState(_getFormData());
+    const [ fieldErrors  , setFieldErrors    ] = useState(_getFormData());
     const [ isSubmitting , setIsSubmitting   ] = useState(false);
-    const [ submitStatus , setSubmitStatus   ] = useState(null); // 'success', 'error', null
-    const [ formContent  , setFormContent    ] = useState(getFormData());
-    const [ fieldErrors  , setFieldErrors    ] = useState(getFormData());
+    const [ submitStatus , setSubmitStatus   ] = useState(_INITIAL_SUBMIT_STATUS_STATE);
 
     // Reset form fields to user data from profile (only for the first load)
     const [hasLoadedProfile, setHasLoadedProfile] = useState(false);
     if (profile && !hasLoadedProfile) {
-        setFormContent(prev => ({...prev, ...getFormData(profile)}));
+        setFormContent(prev => ({...prev, ..._getFormData(profile)}));
         setHasLoadedProfile(true);
     }
 
     // Message character counter
     const count = useMemo(() => formContent?.message.length || 0, [formContent.message]);
 
-    const nameValidation = useCallback((name) => {
-        if (!name)                   return VALIDATION_RESULT.error('El nombre es requerido.');
-        if (!NAME_REGEX.test(name))  return VALIDATION_RESULT.error('El nombre solo puede contener letras y espacios.');
-        return VALIDATION_RESULT.success(name.toUpperCase());
+    const _nameValidation = useCallback((name) => {
+        if (!name)                      return _VALIDATION_RESULT.error('El nombre es requerido.');
+        if (!_NAME_REGEX.test(name))    return _VALIDATION_RESULT.error('El nombre solo puede contener letras y espacios.');
+        return _VALIDATION_RESULT.success(name.toUpperCase());
     }, []);
 
-    const phoneNumberValidation = useCallback((phone) => {
+    const _phoneNumberValidation = useCallback((phone) => {
         const cleanedPhoneNumber = phone.replace(/\D/g, '');
-        if (!cleanedPhoneNumber)                    return VALIDATION_RESULT.error('El número de teléfono es requerido.');
-        if (!PHONE_REGEX.test(cleanedPhoneNumber))  return VALIDATION_RESULT.error('El número debe tener exactamente 10 dígitos.');
-        return VALIDATION_RESULT.success(cleanedPhoneNumber);
+        if (!cleanedPhoneNumber)                    return _VALIDATION_RESULT.error('El número de teléfono es requerido.');
+        if (!_PHONE_REGEX.test(cleanedPhoneNumber)) return _VALIDATION_RESULT.error('El número debe tener exactamente 10 dígitos.');
+        return _VALIDATION_RESULT.success(cleanedPhoneNumber);
     }, []);
 
-    const messageValidation = useCallback((message) => {
-        if (!message)                        return VALIDATION_RESULT.error('El mensaje es requerido.');
-        if (!MESSAGE_REGEX.test(message))    return VALIDATION_RESULT.error('El mensaje contiene caracteres no permitidos.');
-        return VALIDATION_RESULT.success(message);
+    const _messageValidation = useCallback((message) => {
+        if (!message)                       return _VALIDATION_RESULT.error('El mensaje es requerido.');
+        if (!_MESSAGE_REGEX.test(message))  return _VALIDATION_RESULT.error('El mensaje contiene caracteres no permitidos.');
+        return _VALIDATION_RESULT.success(message);
     }, []);
 
-    const VALIDATORS = useMemo(() => ({
-        name        : nameValidation,
-        phone_number: phoneNumberValidation,
-        message     : messageValidation
-    }), [nameValidation, phoneNumberValidation, messageValidation]);
-
-    const _handleValidationResult = useCallback((id, value, result) => {
-        if (result.isValid) {
-            setFormContent(prev => ({...prev, [id]: result.value}));
-            setFieldErrors(prev => ({...prev, [id]: ''}));
-        } else {
-            setFormContent(prev => ({...prev, [id]: value}));
-            setFieldErrors(prev => ({...prev, [id]: result.message}));
-        }
+    const _handleValidationResult = useCallback((id, unvalidatedValue, validationResult) => {
+        const { isValid, value, message } = validationResult;
+        setFormContent(prev => ({...prev, [id]: isValid ? value : unvalidatedValue}));
+        setFieldErrors(prev => ({...prev, [id]: isValid ? ''    : message}));
     }, []);
+
+    const _VALIDATORS = useMemo(() => ({
+        name        : _nameValidation,
+        phone_number: _phoneNumberValidation,
+        message     : _messageValidation
+    }), [_nameValidation, _phoneNumberValidation, _messageValidation]);
 
     const setContentFormState = useCallback((e) => {
         const { id, value } = e.target;
         const upperValue = value.toUpperCase();
         
         // Validate specific field while typing
-        _handleValidationResult(id, upperValue, VALIDATORS[id]?.(upperValue));
-    }, [VALIDATORS, _handleValidationResult]);
-    
-    const _validateAllFields = useCallback((values) => {
-        console.log(`- values: ${JSON.stringify(values)}`);
-        Object.entries(values).map(([key, value]) => {
-            const validator = VALIDATORS[key]?.(value);
-            console.log(`
-                - key: ${key}
-                - value: ${value}
-                - validator: ${JSON.stringify(validator)}
-            `);
-            _handleValidationResult(key, value, validator);
-        });
-    }, [VALIDATORS, _handleValidationResult]);
+        _handleValidationResult(id, upperValue, _VALIDATORS[id]?.(upperValue));
+    }, [_VALIDATORS, _handleValidationResult]);
+
+    const _validateAllFields = useCallback((values) => Object.entries(values).map(([key, value]) => _handleValidationResult(key, value, _VALIDATORS[key]?.(value))), [_VALIDATORS, _handleValidationResult]);
 
     const onSubmitFormHandler = useCallback(async (e) => {
         e.preventDefault();
 
         setIsSubmitting(true);
-        setSubmitStatus(null);
+        setSubmitStatus(_INITIAL_SUBMIT_STATUS_STATE);
 
         // Current fields values
         const currentName       = formContent.name.trim();
@@ -140,7 +134,11 @@ const useContactForm = () => {
 
         if (Object.values(fieldErrors).some(err => !err?.isValid)) {
             setIsSubmitting(false);
-            return alert('Hay errores en el formulario.');
+            setSubmitStatus({
+                status: 'error',
+                message: _SUBMIT_STATUS_MESSAGES.fieldError
+            });
+            return setTimeout(() => setSubmitStatus(_INITIAL_SUBMIT_STATUS_STATE), 5000);
         }
 
         // Send the email with useSubmitMail hook
@@ -152,17 +150,23 @@ const useContactForm = () => {
         });
         
         if (result.success) {
-            setSubmitStatus('success');
+            setSubmitStatus({
+                status: 'success',
+                message: _SUBMIT_STATUS_MESSAGES.success
+            });
             // Reset form to initial state (without overwriting with profile if it has changed)
-            setFormContent(getFormData());
-            setFieldErrors(getFormData());
-            setTimeout(() => setSubmitStatus(null), 5000);
+            setFormContent(_getFormData(profile));
+            setFieldErrors(_getFormData());
+            setTimeout(() => setSubmitStatus(_INITIAL_SUBMIT_STATUS_STATE), 5000);
         } else {
-            setSubmitStatus('error');
+            setSubmitStatus({
+                status: 'error',
+                message: _SUBMIT_STATUS_MESSAGES.error
+            });
         }
 
         setIsSubmitting(false);
-    }, [formContent, sendMail, fieldErrors, _validateAllFields]);
+    }, [formContent, sendMail, fieldErrors, _validateAllFields, profile]);
 
     return {
         ARR_INFO_CARD_CONTENT,
