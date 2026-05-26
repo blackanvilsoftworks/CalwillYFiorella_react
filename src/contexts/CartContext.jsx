@@ -1,153 +1,170 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import { AuthContext } from './AuthContext.jsx';
-import {
-    getCartByUser,
-    addCartItem,
-    updateCartItemQuantity,
-    removeCartItem,
-    clearUserCart
-} from '../services/cartService';
+import * as cartService from '../services/cartService';
 
 const CartContext = createContext();
 
-const CART_STORAGE_KEY = 'c&f_cart_items';
+const _CART_STORAGE_KEY = 'c&f_cart_keys';
 
 const CartProvider = ({ children }) => {
     const { user } = useContext(AuthContext);
+
+    // Capa 1: datos mínimos persistidos — [{ id_variant, quantity }, ...]
+    const [cartKeys, setCartKeys] = useState([]);
+
+    // Capa 2: datos hidratados desde Supabase — array de ítems enriquecidos
     const [cartItems, setCartItems] = useState([]);
 
-    // Hydratation
-    useEffect(() => {
-        (async () => {
+    const [loading, setLoading] = useState(false);
+
+    // ── Hidratación ──────────────────────────────────────────────────────────
+    const hydrateCart = useCallback(async () => {
+        setLoading(true);
+
+        try {
             if (user) {
-                // if user exists, load cart from Supabase
-                try {
-                    const items = await getCartByUser(user.id);
+                // Usuario logueado: ignorar localStorage, cargar desde Supabase
+                const items = await cartService.getCartByUser(user.id);
+                if (items !== null) {
                     setCartItems(items);
-                } catch (err) {
-                    console.error(`Error cargando el carrito desde Supabase: ${err}`);
+                    // Sincronizar cartKeys con los datos de Supabase
+                    setCartKeys(items.map(i => ({ id_variant: i.id_variant, quantity: i.quantity })));
                 }
             } else {
-                // No user, load from localStorage
+                // Sin usuario: leer keys del localStorage
+                let storedKeys = [];
                 try {
-                    const stored = localStorage.getItem(CART_STORAGE_KEY);
-                    setCartItems(stored ? JSON.parse(stored) : []);
-                } catch (err) {
-                    console.error(`Error cargando el carrito desde localStorage: ${err}`);
-                    setCartItems([]);
+                    const raw = localStorage.getItem(_CART_STORAGE_KEY);
+                    storedKeys = raw ? JSON.parse(raw) : [];
+                } catch {
+                    storedKeys = [];
                 }
+
+                if (!storedKeys.length) {
+                    setCartKeys([]);
+                    setCartItems([]);
+                    return;
+                }
+
+                setCartKeys(storedKeys);
+
+                const variantIds = storedKeys.map(k => k.id_variant);
+                const variants = await cartService.getVariantsByIds(variantIds);
+
+                if (variants === null) return;
+
+                // Combinar datos de la view con quantities del localStorage
+                const hydrated = variants.map(variant => {
+                    const keyEntry = storedKeys.find(k => k.id_variant === variant.id_variant);
+                    const quantity = keyEntry?.quantity ?? 1;
+                    return {
+                        ...variant,
+                        quantity,
+                        subtotal     : variant.price * quantity,
+                        has_stock    : variant.stock >= quantity,
+                    };
+                });
+
+                setCartItems(hydrated);
             }
-        })();
+        } finally {
+            setLoading(false);
+        }
     }, [user]);
 
-    // Only persist cart items in localStorage if there is not a user logged in
-    useEffect(() => { if (!user) localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems)); }, [cartItems, user]);
+    // Re-hidratar cuando cambia el estado de autenticación
+    useEffect(() => {
+        hydrateCart();
+    }, [hydrateCart]);
+
+    // ── Métodos expuestos ────────────────────────────────────────────────────
 
     /**
      * Agrega un ítem al carrito. Si ya existe el id_variant, suma la cantidad.
-     * @param {Object} cartItem - { id_variant, product_name, variant_description, sku, price, quantity, image }
+     * @param {string} id_variant
+     * @param {number} quantity
      */
-    const addToCart = async (cartItem) => {
-        const existing = cartItems.find(i => i.id_variant === cartItem.id_variant);
-        let updatedItems;
+    const addToCart = useCallback(async (id_variant, quantity) => {
+        const existing = cartKeys.find(k => k.id_variant === id_variant);
+        const newQuantity = existing ? existing.quantity + quantity : quantity;
 
-        if (existing) {
-            const mergedQuantity = existing.quantity + cartItem.quantity;
-            updatedItems = cartItems.map(i =>
-                i.id_variant === cartItem.id_variant
-                    ? { ...i, quantity: mergedQuantity }
-                    : i
-            );
-
-            if (user) {
-                try {
-                    await updateCartItemQuantity(user.id, cartItem.id_variant, mergedQuantity);
-                } catch (err) {
-                    console.error(`Error actualizando cantidad en Supabase: ${err}`);
-                }
-            }
+        if (user) {
+            await cartService.upsertCartItem(user.id, id_variant, newQuantity);
         } else {
-            updatedItems = [...cartItems, cartItem];
-
-            if (user) {
-                try {
-                    await addCartItem(user.id, cartItem);
-                } catch (err) {
-                    console.error(`Error agregando ítem al carrito en Supabase: ${err}`);
-                }
+            let updatedKeys;
+            if (existing) {
+                updatedKeys = cartKeys.map(k =>
+                    k.id_variant === id_variant ? { ...k, quantity: newQuantity } : k
+                );
+            } else {
+                updatedKeys = [...cartKeys, { id_variant, quantity }];
             }
+            localStorage.setItem(_CART_STORAGE_KEY, JSON.stringify(updatedKeys));
         }
 
-        setCartItems(updatedItems);
-    };
+        await hydrateCart();
+    }, [user, cartKeys, hydrateCart]);
 
     /**
-     * Updates the quantity of an item. Min:1. Max:99 (for now)
+     * Actualiza la cantidad de un ítem. Min: 1. Max: stock del ítem hidratado.
      * @param {string} id_variant
      * @param {number} newQuantity
      */
-    const updateQuantity = async (id_variant, newQuantity) => {
-        // TODO: validar contra stock real
-        const clampedQuantity = Math.max(1, Math.min(99, newQuantity));
+    const updateQuantity = useCallback(async (id_variant, newQuantity) => {
+        if (newQuantity < 1) return;
 
-        const updatedItems = cartItems.map(i =>
-            i.id_variant === id_variant
-                ? { ...i, quantity: clampedQuantity }
-                : i
-        );
-        setCartItems(updatedItems);
+        const hydrated = cartItems.find(i => i.id_variant === id_variant);
+        if (hydrated && newQuantity > hydrated.stock) return;
 
         if (user) {
-            try {
-                await updateCartItemQuantity(user.id, id_variant, clampedQuantity);
-            } catch (err) {
-                console.error(`Error actualizando cantidad en Supabase: ${err}`);
-            }
+            await cartService.updateCartItemQuantity(user.id, id_variant, newQuantity);
+        } else {
+            const updatedKeys = cartKeys.map(k =>
+                k.id_variant === id_variant ? { ...k, quantity: newQuantity } : k
+            );
+            localStorage.setItem(_CART_STORAGE_KEY, JSON.stringify(updatedKeys));
         }
-    };
+
+        await hydrateCart();
+    }, [user, cartKeys, cartItems, hydrateCart]);
 
     /**
-     * Elimina un ítem del carrito por id_variant.
+     * Elimina un ítem del carrito.
      * @param {string} id_variant
      */
-    const removeItem = async (id_variant) => {
-        const updatedItems = cartItems.filter(i => i.id_variant !== id_variant);
-        setCartItems(updatedItems);
-
+    const removeItem = useCallback(async (id_variant) => {
         if (user) {
-            try {
-                await removeCartItem(user.id, id_variant);
-            } catch (err) {
-                console.error(`Error eliminando ítem del carrito en Supabase: ${err}`);
-            }
+            await cartService.removeCartItem(user.id, id_variant);
+        } else {
+            const updatedKeys = cartKeys.filter(k => k.id_variant !== id_variant);
+            localStorage.setItem(_CART_STORAGE_KEY, JSON.stringify(updatedKeys));
         }
-    };
+
+        await hydrateCart();
+    }, [user, cartKeys, hydrateCart]);
 
     /**
      * Vacía completamente el carrito.
      */
-    const clearCart = async () => {
-        setCartItems([]);
-
+    const clearCart = useCallback(async () => {
         if (user) {
-            try {
-                await clearUserCart(user.id);
-            } catch (err) {
-                console.error(`Error vaciando el carrito en Supabase: ${err}`);
-            }
+            await cartService.clearUserCart(user.id);
+        } else {
+            localStorage.setItem(_CART_STORAGE_KEY, JSON.stringify([]));
         }
-    };
 
-    // ── Total del carrito ─────────────────────────────────────────────────────
-    const cartTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        setCartKeys([]);
+        setCartItems([]);
+    }, [user]);
 
+    // ────────────────────────────────────────────────────────────────────────
     const value = {
         cartItems,
-        cartTotal,
+        loading,
         addToCart,
         updateQuantity,
         removeItem,
-        clearCart
+        clearCart,
     };
 
     return (

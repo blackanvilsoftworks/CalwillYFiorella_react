@@ -174,6 +174,25 @@
             color : $red-color;
         }
     }
+
+    // ── Variante sin stock ─────────────────────────────────────────────────
+    &--out-of-stock {
+        opacity : 0.55;
+
+        .cart-item__name,
+        .cart-item__variant,
+        .cart-item__price,
+        .cart-item__subtotal {
+            text-decoration : line-through;
+        }
+    }
+
+    &__stock-warning {
+        font-size   : 0.78rem;
+        font-weight : 600;
+        color       : $red-color;
+        margin-top  : 0.3rem;
+    }
 }
 
 /* ── Cart summary ────────────────────────────────────────────────────────── */

@@ -10,23 +10,24 @@ import useMainData from './useMainData';
 import useCart from './useCart';
 
 const useProductData = (id_product) => {
-    const { PLACEHOLDER_IMG } = useMainData();
+    const { PLACEHOLDER_IMG }   = useMainData();
+    const { addToCart }         = useCart();
 
     // ── Datos cargados desde la BD ──────────────────────────────────────────
-    const [product, setProduct] = useState(null);
-    const [sizes, setSizes] = useState([]);
-    const [availableColors, setAvailableColors] = useState([]);
-    const [images, setImages] = useState([]);
+    const [product          , setProduct]           = useState(null);
+    const [sizes            , setSizes]             = useState([]);
+    const [availableColors  , setAvailableColors]   = useState([]);
+    const [images           , setImages]            = useState([]);
 
     // ── Selección activa ────────────────────────────────────────────────────
-    const [selectedSize, setSelectedSize] = useState(null);
+    const [selectedSize , setSelectedSize]  = useState(null);
     const [selectedColor, setSelectedColor] = useState(null);
 
     // ── UI ──────────────────────────────────────────────────────────────────
     // const [currentImage, setCurrentImage] = useState(0);
-    const [quantity, setQuantity] = useState(1);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [quantity , setQuantity]  = useState(1);
+    const [loading  , setLoading]   = useState(true);
+    const [error    , setError]     = useState(null);
 
     // ── 1. Cargar producto y talles en paralelo al montar ───────────────────
     useEffect(() => {
@@ -108,23 +109,12 @@ const useProductData = (id_product) => {
             : alert('La cantidad ingresada no puede ser mayor a la que figura en el stock. En caso de desear realizar un pedido que supere la cantidad en stock por favor comuníquese con nosotros por nuestros canales.');
     }, [selectedColor]);
 
-    const { addToCart } = useCart();
+    
 
     const onAddToCart = () => {
         if (!selectedColor || !selectedSize) return;
-        // TODO: Dar alguna advertencia de que no se puede agregar al carrito dependiendo de lo que falte
 
-        const cartItem = {
-            id_variant: selectedColor.id_variant,
-            product_name: product.product_name,
-            variant_description: `${selectedColor.colors.description} - Talle ${selectedSize.size}`,
-            sku: selectedColor.sku,
-            price: selectedColor.price,
-            quantity: quantity,
-            image: images[0]?.image_url || PLACEHOLDER_IMG
-        };
-
-        addToCart(cartItem);
+        addToCart(selectedColor.id_variant, quantity);
         setQuantity(1);
     };
 
